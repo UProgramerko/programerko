@@ -1,0 +1,172 @@
+Događaji tipkovnice
+-------------------
+
+Od događaja koji nastaju na tipkovnici najvažniji je događaj pritiskanja tipki, tako da ćemo se najviše fokusirati na taj. Kada pritisnete tipke na tipkovnici, u objektu *događaj* koji predstavlja događaj u našim programima, vrijednost *event.type* biti će ``pg.KEYDOWN``.
+
+Kada se registrira pritiskanje tipke na tipkovnici, gotovo uvijek želimo znati koja je to tipka. To možemo saznati testiranjem vrijednosti ``event.key``. Kao što smo već spomenuli u lekciji o čitanju stanja tipkovnice, da za svaku tipku postoji konstanta koja odgovara toj tipki. Prisjetimo se imena tih konstanti za neke često provjerene tipke (kompletan popis tih konstanta možete vidjeti `ovdje <https://www.pygame.org/docs/ref/key.html>`__ ):
+
+============ ==============
+constant     key
+============ ==============
+pg.K_LEFT    left arrow
+pg.K_RIGHT   right arrow
+pg.K_UP      up arrow
+pg.K_DOWN    down arrow
+pg.K_SPACE   space bar
+pg.K_a       *a* key
+pg.K_b       *b* key
+pg.K_c       *c* key
+============ ==============
+
+Vrijednost polja *event.key* govori nam koja se fizička tipka pritisne, a ova vrijednost je pogodna za tipke kao što su tipke sa strelicama, *Ctrl*, *Shift*, *Alt*, *Home*, *End* i slično. Kada je riječ o tekstu, možda će biti prikladnije koristiti vrijednost polja ``event.unicode``, koja sadrži znak koji je upravo upisan (kao jedan niz znakova).
+
+Sljedeći primjer ilustrira testiranje pritiska tipke ili događaj tipa *pg.KEYDOWN*.
+
+.. questionnote::
+
+    **Primjer - križaljka** 
+    
+    U ovom primjeru korisnik može upotrijebiti tipke sa strelicama na tipkovnici za pomicanje okvira i unošenje slova u kvadratiće.
+    
+Imajte na umu funkciju *handle_event* u kojoj se događa provjera vrste događaja, a zatim, ako se radi o pritisku tipke, provjeravaju se dodatne informacije o događajima, pohranjene u poljima *event.key* i *event.unicode*.
+
+Uz to, možete pokušati sastaviti neke zanimljive križaljke.
+
+.. activecode:: PyGame__interact_crossword
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src/PyGame/3_Interaction/3e_Keyboard_events/crossword.py
+    
+Uporedimo ovaj program s programom "Navigacija" iz iz poglavlja o očitanju stanja tipkovnice:
+
+=========================================================== =============================================================
+In the "Navigation" program                                 In the "Crossword" program
+=========================================================== =============================================================
+the yellow circle was moving by one pixel - it was gliding  the frame moves by one field - it jumps
+we had no precise control of where the circle would stop    we can precisely control where the frame will stop
+it didn't matter where exactly the circle would stop        it matters where exactly the frame will stop
+we were reading the status of the keybard keys (down or up) we are using an event (pressing a key)
+=========================================================== =============================================================
+
+
+.. questionnote::
+
+    **Zadatak - navigacija kroz polja** 
+    
+    Napišite program koji radi kao što je prikazano u primjeru (gumb "Play task"). 
+    
+    Korisnik može pomoću tipki sa strelicama na tipkovnici voditi lik predstavljen žutim krugom. Lik se kreće po poljima s bijelim točkama.
+    
+
+.. activecode:: PyGame__interact_pacman1
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includehsrc: src/PyGame/3_Interaction/3e_Keyboard_events/pacman1.py
+    
+    import pygame as pg, pygamebg
+    num_rows, num_cols = 10, 10
+    a = 50 # square size
+    (width, height) = (a* num_cols, a * num_rows)
+    canvas = pygamebg.open_window(width, height, "Dot-eater")
+
+    (character_row, character_col) = (num_rows // 2, num_cols // 2)
+
+    def new_frame():
+        canvas.fill(pg.Color("black"))   # obojimo prozor u crno
+
+        # white dots
+        for x in range(a // 2, width, a):
+            for y in range(a // 2, height, a):
+                pg.draw.circle(canvas, pg.Color("white"), (x, y), 3)
+       
+        # OVDjE DODAJTE NAREDBE ZA CRTANJE ZUTOG KRUGA
+        # (use character_row, character_col)
+        
+    def handle_event(event):
+        global character_row, character_col
+        # OVDjE DODAJTE NAREDBE ZA OBRADU DOGAĐAJA
+        
+    pygamebg.frame_loop(30, new_frame, handle_event)
+
+
+.. questionnote::
+
+    **Zadatak - dodavanje labirinta** 
+    
+    Napišite program koji pravi labirint. Crvenim okvirom treba upravljati pomoću strelica, a pritiskom na razmaknicu treba promijeniti boju kvadrata (od crne do bijele i obrnuto).
+    
+Kada dovršite zadatak, pokušajte sljedeće:
+
+- kliknite na gumb "Play task" (ovaj put primjer programa radi više od onoga što smo tražili od vas)
+- napravite labirint onako kako želite
+- pritisnite *S* za početak i gledajte
+- pritisnite *P* za uključivanje i isključivanje načina pauze, odnosno za zaustavljanje ili nastavak pretraživanja
+    
+.. commented out
+
+    Ovdje bi bilo idealno kada učenici ne bi mogli isprobati pretragu prije nego što riješe zadatak
+
+.. activecode:: PyGame__interact_labyrinth
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includehsrc: src/PyGame/3_Interaction/3e_Keyboard_events/labyrinth_edit_and_search.py
+    
+    import pygame as pg, pygamebg, random
+    a = 50 # veličina polja
+    num_rows = 12
+    num_cols = 20
+    (width, height) = (num_cols * a, num_rows * a)
+    canvas = pygamebg.open_window(width, height, "Maze")
+
+    def new_frame():
+        canvas.fill(pg.Color('white')) # obojite pozadinu u bijelo
+        for row in range(num_rows):
+            for col in range(num_cols):
+                if board[row][col] == 1: # zid
+                    pg.draw.rect(canvas, pg.Color('black'), (col * a, row * a, a, a))
+
+        # okvir
+        pg.draw.rect(canvas, pg.Color('red'), (frame_col * a, frame_row * a, a, a), 3)
+        
+    def handle_event(event):
+        global board, frame_row, frame_col
+        
+        # OVDJE DODAJTE NAREDBE ZA OBRADU PRITISAKA NA RAZMAKNICU I STRELICE
+        # (arrow keys and space bar should be covered)
+
+    board = []
+    for j in range(num_rows):
+        board.append([])
+        for i in range(num_cols):
+            board[-1].append(random.randint(0, 1))
+            
+    (frame_row, frame_col) = (0, 0)
+    pygamebg.frame_loop(10, new_frame, handle_event)
+            
+
+Bonus - program vježbanja za tipkanje
+'''''''''''''''''''''''''''''''''''''
+
+Program koji slijedi, služi za vježbu tipkanja. Program je dug, ali trebali biste biti u stanju razumjeti veliki dio njega.
+
+Možda želite (bez obveza) program prilagoditi svojim potrebama, posebno na početku. Na primjer:
+
+- da usporite (ili kasnije da ubrzate) padanje slova
+- da ne izgubite bodove kad pogriješite
+- kad savladate slova koja prva padaju, uklonite ih s liste slova za vježbanje
+- da biste promijenili skup znakova koji padaju samo u brojeve i radne znakove (ako želite vježbati tipkati samo na numeričkoj tipkovnici s desne strane)
+- da pritisnete razmaknicu izbrišite najniže slovo (uz donekle smanjujući rezultat) 
+
+ili bilo što drugo što se možete sjetiti.
+    
+Kada budete imali vremena, svakako pokušajte napraviti što bolji rezultat (bez varanja).
+
+.. activecode:: PyGame__interact_typing_tutor
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src/PyGame/3_Interaction/3e_Keyboard_events/typing_tutor.py

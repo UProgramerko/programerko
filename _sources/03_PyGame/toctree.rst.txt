@@ -1,0 +1,14 @@
+===============================
+Grafičko programiranje s Pygame
+===============================
+
+Vrlo zanimljiva domena aplikacijskog programiranja je stvaranje programa koji koriste grafičke mogućnosti računala, tj. sposobnost crtanja oblika, prikazivanja slika, stvaranja animacija i simulacija i slično. Takve su, primjerice, računalne igre, što obično znači da korisnik kontrolira lik mišem ili tipkovnicom koji se pojavljuje na zaslonu i hoda kroz virtualni svijet, svladavajući prepreke i boreći se s neprijateljima. Programski jezik Python nudi i neke grafičke mogućnosti unutar svoje standardne biblioteke (na primjer, kornjača grafika). Ipak, za naprednije mogućnosti i programiranje igara obično se koristi neka naprednija biblioteka. Jedna takva biblioteka je PyGame. PyGame biblioteka je također prikladna za učenje programiranja računalne grafike i predstavljena je u sljedećim lekcijama.
+
+   .. toctree::
+      :maxdepth: 2
+
+      ./03_PyGame_01_Intro.rst
+      ./03_PyGame_02_Basics.rst
+      ./03_PyGame_10_Drawing.rst
+      ./03_PyGame_20_Animation.rst
+      ./03_PyGame_30_Interaction.rst

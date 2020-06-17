@@ -1,0 +1,161 @@
+Učitavanje podataka
+===================
+
+Učitavanje teksta
+-----------------
+
+Programi koje smo do sada naučili pisati sadrže sve potrebne podatke u sebi i rade uvijek na isti način. Kada nam je potrebno da program radi istu stvar s drugačijim podacima, morali bismo promijeniti program. Ovaj način može biti odgovarajući kada su promjene u podacima male i nisu česte.
+
+Drugi način da se naš program nosi s raznolikim zadacima je omogućavanje unosa podataka. Umetanje podataka u program tijekom njegovog rada vrši se pomoću funkcije *input()*. Ova funkcija funkcionira čekajući da korisnik programa nešto upiše (i pritisne tipku *Enter*), a zatim vrati upisani tekst kao rezultat.
+
+Kad pokrenete ovaj program, da biste vidjeli kako funkcionira, utipkajte nešto i pritisnite *Enter*. Isprobajte isti program u *IDLE* okruženjuili na stranici *repl.it*.
+
+.. activecode:: console__text_input_first
+
+    s = input()
+    print("Napisali ste", s)
+
+Program djeluje kako je opisano, ali takvo ponašanje programa može biti zbunjujuće. Ako bi netko pokrenuo takav program u okruženju *IDLE* a da nije znao da program očekuje podatke, moglo bi izgledati kao da je njegovo računalo zaključano jer se ništa ne događa, a u stvari program samo čeka na unos s tipkovnice.
+
+Da bismo korisniku pomogli razumjeti što se od njih očekuje, možemo koristiti i oblik funkcije *input* s jednim tekstualnim argumentom, koji će se ispisati kao vodič za korisnika. Na primjer:
+
+.. activecode:: console__text_input_prompt
+
+    s = input("Napišite nešto: ")
+    print("Napisali ste", s)
+
+Hoćemo li odabrati jedan ili drugi oblik *input* funkcije, ovisi o svrsi programa. Kada pišemo program u koji će podatke unositi drugi ljudi, koristimo oblik s argumentom - uputstvom. Kada pišemo program samo za svoju kratkoročnu (možda čak jednokratnu) upotrebu, tada nemamo potrebe za uputstvima i možemo koristiti i oblik bez argumenata.
+
+Spomenimo i to da se u nekim od okruženja u kojima se program izvršava možemo podesiti da program umjesto s tipkovnice, učitava podatke s nekog drugog mjesta na kojem smo te podatke unaprijed pripremili. Tada nema čekanja da podaci budu uneseni, oni se učitavaju automatski i nema potrebe da se nekome ispisuje uputstvo. Zato se u programima predviđenim za ovakvu upotrebu također koristi *input* naredba bez argumenata.
+
+Učitavanje brojeva
+------------------
+
+Vidjeli smo da funkcija *input()* vraća string (tekst tipkao korisnik). To znači da ako trebamo podatke drugog tipa, trebamo promijeniti vrstu podataka koje vraća funkcija *input()* iz stringa u željeni tip. Promjena vrste podataka također se naziva **pretvorba**. Na primjer, ako želimo cijeli broj, dobiveni tekst moramo pretvoriti u cijeli broj. Evo kako to učiniti u Pythonu:
+
+.. activecode:: console__text_input_int1
+
+    s = input("Unesite cijeli broj: ")
+    n = int(s)
+    print(n+n)
+
+Funkcija ``int()`` pretvara vrijednost teksta u cjelobrojnu vrijednost. Stoga naredbom ``n = int(s)`` u varijablu *n* stavljamo cjelobrojnu vrijednost, zbog čega znak + u programu predstavlja dodavanje cijelih brojeva. Zbroj se dodaje programu kao dokaz da je *n* zaista cjelobrojna vrijednost (rezultat pokazuje da su vrijednosti zbrajane kao brojevi).
+
+Budući da funkcija *input* function vraća string, njegov rezultat možemo prenijeti i izravno na funkciju *int*. Na taj način izbjegavamo korištenje varijable *s* i dobivamo nešto kraći program koji radi isto: 
+
+.. activecode:: console__text_input_int2
+
+    n = int(input("Unesite cijeli broj: "))
+    print(n+n)
+
+~~~~
+
+Za realni broj umjesto funkcije *int* treba upisati *float*, jer funkcija ``float()`` pretvara vrijednost teksta u realan broj. Na primjer, ako želimo učitati realan broj i ispisati dvostruko veći broj, program može izgledati ovako:
+
+.. activecode:: console__text_input_float1
+
+    s = input("Unesite realan broj: ")
+    a = float(s)
+    print(2*a)
+
+ili
+
+.. activecode:: console__text_input_float2
+
+    a = float(input("Unesite realan broj: "))
+    print(2*a)
+
+
+Provjerite što se događa u ova dva primjera kad unesete nešto drugo, a ne broj.
+
+O konverzijama
+--------------
+
+Vidjeli smo da kada string sadrži cijeli ili realan broj, tajse string može pretvoriti u cijeli ili realan tip pomoću funkcija *int()* ili *float()*. S druge strane, cijeli i realni brojevi se uvijek mogu pretvoriti u string. Funkcija *str()* se koristi za pretvorbu u string.
+
+.. activecode:: console__text_convert_to_str
+
+    a = 1
+    a_str = str(a)
+    print(a_str + a_str)
+
+    b = 2.1
+    b_str = str(b)
+    print(b_str + b_str)
+
+Pretvaranje cjelobrojne vrijednosti u realnu se vrši automatski kada je to potrebno, iako to možemo napraviti i pozivanjem funkcije *float*.
+
+.. activecode:: console__text_convert_int_to_float
+
+    print(float(1))
+    
+Suprotno tome, kada trebamo pretvoriti realan broj u cijeli broj, ta se pretvorba ne događa automatski (s razlogom) i potrebno ju je postaviti u programu pozivanjem funkcije *int()*. Pri pretvaranju realnog broja u cijeli broj odbacuju se svi decimali realnog broja, što znači da je zaokruživanje uvijek **prema nuli**. Drugim riječima, kada vrijednost realnog broja *x* nije cijeli broj, * int(x)* je bliži nuli nego *x*.
+
+.. activecode:: console__text_convert_int_float
+
+    print(float(1))
+    
+    print(int(1.68))
+    print(int(-1.68))
+    
+Pitanja
+-------
+
+.. mchoice:: console__text_quiz_1
+    :answer_a: Program će ispisati 5
+    :answer_b: Program će ispisati 23
+    :answer_c: Doći će do pogreške prilikom pokušaja dodavanja stringa i broja
+    :correct: c
+    :feedback_a: Pokušajte ponovno.
+    :feedback_b: Pokušajte ponovno.
+    :feedback_c: Točno!
+    
+    Što se događa kada pokrenemo sljedeći program i unesemo ``2``?
+    
+    .. code::
+    
+        a = input()
+        print(a+3)
+
+.. mchoice:: console__text_quiz_2
+    :answer_a: Program će ispisati 5
+    :answer_b: Program će ispisati 23
+    :answer_c: Doći će do pogreške prilikom pokušaja dodavanja stringa i broja
+    :correct: b
+    :feedback_a: Pokušajte ponovno
+    :feedback_b: Točno
+    :feedback_c: Pokušajte ponovno
+    
+    Što se događa kada pokrenemo sljedeći program i unesemo ``2``?
+    
+    .. code::
+    
+        a = input()
+        print(a+'3')
+
+.. dragndrop:: console__text_quiz_4
+    :feedback: Pokušaj ponovno!
+    :match_1: '2.11'|||str(2.1) + '1'
+    :match_2: 3.1|||float('2.1') + 1
+    :match_3: greška prilikom računanja|||float('2.1') + '1'
+    :match_4: 2.11|||float('2.1') + 1/100
+    :match_5: '3.1'|||str(2.1 + int('1'))
+
+    Uparite izraze s rezultatima izračuna.
+
+
+.. mchoice:: console__text_quiz_5
+   :answer_a: Kada je prva decimala broja a veća ili jednaka 5
+   :answer_b: Kada je broj a negativan
+   :answer_c: Kada je broj a pozitivan
+   :answer_d: Kada je broj a jednoznamenkast
+   :answer_e: Kada je razlika između a i int(a) veća od 0.5
+   :correct: b
+   :feedback_a: Pokušaj ponovno.
+   :feedback_b: Točno!
+   :feedback_c: Pokušaj ponovno.
+   :feedback_d: Pokušaj ponovno.
+   :feedback_e: Pokušaj ponovno.
+
+   Kada je cijeli broj *int(a)* veći od realnog broja a?
+

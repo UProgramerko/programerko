@@ -1,0 +1,392 @@
+Još kraći programi
+==================
+
+Podsjetimo se poslijednjeg programa prethodne lekcije. Karelje trebao pokupiti po pet loptica sa svakog od tri naredna polja.
+
+.. image:: ../../_images/Karel/nested_for_3x5.png
+    :width: 300px
+    :align: center
+
+Program koji riješava zadataka može ovako izgledati:
+
+.. activecode:: Karel_nested_for__intro_1
+   :passivecode: true
+
+    from karel import *
+    move()
+    for i in range(5):
+        pick_ball()
+    move()
+    for i in range(5):
+        pick_ball()
+    move()
+    for i in range(5):
+        pick_ball()
+        
+Vidimo u ovom programu da se sljedeća grupa ponavlja tri puta:
+
+.. activecode:: Karel_nested_for__intro_2
+   :passivecode: true
+
+    move()
+    for i in range(5):
+        pick_ball()
+
+To nam omogućava da dodatno skratimo program. Pri objašnjavanju for naredbe smo spomenuli da u tijelu petlje mogu naći i druge petlje. Sada imamo priliku to iskoristiti.
+ 
+Umetnute *for* naredbe
+----------------------
+
+Kada se u tijelu jedne petlje nalazi druga petlja, tada se prva petlja naziva vanjska petlja, a druga se naziva unutarnja petlja. Zajedno ih zovemo ugniježđenim ili umetnutim petljama. U sljedećem ćemo primjeru vidjeti kako se pišu umetnute *for* naredbe.
+
+Tri puta pokupi po 5 loptica
+''''''''''''''''''''''''''''''
+
+.. questionnote::
+
+  Ispred Karela su tri polja, a na svakom je po 5 loptica. Karel mora pokupiti sve loptice.
+
+Zadatak se ponavlja, ali sada ćemo ga riješiti na drugačiji način.
+
+.. infonote::
+    Spomenuli smo da ``i`` u dosadašnjim primjerima za *for* naredbe je naziva na kojem brojimo do kuda smo stigli s ponavljanjem. Sada prvi puta trebamo u toku brojanja jedne stvari (polja) prebrojati i drugu stvar (loptice). To znači da će na primjer biti potrebno znati kada smo na trećem polju pri drugoj loptici. Zbog toga ne možemo koristiti isto ime za oba dva brojača, pa smo umjesto dosadašnjeg ``i`` uveli nova imena za brojače. U programu koji slijedi brojač polja smo nazvali ``i_square``, a brojač loptica ``i_ball``.
+   
+.. karel:: Karel_for_TakeMxN
+   :blockly:
+
+   {
+        setup:function() {
+           var numAvenues = 4;
+           var numBalls = 5;
+           var world = new World(numAvenues, 1);
+           world.setRobotStartAvenue(1);
+           world.setRobotStartStreet(1);
+           world.setRobotStartDirection("E");
+           
+           for (var k = 2; k <= numAvenues; k++)
+              world.putBalls(k, 1, numBalls);
+           
+           var robot = new Robot();
+
+           var code = ["from karel import *",
+                       "for i_square in range(3):",
+                       "    move()",
+                       "    for i_ball in range(5):",
+                       "        pick_ball()",
+                       ""];
+           return {robot:robot, world:world, code:code};
+        },
+    
+        isSuccess: function(robot, world) {
+           return robot.getBalls() == 15; // 3 x 5 balls
+        },
+   }
+
+U datom rješenju, naredba *pick_ball()* je dodatno uvučena, zato što se izvršava po jednom za svaku ``i_ball`` iz opsega [0, 1, 2, 3, 4]. Osim toga, cijela naredba ``for i_ball in range(5):`` (uz naredbu *move()* zajedno s svojim tijelom), ponavlja 3 puta, po jednom za svako ``i_square`` iz opsega [ 0, 1, 2]. To znači da naredba *pick_ball()* izvršava ukupno 3 x 5 = 15 puta (na svakom od tri polja po pet puta).
+
+.. infonote::
+   Kod umetnutih petlji je potrebno dodatno paziti na pravilno uvlačenje naredbi, jer ono postaje nešto malo kompliciranije. Pogrešno uvlačenje pojedinih naredbi može dovesti do pogrešnog rezultata, ili do programa koji uopće ne radi.
+   
+Zadaci za vježbu
+------------------
+
+Preskoči
+''''''''
+
+.. questionnote::
+
+  Ispred Karela nalazi se po jedna loptica na svakom trećem polju i on bi ih trebao pokupiti oba dvije loptice.
+  
+Karel bi trebao ponoviti 2 puta grupu naredbi: "Pomakni se tri puta, a zatim pokupi lopticu".
+
+.. karel:: Karel_for_every_nth_square
+    :blockly:
+
+    {
+        setup:function() {
+            var everyNth = 3;
+            var numRepetitions = 2;
+            var numBalls = 1;
+            var numAvenues = 1 + numRepetitions * everyNth;
+            var world = new World(numAvenues, 1);
+            world.setRobotStartAvenue(1);
+            world.setRobotStartStreet(1);
+            world.setRobotStartDirection("E");
+           
+            for (var k = 1; k <= numRepetitions; k++)
+                world.putBalls(1+k*everyNth, 1, numBalls);
+            
+            var robot = new Robot();
+         
+            var code = ["from karel import *",
+                        "for i_rep in range(2):  # ponovi dva puta sve sto slijedi",
+                        "    # upotrijebite for naredbu da kazete Karelu da ide 3 polja naprijed",
+                        "    pick_ball()             # pokupi lopticu",
+                        ""];
+    
+            return {robot:robot, world:world, code:code};
+        },
+    
+        isSuccess: function(robot, world) {
+            return robot.getBalls() == 2; // number of repetitions
+        },
+    }
+
+.. commented out
+   .. reveal:: Karel_for_every_nth_square_reveal
+       :showtitle: Rješenje
+       :hidetitle: Sakrij rješenje
+   
+       .. activecode:: Karel_for_every_nth_square_solution
+           :passivecode: true
+         
+           from karel import *
+           for i_pon in range(2):     # ponovi dva puta sve sto slijedi
+               for i_polje in range(3):   # idi 3 polja naprijed
+                   move()
+               pick_ball()            # pokupi lopticu
+
+5 loptica na svakom trećem polju
+''''''''''''''''''''''''''''''''
+
+.. questionnote::
+
+  Ispred Karela je na svakom trećem polju po pet loptica, on ih treba sve pokupiti.
+  
+Zadatak je sličan predhodnom, treba samo ponavljati da pokupi loptice. Pazite da petlja za pokupi loptice bude ispod petlje za kretanje naprijed, a ne u njoj.
+
+
+.. karel:: Karel_for_every_nth_square_5
+    :blockly:
+
+    {
+        setup:function() {
+            var everyNth = 3;
+            var numRepetitions = 2;
+            var numBalls = 5;
+            var numAvenues = 1 + numRepetitions * everyNth;
+            var world = new World(numAvenues, 1);
+            world.setRobotStartAvenue(1);
+            world.setRobotStartStreet(1);
+            world.setRobotStartDirection("E");
+           
+            for (var k = 1; k <= numRepetitions; k++)
+                world.putBalls(1+k*everyNth, 1, numBalls);
+            
+            var robot = new Robot();
+         
+            var code = ["from karel import *",
+                        "for i_rep in range(2):      # ponovi dva puta sve sto slijedi",
+                        "    # upotrijebite for naredbu da kazete Karelu da ide 3 polja naprijed",
+                        "    # upotrijebite novu for naredbu da kazete Karelu da pokupi 5 loptica",
+                        ""];
+    
+            return {robot:robot, world:world, code:code};
+        },
+    
+        isSuccess: function(robot, world) {
+            return robot.getBalls() == 10; // numRepetitions x numBalls
+        },
+    }
+
+.. commented out
+   .. reveal:: Karel_for_every_nth_square_5_reveal
+       :showtitle: Rješenje
+       :hidetitle: Sakrij rješenje
+   
+       .. activecode:: Karel_for_every_nth_square_5_solution
+           :passivecode: true
+         
+           from karel import *
+           for i_pon in range(2):     # ponovi dva puta sve sto slijedi
+               for i_polje in range(3):   # idi 3 polja naprijed
+                   move()
+               for i_loptica in range(5): # pokupi 5 loptica
+                   pick_ball()
+
+
+U krug
+''''''
+
+.. questionnote::
+
+  Karel ponovno mora pokupiti sve loptice.
+  
+Vanjsku petlju treba izvršiti 3 puta, a u njoj Karel treba napraviti sljedeće:
+
+- Dva puta ponovi korake: "idi naprijed" i "pokupi lopticu"
+- Okreni se lijevo
+
+.. karel:: Karel_for_ring
+    :blockly:
+
+    {
+        setup:function() {
+            var w = [
+               '███████',
+               '█1.1.1█',
+               '█.███.█',
+               '█0.0█1█',
+               '█████.█',
+               '█E.1.1█',
+               '███████'
+            ];
+
+            var ny = Math.floor(w.length / 2);
+            var nx = Math.floor(w[0].length / 2);
+            var world = new World(nx, ny);
+
+            for (let y = 1; y <= ny; y++) {
+                let wy = 2*(ny-y) + 1;
+                for (let x = 1; x <= nx; x++) {
+                    let wx = 2*x - 1;
+                    if (y < ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+                    if (x < nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+                    let c = w[wy].charAt(wx);
+                    let pos = "SWEN".indexOf(c);
+                    if (pos > -1) {
+                        world.setRobotStartAvenue(x);
+                        world.setRobotStartStreet(y);
+                        world.setRobotStartDirection("SWEN".charAt(pos));
+                    }
+                    let d = w[wy].charCodeAt(wx);
+                    if (d >= 48 && d < 58) world.putBalls(x, y, d - 48);
+                }
+            }
+
+            var robot = new Robot();
+         
+            var code = ["from karel import *",
+                        "... # dovršite program",
+                        ""];
+                     
+            return {robot:robot, world:world, code:code};
+        },
+      
+        isSuccess: function(robot, world) {
+           return robot.getBalls() == 6;
+        }
+    }
+
+.. reveal:: Karel_for_ring_reveal_1
+    :showtitle: Pomoć
+    :hidetitle: Sakrij pomoć
+
+    Uputstva smo još malo približili programu, probajte ga pretvoriti u naredbu. Ako ipak želite vidjeti program, kliknite na gumb „Rješenje”.
+    
+    .. activecode:: Karel_for_ring_solution_1
+        :passivecode: true
+      
+        for each of the 3 sides:
+            for each of the 2 squares:
+                move forward
+                pick the ball
+            turn left
+
+    .. reveal:: Karel_for_ring_reveal_2
+       :showtitle: Rješenje
+       :hidetitle: Sakrij rješenje
+   
+       .. activecode:: Karel_for_ring_solution_2
+           :passivecode: true
+         
+           from karel import *
+           for i_side in range(3):     # tri puta ponovi sve sto slijedi
+               for i_square in range(2):     # dva puta idi "naprijed" i "pokupi lopticu"
+                   move()
+                   pick_ball()
+               turn_left()                   # okreni se uzduz slijedece strane
+
+
+
+U krug po 3 loptice
+'''''''''''''''''''''''''''''''''''
+
+.. questionnote::
+
+  Napišite program pomoću kojeg će Karel pokupiti svih 18 loptica.
+  
+Razlika u odnosu na prethodni zadatak je u tome što sada uzimanje loptica treba biti u dodatnoj petlji. To znači da ćemo imati tri umetnute petlje: jednu koja broji strane labirinta, drugu koja broji polja uzduž jedne strane, i treću koja broji loptice na polju.
+
+.. karel:: Karel_for_ring_3
+    :blockly:
+
+    {
+        setup:function() {
+            var w = [
+               '███████',
+               '█3.3.3█',
+               '█.███.█',
+               '█0.0█3█',
+               '█████.█',
+               '█E.3.3█',
+               '███████'
+            ];
+
+            var ny = Math.floor(w.length / 2);
+            var nx = Math.floor(w[0].length / 2);
+            var world = new World(nx, ny);
+
+            for (let y = 1; y <= ny; y++) {
+                let wy = 2*(ny-y) + 1;
+                for (let x = 1; x <= nx; x++) {
+                    let wx = 2*x - 1;
+                    if (y < ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+                    if (x < nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+                    let c = w[wy].charAt(wx);
+                    let pos = "SWEN".indexOf(c);
+                    if (pos > -1) {
+                        world.setRobotStartAvenue(x);
+                        world.setRobotStartStreet(y);
+                        world.setRobotStartDirection("SWEN".charAt(pos));
+                    }
+                    let d = w[wy].charCodeAt(wx);
+                    if (d >= 48 && d < 58) world.putBalls(x, y, d - 48);
+                }
+            }
+
+            var robot = new Robot();
+         
+            var code = ["from karel import *",
+                        "... # dovrši program",
+                        ""];
+                     
+            return {robot:robot, world:world, code:code};
+        },
+      
+        isSuccess: function(robot, world) {
+           return robot.getBalls() == 18;
+        }
+    }
+
+.. reveal:: Karel_for_ring_3_reveal
+    :showtitle: Pomoć
+    :hidetitle: Sakrij pomoć
+
+    Ponovno dajemo uputstvo koje malo više slići na program (ovaj put bez rješenja).
+    
+    .. activecode:: Karel_for_ring_3_solution
+        :passivecode: true
+      
+        for each of the 3 sides:
+            for each of the 2 squares:
+                move forward
+                for each of the 3 balls:
+                    pick the ball
+            turn left
+
+.. commented out
+   .. reveal:: Karel_for_ring_3_reveal
+       :showtitle: Rješenje
+       :hidetitle: Sakrij rješenje
+   
+       .. activecode:: Karel_for_ring_3_solution
+           :passivecode: true
+         
+           from karel import *
+           for i_side in range(3):     # tri puta ponovi sve sto sliedi
+               for i_square in range(2):   # ponovi dva put "idi naprijed" i "pokupi 3 loptice"
+                   move()
+                   for i_ball in range(3):
+                       pick_ball()
+               turn_left()             # okreni se uzduz slijedece strane

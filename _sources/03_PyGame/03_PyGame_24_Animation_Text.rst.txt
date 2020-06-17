@@ -1,0 +1,98 @@
+Crtanje teksta
+--------------
+
+Programi za crtanje često ispisuju razne poruke zajedno sa slikama (vjerojatno ste i sami vidjeli mnogo primjera). Evo kako to učiniti u PyGameu:
+
+.. activecode:: PyGame__anim_text
+    :nocodelens:
+    :modaloutput:
+    :includesrc: src/PyGame/2_Animation/2d_Anim_Text/text_example.py
+
+Kao što možete vidjeti u primjeru, da bi tekst bio prikazan **prvo moramo stvoriti objekt koji predstavlja font**. Za to se koristi funkcija ``pg.font.SysFont``, kojoj zadajemo vrstu i veličinu slova. Također možemo stvoriti više takvih objekata u slučaju da namjeravamo koristiti različite veličine ili vrste slova, iako nam je često potreban samo jedan font.
+
+Nakon stvaranja fonta, svaki put kada želimo prikazati neki tekst ponavljamo sljedeća dva koraka:
+
+- Prvi korak je **stvaranje slike koja sadrži željeni tekst.** To se postiže funkcijom ``font.render``, gdje je *font* objekt fonta stvoren u početku. Parametri funkcije *font.render* su redom tekst koji se prikazuje, logička vrijednost koja određuje hoće li se crtati ljepšim linijama (tj. koristiti takozvanu tehniku ​​protiv ublažavanja) na kraju boja kojom će se tekst ispisivati.
+- Drugi korak je isti kao kada prikazujemo bilo koju gotovu sliku - **prikazujemo sliku dobivenu u prethodnom koraku** na poziciji koju odaberemo. Pri tome za računanje pozicije možemo po potrebi (kao u primjeru) koristiti veličinu slike.
+
+Zadaci - svjetleće reklame
+''''''''''''''''''''''''''
+
+Sigurno ste viđali svjetleće reklame s neonskim cijevima u obliku slova. One privlače pažnju tako što se različite grupe slova uključuju i isključuju nekim zadanim redoslijedom koji se ponavlja. Slijedi nekoliko primjera inspirirani takvim svijetlećim reklamama.
+
+
+.. questionnote::
+
+    **Tekst koji treperi:** Napisati program koji prikazuje tekst koji treperi, sličan primjeru u nastavku (gumb "Play Task"). 
+    
+    Možete promijeniti tekst, njegovu boju i veličinu, font, frekvenciju uključivanja / isključivanja ili bilo što drugo ako želite. Ako želite kopirati naš program što je bliže moguće, on koristi slova vrste "Arial", veličine 80 i prikazuje tekst u svakom drugom frameu, centrirano, s 3 framea u sekundi.
+    
+**Pomoć:** Za globalne varijable koje opisuju scenu jedna je logička varijabla dovoljna da kaže treba li dati tekst prikazati ili ne. Izmijenit ćemo vrijednost ove varijable u funkciji *new_frame()* tako da ona u svakom drugom okviru ima vrijednost *True*.
+
+.. activecode:: PyGame__anim_neon1
+    :nocodelens:
+    :modaloutput:
+    :playtask:
+    :includehsrc: src/PyGame/2_Animation/2d_Anim_Text/neon_sign1.py
+
+    import pygame as pg, pygamebg
+    text = "PYTHON"
+    (width, height) = (len(text) * 70, 100)
+    canvas = pygamebg.open_window(width, height, "Reklama")
+    
+.. reveal:: PyGame__anim_neon1_reveal
+   :showtitle: Prikaži rješenje
+   :hidetitle: Sakrij rješenje
+
+    .. activecode:: PyGame__anim_neon1_solution
+        :nocodelens:
+        :modaloutput:
+        :includesrc: src/PyGame/2_Animation/2d_Anim_Text/neon_sign1.py
+
+.. questionnote::
+
+    **Dodavanje slova:** Sad pokušajte kopirati ovaj primjer. U prvom frameu prikazuje se samo prvo slovo, a zatim još jedno slovo u svakom sljedećem frameu dok sva slova nisu prikazana. Nakon toga slijedi jedan frame koji ništa ne prikazuje, zatim tri framea sa svim slovima, a zatim se sve ponavlja. Brzina prikazivanja u našem programu je 2 framea u sekundi.
+
+**Pomoć:** Evo nekoliko komentara koji mogu pomoći u rješavanju problema
+
+- Iz opisa (i promatranja primjera) možemo zaključiti da cijeli ciklus sadrži četiri okvira više od broja slova u tekstu.
+- Možemo odrediti veličinu koja nam treba da se temelji na duljini teksta, kao u prethodnom primjeru.
+- Tekst se uvijek prikazuje na istom mjestu (gornji lijevi kut teksta je isti). Stoga je dovoljno izračunati poziciju jednom, u glavnom dijelu programa.
+- Možemo koristiti globalnu varijablu brojača okvira i na temelju njegove vrijednosti odrediti da li i koji dio teksta treba prikazati pomoću *if* naredbe u funkciji *new_frame()*.
+
+.. activecode:: PyGame__anim_neon2
+    :nocodelens:
+    :modaloutput:
+    :playtask:
+    :includehsrc: src/PyGame/2_Animation/2d_Anim_Text/neon_sign2.py
+
+.. questionnote::
+
+    **Pojedinačna slova:** u ovom primjeru prvo se svako slovo prikazuje pojedinačno, a zatim se sva slova uključuju i isključuju 3 puta. Možete li kopirati takvo ponašanje?
+
+**Pomoć:** Položaji prikaza pojedinih slova su (0, 0), (50, 0), (100, 0), (150, 0), itd. Broj frameova u ciklusu je 6 plus broj slova u tekstu. Ostatak ideja vrlo je sličan onima iz prethodnih primjera.
+
+.. activecode:: PyGame__anim_neon3
+    :nocodelens:
+    :modaloutput:
+    :playtask:
+    :includehsrc: src/PyGame/2_Animation/2d_Anim_Text/neon_sign3.py
+
+.. questionnote::
+
+    **Pomicanje slova:** ovaj se primjer razlikuje po tome što se slova kreću. Pokušajte to riješiti i vi.
+    
+**Pomoć:** Jednom kada iz danog teksta oblikujete sliku, zadatak će postati vrlo sličan zadatku s automobilom u pokretu.
+
+.. activecode:: PyGame__anim_neon4
+    :nocodelens:
+    :modaloutput:
+    :playtask:
+    :includehsrc: src/PyGame/2_Animation/2d_Anim_Text/neon_sign4.py
+
+
+Konačno, ovdje možete napraviti svjetleću reklamu vlastitog dizajna.
+
+.. activecode:: PyGame__anim_neon5
+    :nocodelens:
+    :modaloutput:

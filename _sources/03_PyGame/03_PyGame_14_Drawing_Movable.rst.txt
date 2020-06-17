@@ -1,0 +1,403 @@
+Pomicanje crteža
+----------------
+
+U prethodnim primjerima napravili smo nekoliko crteža sastavljenih od osnovnih oblika. Pri tome je bilo potrebno odrediti točan položaj da svaki od tih oblika stane na sve dijelove. Za neke su crteže je bilo moguće (a u pojednim zadacima i potrebno) da se koordinate pojedinih točaka izračunaju na temelju poznatih koordinata drugih točaka. To je računanje moglo biti izvedeno izvan programa, a zatim bi se proračunske koordinate mogle jednostavno unijeti u program. Međutim, bolje je izvesti takve proračune u samom programu iz nekoliko razloga:
+
+- Možda nećemo iz prvog pokušaja izračunavati koordinate na ispravan način. U takvoj situaciji je lakše izmijeniti uputstvo za računanje nego sve ručno izračunati od početka.
+- Kada sami kreiramo crtež, može se dogoditi da nakon prve verzije programa poželimo dodati još nešto, na primjer s lijeve strane crteža, ali da nemamo dovoljno mjesta. U ovom slučaju, cijeli crtež treba pomaknuti udesno, tako da su *x* koordinate svih točaka povećane za istu vrijednost. Ako smo ručno izračunali koordinate točaka, moramo ih sve izračunati iznova. U dobro organiziranom programu crtanja dovoljno je promijeniti jedan broj da biste pomaknuli cijeli crtež udesno. Ovaj će postupak možda trebati ponoviti nekoliko puta dok ne budemo zadovoljni položajem nacrtanog dijela, pa je isprobavanje toga puno lakše kad program izvrši izračun umjesto nas.
+- •	Ako isti crtež želimo nacrtati na više mjesta u prozoru, prednosti računanja unutar programa dolaze do izražaja.
+
+Sada ćemo malo više sistematizirati računanje koordinata i upotrijebiti ga za lakše pomicanje nacrtanih predmeta. Prije nego što započnemo, bilo bi dobro provjeriti predznanje i odgovoriti na ova pitanja:
+
+.. mchoice:: PyGame__drawing_quiz_point_left
+   :answer_a: (50, 60)
+   :answer_b: (50, 80)
+   :answer_c: (40, 70)
+   :answer_d: (60, 70)
+   :answer_e: (40, 60)
+   :correct: c
+   :feedback_a: Pokušaj ponovo.
+   :feedback_b: Pokušaj ponovo.
+   :feedback_c: Točno!
+   :feedback_d: Pokušaj ponovo.
+   :feedback_e: Pokušaj ponovo.
+
+   Koje su koordinate točke 10 piksela lijevo od točke (50, 70)?
+
+.. mchoice:: PyGame__drawing_quiz_point_down
+   :answer_a: (50, 60)
+   :answer_b: (50, 80)
+   :answer_c: (40, 70)
+   :answer_d: (60, 70)
+   :answer_e: (40, 60)
+   :correct: b
+   :feedback_a: Pokušaj ponovo.
+   :feedback_b: Točno!
+   :feedback_c: Pokušaj ponovo.
+   :feedback_d: Pokušaj ponovo.
+   :feedback_e: Pokušaj ponovo.
+
+   Koje su koordinate točke 10 piksela ispod točke (50, 70)?
+
+.. mchoice:: PyGame__drawing_quiz_rect_up_left
+   :answer_a: pg.draw.rect(canvas, color, (70, 120, 50, 60))
+   :answer_b: pg.draw.rect(canvas, color, (100, 150, 110, 120))
+   :answer_c: pg.draw.rect(canvas, color, (100, 150, 50, 60))
+   :answer_d: pg.draw.rect(canvas, color, (70, 120, 80, 90))
+   :answer_e: pg.draw.rect(canvas, color, (70, 180, 80, 90))
+   :correct: d
+   :feedback_a: Pokušaj ponovo.
+   :feedback_b: Pokušaj ponovo.
+   :feedback_c: Pokušaj ponovo.
+   :feedback_d: Točno!
+   :feedback_e: Pokušaj ponovo.
+
+   Pravokutnik se crta pomoću ``pg.draw.rect(canvas, color, (100, 150, 80, 90))``. Kako se može nacrtati pravokutnik iste veličine, koji se nalazi 30 piksela s lijeve strane i 30 piksela iznad ovog pravokutnika?
+   
+.. mchoice:: PyGame__drawing_quiz_circle_above
+   :answer_a: pg.draw.circle(canvas, color, (100, 120), 40)
+   :answer_b: pg.draw.circle(canvas, color, (100, 160), 40)
+   :answer_c: pg.draw.circle(canvas, color, (120, 100), 40)
+   :answer_d: pg.draw.circle(canvas, color, (160, 100), 40)
+   :answer_e: pg.draw.circle(canvas, color, (20, 120), 40)
+   :correct: a
+   :feedback_a: Točno!
+   :feedback_b: Pokušaj ponovo.
+   :feedback_c: Pokušaj ponovo.
+   :feedback_d: Pokušaj ponovo.
+   :feedback_e: Pokušaj ponovo.
+
+   Krug se crta pomoću ``pg.draw.circle(canvas, color, (100, 200), 40)``. Kako se može nacrtati krug iste veličine koji se nalazi iznad ovog kruga i dodiruje ga?
+
+
+Izmjene nepomičnog crteža u pomični
+'''''''''''''''''''''''''''''''''''
+
+Pogledajmo kako je nacrtan oblak u sljedećem primjeru:
+
+.. activecode:: PyGame__drawing_cloud_fixed
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src\PyGame\1_Drawing\5_Movable\cloud_fixed.py
+
+Oblak smo predstavili pomoću tri kruga, jednog većeg u sredini i dva manja oko njega:
+
+.. code::
+
+    pg.draw.circle(canvas, pg.Color("white"), (200, 200), 50)
+    pg.draw.circle(canvas, pg.Color("white"), (150, 200), 30)
+    pg.draw.circle(canvas, pg.Color("white"), (250, 200), 30)
+
+Ako bismo željeli crtati taj oblak na različitim visinama, mogli bismo ponoviti ove tri naredbe, svaki put s nekom novom vrijednošću za :math:`y` koordinate središta ovih triju krugova umjesto 200, kao što je to slučaj na prvom crtežu. Na primjer:
+
+.. code::
+
+    pg.draw.circle(canvas, pg.Color("white"), (200, 200), 50)
+    pg.draw.circle(canvas, pg.Color("white"), (150, 200), 30)
+    pg.draw.circle(canvas, pg.Color("white"), (250, 200), 30)
+
+    pg.draw.circle(canvas, pg.Color("white"), (200, 80), 50)
+    pg.draw.circle(canvas, pg.Color("white"), (150, 80), 30)
+    pg.draw.circle(canvas, pg.Color("white"), (250, 80), 30)
+    
+    pg.draw.circle(canvas, pg.Color("white"), (200, 320), 50)
+    pg.draw.circle(canvas, pg.Color("white"), (150, 320), 30)
+    pg.draw.circle(canvas, pg.Color("white"), (250, 320), 30)
+
+.. image:: ../../_images/PyGame/clouds.png
+    :width: 400px
+    :align: center
+
+Na taj način, ne samo da program raste brže nego što mora, moramo promijeniti i svaku promjenu na tri mjesta (na primjer, ako želimo isprobati 330 umjesto 320, tu promjenu treba izvršiti na tri mjesta). Tri promjene nije puno, ali ako usvojimo takav način rada, imali bismo sve više problema u složenijim crtežima ili u složenim programima općenito.
+
+Umjesto toga, bolje je stvoriti funkciju i proslijediti :math:`y` koordinatu centara kao parametar:
+
+.. code::
+
+    def cloud(yc):
+        pg.draw.circle(canvas, pg.Color("white"), (200, yc), 50)
+        pg.draw.circle(canvas, pg.Color("white"), (150, yc), 30)
+        pg.draw.circle(canvas, pg.Color("white"), (250, yc), 30)
+
+    cloud(200)
+    cloud(80)
+    cloud(320)
+
+Novi program je pregledniji, lakši za daljnje mijenjanje i isprobavanje. Za više oblaka ili složenije oblake prednost ovog pristupa bila bi još veća.
+
+~~~~
+
+Sada razmotrimo kako bismo trebali pomicati oblak ulijevo ili udesno. Trebali bismo povećati ili smanjiti :math:`x` koordinate svih krugova (200, 150, 250) istom vrijednošću. Na primjer, ako smo upisali 260, 210, 310 kao :math:`x` koordinate, cijeli bi oblak bio pomaknut 60 piksela udesno.
+
+Bilo bi dobro kada bismo mogli koristiti samo jedan broj da odredimo vodoravni položaj oblaka. Da bismo to postigli, napominjemo da su središta manjih krugova udaljena 50 piksela od srednjeg kruga s lijeve i desne strane. Ove se udaljenosti ne mijenjaju kako se oblak kreće. To znači ako označimo :math:`x` koordinata srednjeg kruga s :math:`X_c`, tada središta manjih krugova imaju :math:`x` koordinate :math:`X_c - 50` i :math:`X_c + 50`. Zahvaljujući ovom odnosu (koji ne ovisi o položaju oblaka), sada možemo uvesti i parametar :math:`x` u funkciju koja crta oblak:
+
+.. code::
+
+    def cloud(xc, yc):
+        pg.draw.circle(canvas, pg.Color("white"), (xc, yc), 50)
+        pg.draw.circle(canvas, pg.Color("white"), (xc - 50, yc), 30)
+        pg.draw.circle(canvas, pg.Color("white"), (xc + 50, yc), 30)
+        
+    cloud(200, 200)
+    cloud(200, 80)
+    cloud(200, 320)
+
+Bilo koji od ova tri oblaka sada se može lako pomaknuti, na primjer, 60 piksela udesno, upisivanjem 260 kao prvog parametra umjesto 200 u pozivima funkcija. Jednako je lako napraviti crtež s nekoliko oblaka. Boja ili nijansa sive, također mogu biti funkcijski parametri. Na taj način neki oblaci mogu biti tamniji, a neki svjetliji.
+
+Kad koristimo sve gore navedeno, možemo stvoriti program koji crta nekoliko oblaka različitih nijansi, na primjer:
+
+.. activecode:: PyGame__drawing_cloud_movable
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src\PyGame\1_Drawing\5_Movable\clouds_movable.py
+
+Sumirajmo, sa malim generalizacijama, što treba učiniti da bi se moglo prikazati jedan crtež na raznim mjestima:
+
+- Moramo odabrati jednu točku čije su koordinate postavljene izravno. Ovu odabranu točku nazivamo **glavnom točkom**, (ponekad se ta točka naziva i **sidro**, engl. anchor). U primjeru oblaka glavna točka je centar srednjeg kruga.
+- Nakon odabira glavne točke, koordinate svih ostalih značajnih točaka određuju se u odnosu na nju dodavanjem ili oduzimanjem određenog pomaka koordinatama glavne točke. U primjeru s oblakom da bismo dobili :math:`x` koordinatu centar lijevog kruga, od :math:`x` koordinate glavne točke (centar srednjeg kruga) oduzimamo 50 piksela, a za desni krug dodamo 50 piksela.
+
+U općem slučaju, na crtežu mogu biti i drugi oblici osim krugova. Značajne točke koje određuju položaje ovih oblika su:
+
+- za liniju: njeni krajevi
+- za poligon: njegove točke
+- za krug: njegov centar
+- za pravokutnik: nejgov gornji lijevi kut
+- za elipsu: gornji lijevi kut pravokutnika u koji je ta elipsa upisana
+
+Sve ove točke treba dati u odnosu na glavnu točku, odnosno njihove koordinate trebaju biti izražene kao koordinate glavne točke, povećane ili smanjene za neku vrijednost.
+
+Provjerite svoje razumijevanje prethodnih objašnjenja i odgovorite na pitanja.
+
+.. mchoice:: PyGame__drawing_quiz_anchor_introduction1 
+   :answer_a: pg.draw.circle(canvas, pg.Color("red"), (x, y), 50, 1)
+   :answer_b: pg.draw.circle(canvas, pg.Color("red"), (x+120, y+90), 50, 1)
+   :answer_c: pg.draw.circle(canvas, pg.Color("red"), (x+20, y-10), 50, 1)
+   :answer_d: pg.draw.circle(canvas, pg.Color("red"), (x-20, y+10), 50, 1)
+   :correct: c
+   :feedback_a: Pokušaj ponovo.
+   :feedback_b: Pokušaj ponovo.
+   :feedback_c: Točno!
+   :feedback_d: Pokušaj ponovo.
+
+   Želimo prilagoditi crtež koji se sastoji od više oblika tako da je sve crtano u odnosu na sidro s koordinatama `x = 100`, `y = 100`. Jedna od naredbi koja tvori crtež je:
+                
+   .. activecode:: PyGame__drawing_quiz_anchor_introduction_code1
+      :passivecode: true
+                    
+      pg.draw.circle(canvas, pg.Color("red"), (120, 90), 50, 1)
+
+   Koja naredba treba zamijeniti datu naredbu?
+      
+.. mchoice:: PyGame__drawing_quiz_anchor_introduction2
+   :answer_a: pg.draw.line(canvas, pg.Color("red"), (x-50, y-50), (150, 150))
+   :answer_b: pg.draw.line(canvas, pg.Color("red"), (x-50, y-50), (x+50, y+50))
+   :answer_c: pg.draw.line(canvas, pg.Color("red"), (x-50, x+50), (y-50, y+50))
+   :answer_d: pg.draw.line(canvas, pg.Color("red"), (x+50, y+50), (x+150, y+150))
+   :correct: b
+   :feedback_a: Pokušaj ponovo.
+   :feedback_b: Točno!
+   :feedback_c: Pokušaj ponovo.
+   :feedback_d: Pokušaj ponovo.
+
+   Želimo prilagoditi crtež koji se sastoji od više oblika tako da sve bude crtano u odnosu na sidro s koordinatama `x = 100`, `y = 100`. Jedna od izjava koja tvori crtež je:
+                
+   .. activecode:: PyGame__drawing_quiz_anchor_introduction_code2
+      :passivecode: true
+                    
+      pg.draw.line(canvas, pg.Color("red"), (50, 50), (150, 150))
+
+   Koja naredba treba zamijeniti datu naredbu?
+      
+.. mchoice:: PyGame__drawing_quiz_anchor_introduction3
+   :answer_a: pg.draw.rect(canvas, pg.Color("red"), (x-50, y-50, x, y))
+   :answer_b: pg.draw.rect(canvas, pg.Color("red"), (x, y, 100, 100))
+   :answer_c: pg.draw.rect(canvas, pg.Color("red"), (x+50, y+50, 100, 100))
+   :answer_d: pg.draw.rect(canvas, pg.Color("red"), (x-50, y-50, 100, 100))
+   :correct: d
+   :feedback_a: Pokušaj ponovo.
+   :feedback_b: Pokušaj ponovo.
+   :feedback_c: Pokušaj ponovo.
+   :feedback_d: Točno!
+
+   Želimo prilagoditi crtež koji se sastoji od više oblika tako da je sve crtano u odnosu na sidro s koordinatama `x = 100`, `y = 100`. Jedna od izjava koja tvori crtež je:
+                
+   .. activecode:: PyGame__drawing_quiz_anchor_introduction_code3
+      :passivecode: true
+                    
+      pg.draw.rect(canvas, pg.Color("red"), (50, 50, 100, 100))
+
+   Koja naredba treba zamijeniti datu naredbu?
+      
+.. mchoice:: PyGame__drawing_quiz_move_to_the_right
+   :multiple_answers:
+   :answer_a: Umjesto pg.draw.circle(canvas, color, (x, y), r, d) pozvat ćemo pg.draw.circle(canvas, color, (x+100, y), r, d).
+   :answer_b: Umjesto of pg.draw.circle(canvas, color, (x, y), r, d) pozvat ćemo pg.draw.circle(canvas, color, (x-100, y-100), r, d).
+   :answer_c: Umjesto of pg.draw.rect(canvas, color, (x, y, w, h), d) pozvat ćemo pg.draw.circle(canvas, color, (x+100, y, w+100, h), d).
+   :answer_d: Umjesto of pg.draw.rect(canvas, color, (x, y, w, h), d) pozvat ćemo pg.draw.rect(canvas, color, (x+100, y, w, h), d).
+   :answer_e: Umjesto of pg.draw.rect(canvas, color, (x, y, w, h), d) pozvat ćemo pg.draw.rect(canvas, color, (x-100, y, w, h), d).
+   :correct: a, d
+   :feedback_a: Točno!
+   :feedback_b: Pokušaj ponovo.
+   :feedback_c: Pokušaj ponovo.
+   :feedback_d: Točno!
+   :feedback_e: Pokušaj ponovo.
+
+   Želimo pomaknuti crtež koji se sastoji od više oblika udesno za 100 piksela. Označite ispravne tvrdnje.
+
+Slijedi nekoliko primjera pretvaranja fiksnog crteža u pomični.
+
+Medvjedić - položaj
+'''''''''''''''''''
+
+Daje se sljedeći program koji pokazuje glavu igračke medvjeda:
+
+.. activecode:: PyGame__drawing_bear_fixed
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src\PyGame\1_Drawing\5_Movable\teddy-bear_fixed.py
+
+
+
+
+
+Program sedam puta poziva funkciju *framed_circle*, koja crta zadanu kružnicu crnom obrubom (mada je to moguće izbjeći za tri mala crna kruga). Da biste mogli promijeniti položaj crteža, odaberite glavnu točku (sidro). Neka to bude centar velikog kruga, to jest glave medvjeda. Koordinate ove točke su (250, 150). Sada moramo izraziti koordinate centara svih ostalih krugova u odnosu na glavnu točku. Za primjer uzmite desno uho medvjeda.
+
+:math:`x` koordinata centra desnog uha je :math:`310 = 250 + 60`, dok je :math:`y` koordinata :math:`80 = 150 - 70`. Odavde vidimo da se koordinate centara desnog uha mogu u programu zapisati kao `(cx + 60, cy - 70)`, gdje su `(cx, cy)` koordinate glavne točke. 
+
+Slijedite isti postupak za ostale krugove i dovršite funkciju *draw_teddy*.
+
+.. activecode:: PyGame__drawing_bear_movable1
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\5_Movable\teddy-bear_movable1b.py
+
+   
+    canvas.fill(pg.Color("white")) # obojite pozadinu u bijelo
+    
+    def framed_circle(canvas, color, center, radius):
+        pg.draw.circle(canvas, color, center, radius)
+        pg.draw.circle(canvas, pg.Color("black"), center, radius, 1)
+
+    def draw_teddy(cx, cy):
+        framed_circle(canvas, pg.Color("yellow"), (cx - 60,  cy - 70),  45) # lijevo uho
+        # dovršite program
+        
+    draw_teddy(width // 2, height // 2)
+
+    
+Ovaj program omogućava nam lako prikazivanje medvjeda na raznim mjestima na ekranu. Na primjer, poziv funkcije
+
+.. code::
+
+    draw_teddy(width // 2, height // 2)
+    
+koji crta medvjeda s glavnom točkom u sredini prozora (kakav je bio), može se zamijeniti sa sljedeća dva:
+
+.. code::
+
+    draw_teddy(width // 2 - 120, height // 2)
+    draw_teddy(width // 2 + 120, height // 2)
+
+Isprobajte ovo! Bilo bi znatno teže nacrtati drugog medvjeda da nismo početni program prilagodili za ovakvu upotrebu.
+
+Kuća - položaj
+''''''''''''''
+
+Recimo da ste napisali ovaj program, a vaš je cilj preraditi program tako da se kuća može lako preseliti:
+
+.. activecode:: PyGame__drawing_house_detailed_fixed
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src\PyGame\1_Drawing\5_Movable\house2D_detailed_fixed.py
+
+Neka je glavna točka: `(x, y) = (50, 150)`. Ispunite započeto preuređivanje programa u donjem okviru, gdje se crtanje vrši u funkciji:`draw_house(x, y, wall_color)`. Kada se uvjerite da crteži u dva programa izgledaju isto (osim što su prozori u kojima se crta različite veličine), zamijenite poziv:`draw_house(50, 150, pg.Color (" khaki "))` sa sljedeća 4, da biste dobili slika kao kad kliknete gumb "Prikaži primjer":
+
+.. code::
+
+    draw_house(150,  90, pg.Color(220, 220, 220))
+    draw_house(220, 130, pg.Color("white"))
+    draw_house(350, 160, (255,255,150))
+    draw_house( 50, 150, pg.Color("khaki"))
+
+.. activecode:: PyGame__drawing_house_detailed_movable
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask: 
+    :includexsrc: src\PyGame\1_Drawing\5_Movable\house2D_detailed_movable.py
+   
+    canvas.fill(pg.Color("darkgreen")) # obojite pozdainu u tamno zelenu
+
+    def draw_house(x, y, wall_color):
+        pg.draw.polygon(canvas, pg.Color("red"), [(x, y), (x+???, y-???), (x+140, y)]) # krov
+        pg.draw.rect(canvas, wall_color,       (x,       y,     140, 100)) # zidovi
+        pg.draw.rect(canvas, pg.Color("brown"), (x + ???, y + ???,  30,  30)) # lijevi prozor
+        pg.draw.rect(canvas, pg.Color("brown"), (x + ???, y + ???, ???, ???)) # desni prozor
+        pg.draw.rect(canvas, pg.Color("brown"), (x + ???, y + ???, ???, ???)) # vrata
+        
+    draw_house( 50, 150, pg.Color("khaki"))
+
+
+
+
+.. commented out
+
+    The task is non-active (commented out) until a related technical issue is resolved.
+
+    Task - a constantly moving drawing
+    ''''''''''''''''''''''''''''''''''
+
+    The following function draws some drawing.
+       
+    .. activecode:: PyGame__drawing_movable_scalable_given
+        :passivecode: true
+
+        def draw():
+            prozor.fill(pg.Color("white"))
+            pg.draw.circle(canvas, pg.Color("blue"), (100, 100), 60)
+            pg.draw.circle(canvas, pg.Color("yellow"), (75, 75), 15)
+            pg.draw.circle(canvas, pg.Color("black"), (80, 80), 5)
+            pg.draw.circle(canvas, pg.Color("yellow"), (125, 75), 15)
+            pg.draw.circle(canvas, pg.Color("black"), (120, 80), 5)
+            pg.draw.ellipse(canvas, pg.Color("red"), (75, 110, 50, 10))
+
+    In the program that follows, the drawing function is just started. Complete it by drawing the same drawing, but using the anchor :math:`(x, y)`, which is located in the center of the blue circle (initially this is the point :math:`(100, 100)`).
+
+    When you finish the function, make sure it works the same as when you click the "Play task" button.
+
+    .. activecode:: PyGame__drawing_movable
+       :nocodelens:
+       :enablecopy:
+       :modaloutput:
+       :playtask:
+       :includexsrc: src\PyGame\1_Drawing\5_Movable\movable_scalable.py
+       
+                     
+       def draw():
+           canvas.fill(pg.Color("white"))
+
+.. commented out
+
+    .. reveal:: PyGame__drawing_movable_reveal
+       :showtitle: Show solution
+       :hidetitle: Hide solution
+
+       .. activecode:: PyGame_movable_code
+          :passivecode:
+
+          def draw():
+              canvas.fill(pg.Color("white"))
+              pg.draw.circle(canvas, pg.Color("blue"), (x, y), 60)
+              pg.draw.circle(canvas, pg.Color("yellow"), (x-25, y-25), 15)
+              pg.draw.circle(canvas, pg.Color("black"), (x-20, y-20), 5)
+              pg.draw.circle(canvas, pg.Color("yellow"), (x+25, y-25), 15)
+              pg.draw.circle(canvas, pg.Color("black"), (x+20, y-20), 5)
+              pg.draw.ellipse(canvas, pg.Color("red"), (x-25, y+10, 50, 10))
+           
+

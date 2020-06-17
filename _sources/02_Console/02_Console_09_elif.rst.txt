@@ -1,0 +1,259 @@
+Složena grananja
+================
+
+Uzastopni uvjeti
+----------------
+
+Postoje zadaci u kojima, kada jedan uvjet nije ispunjen, treba provjeriti drugi, a ako taj uvjet nije valjan provjerava se i treći i tako dalje. Da biste izbjegli pisanje
+
+.. activecode:: console__more_branching_elif1
+    :passivecode: true
+    
+    if first_condition:
+        naredba1
+    else:
+        if second_condition:
+            naredba2
+        else:
+            if third_condition:
+                naredba3
+            else:
+                if fourth_condition:
+                    naredba4
+                else:
+                    naredba5
+
+u Pythonu koristimo posebnu riječ ``elif``, koja stoji umjesto *else:* i uvučenog *if* u sljedećem redu. Tako dobivamo čitljiviji kod:
+
+.. activecode:: console__more_branching_elif2
+    :passivecode: true
+    
+    if first_condition:
+        naredba1
+    elif second_condition:
+        naredba2
+    elif third_condition:
+        naredba3
+    elif fourth_condition:
+        naredba4
+    else:
+        naredba5
+
+Napomena 1: Bilo koji broj uzastopnih *elif* naredbi se može upotrijebiti na ovaj način. 
+
+Napomena 2: Dio
+
+.. activecode:: console__more_branching_elif3
+    :passivecode: true
+
+    else:
+        naredba5
+
+nije obavezan i može se izostaviti ako za njim nema potrebe.
+
+
+Primjeri i zadaci
+'''''''''''''''''
+
+.. questionnote::
+    
+    **Primjer - indeks tjelesne mase:** 
+    
+    Indeks tjelesne mase (skraćeno bmi) koristi se za brzu orijentaciju u pogledu stupnja pretilosti ili gubitka težine. Formula za izračun indeksa tjelesne mase je :math:`bmi = {m \over {h \times h}}`, gdje je *m* masa u kilogramima, a *h* visina u metrima. Vrijednost *bmi* se tumače na sljedeći način:
+    
+    - do 18.5: pothranjena osoba
+    - od 18.5 do 25: osoba normalne tjelesne težine
+    - od 25 do 30: prekomjerna težina
+    - preko 30: pretila osoba
+    
+    Napisite program koji uzima težinu i visinu osobe, a zatim napiše kojoj kategoriji ta osoba pripada (granične vrijednosti pripadaju nižoj kategoriji).
+
+U nastavku je jedno moguće rješenje. Razmislite zašto u ovom rješenju nije potrebno koristiti složene logičke uvjete (riječi *and*, *or*, *not*).
+
+.. activecode:: console__more_branching_bmi
+
+    m = float(input('Tjelesna masa: '))
+    h = float(input('Tjelesna visina: '))
+    bmi = m / (h*h)
+    if bmi <= 18.5:
+        print('Pothranjena osoba.')
+    elif bmi <= 25:
+        print('Osoba normalne tjelesne težine.')
+    elif bmi <= 30:
+        print('Osoba prkomjerne tjelesne težine.')
+    else:
+        print('Pretila osoba.')
+
+
+
+.. questionnote::
+    
+    **Zadatak - dobne kategorije igrača:** 
+    
+    Mladi košarkaši registriraju se na početku košarkaške sezone u jednoj od dobnih kategorija, ovisno o tome koliko se godina pune u kalendarskoj godini u kojoj počinje sezona. Pravila registracije su sljedeća:
+    
+    - 10 i manje - nema kategorije
+    - 11 ili 12 godina - mlađi pioniri
+    - 13 ili 14 godina - pioniri
+    - 15 ili 16 - kadeti
+    - 17 ili 18 - juniori
+    - 19 godina i stariji - seniori
+    
+    Napišite program koji učitava koliko godina košarkaš puni u godini u kojoj se rigistriraju i ispisuje njegovu dobnu kategoriju.
+
+.. activecode:: console__more_branching_categories
+
+    g = int(input("Koliko godina ima igrač: "))
+    # dovršite program
+
+
+        
+.. questionnote::
+    
+    **Zadatak - redni broj:** 
+    
+    Napišite program koji učitava cijeli broj od 1 do 6 (uključujući granice) i ispisuje odgovarajući redni broj slovima. Na primjer, ako se učita broj 6, treba ispisati "šesti" (bez navodnika).
+    
+.. activecode:: console__more_branching_ordinal
+
+    n = int(input("Unisite broj od 1 do 6: "))
+    # dovršite program
+
+Umetnuto grananje
+-----------------
+
+Umetnuta grananja su *if* naredbe u granama drugih *if* naredbi. Umetnute (ugnježđene) *if* naredbe mogu se naći u jednoj, drugoj ili oba dvije grane neke veće *if* naredbe. Ovakav način postavljanja *if* naredbe može ići do bilo koje dubine, ali treba imati na umu da programi na taj način mogu postati vrlo nepregledni i teški za točno razumijevanje i eventualne izmjene kada je potrebno.
+
+U prvom primjeru namjerno dajemo program s tri razine umetanja *if* naredbi, kako bismo vam pomogli da zamislite kakav je program s još dubljim umetnutim i duljim *if* naredbama. U ostalim primjerima i zadacima ograničit ćemo se na jednu razinu umetanja *if* naredbi.
+
+Primjeri i zadaci
+'''''''''''''''''
+
+
+.. questionnote::
+    
+    **Primjer - pogodi tko**
+    
+    U susjedstvu je osmero djece koja su često zajedno. Njihova imena su: Alice, Ben, Charlotte, Daniel, Emily, Frankie, Gabriella i Harry. Alice, Ben, Charlotte i Daniel idu školu za programiranj, a Alice, Ben, Emily i Frankie u školu za sport. Školski kuhar htio je pohvaliti jedno dijete za neko djelo, ali nije znao ime tog djeteta.
+    
+    Napišite program koji postavlja tri pitanja, prihvaća odgovore na ta pitanja (slovo 'y' za da, i svaki drugi odgovor za ne) i ispisuje ime djeteta o kome je riječ. Pitanja koja program postavlja su:
+
+    - Je li to djevojčica?
+    - Ide li u školu za sport?
+    - Ide li u školu za programiranje?
+    
+.. activecode:: console__more_branching_guess_who1
+
+    girl = input("Je li to djevojčica? ") == 'y'
+    sportsperson = input("Ide li u školu za sport? ") == 'y'
+    programmer = input("Ide li u školu za programiranje? ") == 'y'
+    if programmer:
+        if sportsperson:
+            if girl:
+                print("Alice")
+            else:
+                print("Ben")
+        else:
+            if girl:
+                print("Charlotte")
+            else:
+                print("Daniel")
+    else:
+        if sportsperson:
+            if girl:
+                print("Emily")
+            else:
+                print("Frankie")
+        else:
+            if girl:
+                print("Gabriella")
+            else:
+                print("Harry")
+
+Imajte na umu da se programi s umetnutim grananjem mogu izmijeniti da koriste samo uzastopne uvjete i oblik s *elif*, bez umetanja *if* naredbi u dubinu.Pri tome koristimo složene uvjete, koje gradimo pomoću logičkih operacija *and*, *or* i *not*.
+   
+.. activecode:: console__more_branching_guess_who2
+
+    girl = input("Je li to djevojčica? ") == 'y'
+    sportsperson = input("Ide li u školu za sport? ") == 'y'
+    programmer = input("Ide li u školu za programiranje? ") == 'y'
+    if programmer and sportsperson and girl:
+        print("Alice")
+    elif programmer and sportsperson and not girl:
+        print("Ben")
+    elif programmer and not sportsperson and girl:
+        print("Charlotte")
+    elif programmer and not sportsperson and not girl:
+        print("Daniel")
+    elif not programmer and sportsperson and girl:
+        print("Emily")
+    elif not programmer and sportsperson and not girl:
+        print("Frankie")
+    elif not programmer and not sportsperson and girl:
+        print("Gabriella")
+    else:
+        print("Harry")
+
+
+.. questionnote::
+    
+    **Zadatak - raskrižje:** 
+    
+    U naselju se nalazi raskrižje velikih ulica A i B. Brojevi u ulica A su parni s desne strane a neparni s lijeve. Na parnoj strani (desnoj), brojevi do raskrižja su od 2 do 200, a poslije raskrižja su veći od 200. Na neparnoj strani (lijevoj), brojevi do raskrižja su od 1 do 177, a poslije raskrižja su od 179 pa nadalje.
+    
+    Napišite program koji učitava jedan kućni broj u ulici A i odgovara je li taj broj prije ili poslije raskrižja i s koje strane ulice A. Na primjer:
+    
+    - za broj 128 ispisati "s desne strane, prije raskrižja"
+    - za broj 284 ispisati "s desne strane, poslije raskrižja"
+    - za broj 177 ispisati "s lijeve strane, prije raskrižja"
+    - za broj 219 ispisati "s lijeve strane, poslije raskrižja"
+
+**Pomoć:** Nakon učitavanja, prvo treba provijeriti je li kućni broj *n* paran, to jest je li :math:`n \% 2 == 0`.
+
+.. activecode:: console__more_branching_quart
+
+    n = int(input("Koji je kućni broj: "))
+    # dovršite program
+
+
+
+
+.. questionnote::
+    
+    **Zadatak - učenje:** 
+    
+    Ivanovi roditelji rekli su Ivanu da ako dobije četvorke ili petice iz matematike i engleskog jezika može ići na popodnevni nogometni turnir, inače mora naučiti predmet ili predmete iz kojih je dobio ocjene manje od 4 (ocjene su od 1 do 5)
+    
+    Napišite program koji prvo učitava Ivanovu ocjenu iz matematike, a zatim engleskog i ispisuje poruku za Ivana. Na primjer:
+    
+    - za ocjene 2, 3 ispisati "uči matematiku i engleski"
+    - za ocjene 3, 4 ispisati "uči matematiku"
+    - za ocjene 4, 2 ispisati "uči engleski"
+    - za ocjene 5, 4 ispisati "idi na turnir"
+    
+
+.. activecode:: console__more_branching_grades
+
+    math = int(input("Koja je ocjena iz matematike: "))
+    english = int(input("Koja je ocjena iz engleskog: "))
+    # dovršite program
+
+
+.. questionnote::
+    
+    **Zadatak - oblačenje:** 
+    
+    Ian piše program koji sa vremenske web stranice očitava trenutnu temperaturu (u stupnjevima Celzijusa) i mogućnost kiše (od 0 do 100), a na temelju tih podataka ispisuje preporuku treba li ponijeti jaknu(koja ima kapuljaču) ili kišobran, ili nijedno od ovo dvoje. Ian je odabrao ovo pravilo:
+
+    - kada je temperatura niža od 21,treba biti savjet: "ponesi jaknu"
+    - kada je temperatura 21 ili viša a šanse za kišu preko 50, preporuka je: "ponesi kišobran"
+    - kada je temperatura 21 ili viša a šanse za kišu do 50, tsavjet bi trebao biti "možete u majici"
+    
+    Napišite program koji učitava prvo temperaturu pa šanse za kišu, zatim ispisuje preporuke.
+    
+.. activecode:: console__more_branching_weather
+
+    t = int(input("Koja je temperatura: "))
+    chance_of_rain = int(input("Koja je mogućnost kiše: "))
+    # dovršite program
+

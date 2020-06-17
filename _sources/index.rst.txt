@@ -1,0 +1,53 @@
+Uvod
+---------
+
+Interes za programiranje neprestano raste, i to s razlogom. Međutim, savladavanje ove vještine je ponekad teško. Neke stvari u programiranju su teške same po sebi, ali često težina dolazi od načina i redoslijeda objašnjavanja, primjera koji se koriste, izabranog programskog jezika itd.
+
+Vjerujemo da smo ovdje eliminirali većinu razloga koji učenje programiranja čine težima nego što mora biti:
+
+- Za svaki pojam koji objašnjavamo, nastojali smo da vam on zatreba i prije nego što do njega dođemo, tako da poželite da ga savladate i upotrijebite;
+- Primjeri koje najčešće koristimo imaju priču kako bismo vas potaknuli da prođete kroz njih; izbjegavaju se zamorne mehaničke vježbe u najvećoj mogućoj mjeri;
+- Objašnjavamo samo ono što je potrebno za rješavanje konkretnog primjera; teže stvari ostavljamo za kasnije;
+- Ne bavimo se pregledom mogućnosti jezika, za to postoje referentni priručnici;
+- Koristimo sve popularniji programski jezik Python, koji se trenutno smatra najboljim izborom za početnike i vrlo je primjenjiv u stvarnim životnim situacijama;
+- Ne podrazumijevaju se prethodna znanja iz područja programiranja, a matematičko znanje na razini prvih nekoliko razreda osnovne škole će biti dovoljno;
+
+Što se tiče tehničkih detalja:
+
+- Zadatke možete pregledati u pregledniku i odmah dobiti odgovor rade li vaši programi;
+- Uz svaki zadatak nalazi se rješenje, što nije odmah vidljivo. Kada kliknete na gumb "Rješenje", pojavljuje se rješenje zadatka, eventualno detaljna uputa ili ponekad cjeloviti program koji rješava zadatak. Taj program zatim možete kopirati u prostor za rješavanje i isprobati ga;
+- U početnim zadacima možete vidjeti blok-dijagram svog programa, sličan onima u Scratchu (https://scratch.mit.edu/), ili na https://code.org/. Možete čak promijeniti program pomoću blok-naredbi, a zatim se s tim izmjenama vratite na Python;
+- U mnogim zadacima možete testirati svoje rješenje na nekoliko unaprijed pripremljenih testova kako biste potvrdili da rezultat da nije slučajno ispao dobar, nego da ste zapravo napravili ono što se očekivalo;
+
+Ukratko, maksimalno smo se potrudili da vam omogućimo da na ugodan način uđete u svijet pisanja računalnih programa i dostignete razinu na kojoj svoje znanje možete primijeniti u praksi.
+
+Prije nego što započnemo, trebali biste obratiti pozornost na nekoliko činjenica o učenju programiranja općenito:
+
+- Vaše rješenje može biti u redu čak i ako se razlikuje od našeg. Gotovo uvijek postoji više od jednog ispravnog načina za rješavanje zadatka.
+- Programiranje se uči tako što se pišu programi. Nemojte samo čitati i rješavati zadatke napamet, ili još gore, da gledate rješenja i poslije toga razmišljate biste li tako i vi riješili zadatak. Pišite programe. Čak i ako ste u stanju da izdiktirate točan program, i vašim rukama je potrebno da kroz taj program prođu. Potrebno je da znate i glavom i rukama.
+- Bez obzira koliko se trudili, ne možemo vam pokazati ili vam sve reći - budite znatiželjni, isprobajte različite ideje i pogledajte kako djeluju, poigrajte se.
+- Ako imate problema s rješavanjem nekih zadataka, ne brinite - to je potpuno normalno. Imajte strpljenja i budite oprezni. Pokušajte shvatiti poruku o problemu. Ako je potrebno, ponovno analizirajte primjere i objašnjenja koja ste do tada prošli. U slučaju da pogledate u rješenje, možete ga kopirati ili utipkati ili bez gledanja u rješenja (ako ga utipkate, prije bi trebali postati samostalni), ali, da biste postigli napredak u učenju programiranja, važno je da pokušate u potpunosti shvatiti rješenja i ideje koje stoje iza njih.
+
+Želimo vam zabavno i uspješno programiranje!
+
+.. raw:: html
+
+    <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+    <img alt="Creative Commons License" style="border-width:0" 
+    src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />
+    <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">Tekstualno programiranje u Pythonu</span>
+    objavila je <a xmlns:cc="http://creativecommons.org/ns#" href="Petlja.org" property="cc:attributionName" rel="cc:attributionURL">Petlja.org</a>
+    pod licencom 
+    <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
+
+Sadržaj
+-------
+
+.. toctree::
+    :maxdepth: 3
+
+    01_Karel/toctree.rst
+    02_Console/toctree.rst
+    03_PyGame/toctree.rst
+

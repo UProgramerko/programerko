@@ -1,0 +1,317 @@
+Crtanje uz pomoć petlje
+-----------------------
+
+Razmislite o sljedećem zadatku: nacrtajmo 6 krugova kao na ovoj slici:
+
+.. image:: ../../_images/PyGame/target.png
+   :width: 300px
+   :align: center 
+
+Gledajući sliku, možemo pretpostaviti (ili bi se to moglo reći u postavci problema)) da su krugovi jednako raspoređeni. To znači da je razlika u radijusu svake dvije susjedne kružnice jednaka.
+
+Veličinu krugova biramo što je moguće veće, ali da se uklopimo u zadani prostor crtanja od 300x300 piksela. Budući da je širina prozora 300 piksela, polumjer najvećeg kruga je 150. Kao razliku polumjera dvaju susjednih krugova možemo uzeti :math:`{150 \over 6} = 25`. To daje polumjer od 25, 50, 75, 100, 125, 150.
+
+Na temelju izračunatih vrijednosti mogli bismo napisati program poput ovoga:
+
+.. activecode:: PyGame_loop__target_fixed
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :includesrc: src\PyGame\1_Drawing\7a_UsingLoops\Examples\circles_target_fixed.py
+
+Zamislimo da smo nakon toga dobili novi zadatak izrade istog crteža, ali s 5 krugova. Ovo je vrlo mala promjena, zar ne? Trebali bismo biti u mogućnosti ponovno koristiti prethodno riješeni zadatak.
+
+Kada počnemo raditi na crtežu od 5 krugova, vidimo iskoristiti vrlo malo od prethodnog programa. Zapravo, možemo koristiti samo ideju, a veličinu krugova treba izračunati ispočetka.
+
+Da smo program napisali drugačije, prilagodba bi bila mnogo lakša. Na primjer, mogli bismo napisati broj krugova u varijablu, a zatim je iskoristiti u svim potrebnim proračunima. Ovaj bi program izgledao ovako:
+
+.. activecode:: PyGame_loop__target_flexible
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :includesrc: src\PyGame\1_Drawing\7a_UsingLoops\Examples\circles_target_flexible.py
+
+U ovom je programu dovoljno promijeniti samo jedan broj tako da crta bilo koji određeni broj krugova.
+
+Kao što smo već rekli, mnogi crteži imaju određenu pravilnost, poput simetrije ili nekog dijela koji se ponavlja (i mnoge druge, složenije pravilnosti). Ako shvatimo pravilnost na takvim crtežima i izrazimo je matematički, moći ćemo je iskoristiti pri pisanju programa za crtanje takvih crteža, kao što smo radili u prethodnom primjeru. Na taj način dobijamo program koji je puno lakše izmijeniti da bi se dobio neki drugi, sličan crtež. Kod crteža s velikim brojem ponavljanja nekog dijela (identičnog ili malo izmijenjenog), program koji koristi pravilnost će biti znatno kraći.
+
+.. infonote::
+
+    Mnogi se programi koje koriste milijuni ljudi stalno poboljšavaju i usavršavaju. Stalno se objavljuju nove verzije u kojima je nešto bolje napravljeno. Prema tome, promjene programa su nešto potpuno normalno i nešto što se stalno događa. Slična je situacija i s programima koje pišemo sami. Kada pišemo program, lako se može dogoditi da kasnije smislimo nešto novo i da želimo izmijeniti dio programa koji je već napisan.
+    
+    Zato, kada pišemo programe, trebamo imati na umu mogućnost da će netko (moguće i mi sami) htjeti napraviti neki sličan program i da će možda željeti upotrebiti naš program kao početnu verziju.
+
+Pogledajmo još jedan primjer kako možemo koristiti pravilnosti crteža za pisanje fleksibilnijeg programa (program koji se lakše prilagođava malo drugačijoj svrsi).
+
+Primjer - antena
+'''''''''''''''''
+
+Ranije smo već imali program koji crta ovakvu antenu. Sada je program napisan tako da nije pretjerano teško mijenjati broj poprečnih segmenata, razmak između njih, razliku dužina uzastopnih segmenata i slično.
+
+.. activecode:: PyGame_loop__antenna
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :includesrc: src\PyGame\1_Drawing\7a_UsingLoops\Examples\antenna1.py
+
+Dio programa koji crta poprečne segmente antene je mogao biti napisan i ovako:
+
+.. code::
+
+    for i in range(6):
+        pg.draw.line(canvas, pg.Color('darkgray'), (120 - 10 * i,  75 + 25 * i), (180 +  10 * i,  75 + 25 * i), 1 + i//2)
+
+Program napisan na ovaj način bio bi malo kraći, ali prvi je jasniji, tako da svaki ima svoje prednosti. Napomenimo samo da su oba ova programa bolja od crtanja 6 linija jedan po jedan za poprečne segmente (kao što smo to radili ranije). Ako bi se ovaj dio programa sastojao od šest poziva funkcije crtanja linije, bilo bi teže izmijeniti i prilagoditi program za crtanje drugačije antene.
+
+Pravilno raspoređeni brojevi
+''''''''''''''''''''''''''''
+
+U oba prethodna primjera bilo je potrebno nabrojiti jedan ili više niza pravilno raspoređenih brojeva. U zadatku sa krugovima to su bili brojevi 25, 50, 75, 100, 125, 150 (radijusi krugova), a u zadatku s antenom trebalo nam je čak četiri niza brojeva - *x* i *y* koordinate lijevih i desnih krajeva poprečnih segmenata antene. Posebno, ti brojevi su:
+
+- *x* koordinate lijevih krajeva: 120, 110, 100, 90, 80, 70
+- *y* koordinate lijevih krajeva: 75, 100, 125, 150, 175, 200
+- *x* koordinate desnih krajeva: 180, 190, 200, 210, 220, 230
+- *y* koordinate desnih krajeva: 75, 100, 125, 150, 175, 200
+
+Vidjeli smo da postoje različiti načini da dobijemo potrebne vrijednosti. Na primjer, u zadatku koncentričnih krugova vrijednosti 25, 50, 75, 100, 125, 150 mogli bismo dobiti na bilo koji od sljedećih (podjednako dobrih) načina:
+
+..  code::
+
+    for r in range(25, 151, 25):
+        pg.draw.circle(canvas, pg.Color("red"), center, r, 2)
+
+..  code::
+
+    for i in range(br_krugova):
+        pg.draw.circle(canvas, pg.Color("red"), center, round(25 + i * 25), 2)
+
+..  code::
+
+    r = 25
+    for _ in range(br_krugova):
+        pg.draw.circle(canvas, pg.Color("red"), center, r, 2)
+        r += 25
+
+U općenitom slučaju, ako trebamo dobiti niz vrijednosti *a*, *a+d*, *a+2d*, ... *a+(n-1)d*, prethodne tri metode mogu se koristiti na sljedeći način:
+
+..  code::
+
+    for x in range(a, a + n*d, d):
+        print(x)
+
+..  code::
+
+    for i in range(n):
+        print(a+i*d)
+
+..  code::
+
+    x = a
+    for _ in range(n):
+        print(x)
+        x += d
+
+
+Vidjet ćemo da se mnogi zadaci crtanjem pravilo raspoređenih oblika mogu riješiti primjenom ovakih petlji.
+
+Naglasimo još i da funkcija ``range`` s korakom (s tri argumenta) mora primiti cijelobrojni argument, tako da u situacijama kada korak nije cijeli broj njegova upotreba nije moguća.
+
+Kada nam je potrebno (kao u zadatku s antenom) napraviti nekoliko serija u jednoj petlji, prvi je način manje prikladan, pa moramo odabrati jedan od druga dva načina.
+
+Sljedeća pitanja pomoći će vam da konsolidirate svoje znanje o formiranju niza pravilno raspoređenih brojeva.
+
+.. dragndrop:: pygame__loop_quiz_match_series
+    :feedback: Pokušaj ponovo!
+    :match_1: 100, 200, 300, 400, 500|||for i in range(100, 600, 100)
+    :match_2: 100, 300, 500|||for i in range(100, 601, 200)
+    :match_3: 100, 200, 300, 400, 500, 600|||for i in range(100, 601, 100)
+    :match_4: 200, 300, 400, 500, 600|||for i in range(200, 601, 100)
+
+    Uparite niz brojeva s petljom koja ga generira.
+     
+.. dragndrop:: pygame__loop_quiz_match_series2
+    :feedback: Pokušaj ponovo!
+    :match_1: 100, 150, 200, 250, 300|||x = 100 + i*50
+    :match_2: 50, 150, 250, 350, 450|||x = 50 + i*100
+    :match_3: 0, 100, 200, 300, 400|||x = i*100
+    :match_4: 100, 200, 300, 400, 500|||x = 100+i*100
+
+    Uparite brojeve dobivene s izrazom u petlji "for i in range (5):" koja ih generira.
+    
+
+.. mchoice:: pygame__loop_quiz_range01
+    :answer_a: x = 25 * i + 50
+    :answer_b: x = (25 + i) * 50
+    :answer_c: x = 25 * 2*i+1
+    :answer_d: x = 25 + 50 * i
+    :correct: d
+    :feedback_a: Ne.
+    :feedback_b: Ne.
+    :feedback_c: Ne.
+    :feedback_d: Točno!
+    
+    Koji izraz treba upotrijebiti u petlji
+    
+    .. code::
+    
+        for i in range(19):
+            x = ???
+            ...
+            
+    da bi *x* imao iste vrijednosti kao u petlji
+
+    .. code::
+    
+        for x in range(25, 500, 50):
+            ...
+            
+Slijede zadaci za vježbu.
+
+Ljestve
+'''''''
+
+Izmijenite program tako da se koraci ljestvi crtaju u petlji.
+
+.. activecode:: PyGame_loop__ladder
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\7a_UsingLoops\Tasks\ladder.py
+
+    canvas.fill(pg.Color("green")) # obojite pozadinu u zeleno
+
+    pg.draw.line(canvas, pg.Color("brown"), (100, 10), (100, height - 10), 10)    # lijeva strana
+    pg.draw.line(canvas, pg.Color("brown"), (200, 10), (200, height - 10), 10)    # desna strana
+
+    # change (rewrite) this part
+    pg.draw.line(canvas, pg.Color("brown"), (100,  50), (200, 50), 10) # korak
+    pg.draw.line(canvas, pg.Color("brown"), (100, 100), (200, 100), 10) # korak
+    pg.draw.line(canvas, pg.Color("brown"), (100, 150), (200, 150), 10) # korak
+    pg.draw.line(canvas, pg.Color("brown"), (100, 200), (200, 200), 10) # korak
+    pg.draw.line(canvas, pg.Color("brown"), (100, 250), (200, 250), 10) # korak
+
+   
+.. reveal:: PyGame_loop__ladder_reveal
+    :showtitle: Pomoć
+    :hidetitle: Sakrij pomoć
+
+    Umjesto 5 naredbi za crtanje linija, možete upotrebiti petlju sljedećeg oblika:
+    
+    .. code::
+    
+        for y in ???:
+            pg.draw.line(canvas, pg.Color("brown"), (100, y), (200, y), 10)
+            
+    Da biste pravilno dovršili petlju, morate odgovoriti na sljedeće pitanje:
+    
+    .. mchoice:: pygame__loop_quiz_range1
+        :answer_a: range(0, 50, 250)
+        :answer_b: range(250, 50)
+        :answer_c: range(50, 251, 50)
+        :answer_d: range(50, 250, 50)
+        :correct: c
+        :feedback_a: Ne, za taj opseg prvi broj nije odgovarajući.
+        :feedback_b: Ne, pokušajte ponovo.
+        :feedback_c: Točno!
+        :feedback_d: Ne, za taj opseg posljednji broj nije odgovarajući.
+        
+        Koji od ponuđenih opsega daje vrijednosti 50, 100, 150, 200, 250?
+
+          
+Stabla
+''''''
+
+Izmijenite program tako da se u tri prolaska kroz petlju crta po jedno drvo.
+
+.. activecode:: PyGame_loop__trees
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\7a_UsingLoops\Tasks\trees.py
+   
+    canvas.fill(pg.Color("green")) # obojite pozadinu u zeleno
+
+    pg.draw.rect(canvas, pg.Color("brown"), (40, 180, 20, 100))        # prvo stablo
+    pg.draw.ellipse(canvas, pg.Color("darkgreen"), (10, 50, 80, 150))  # prva krošnja
+    pg.draw.rect(canvas, pg.Color("brown"), (140, 180, 20, 100))       # drugo stablo 
+    pg.draw.ellipse(canvas, pg.Color("darkgreen"), (110, 50, 80, 150)) # druga krošnja
+    pg.draw.rect(canvas, pg.Color("brown"), (240, 180, 20, 100))       # treće stablo
+    pg.draw.ellipse(canvas, pg.Color("darkgreen"), (210, 50, 80, 150)) # treća krošnja
+
+.. reveal:: PyGame_loop__trees_reveal
+    :showtitle: Rješenje
+    :hidetitle: Sakrij rješenje
+
+    Program može izgledati ovako:
+    
+    .. activecode:: PyGame_loop__trees_solution
+        :nocodelens:
+        :enablecopy:
+        :modaloutput:
+        :includexsrc: src\PyGame\1_Drawing\7a_UsingLoops\Tasks\trees.py
+
+        canvas.fill(pg.Color("green")) # obojite pozadinu u zeleno
+
+        for i in range(3):
+            pg.draw.rect(canvas, pg.Color("brown"), (???, 180, 20, 100))        # stablo
+            pg.draw.ellipse(canvas, pg.Color("darkgreen"), (???, 50, 80, 150))  # krošnja
+
+    
+    pri čemu se umjesto upitnika trebaju staviti odgovarajući izrazi za *x* koordinatu. Kad *i* uzima vrijednosti 0, 1, 2 redom, izraz u prvoj naredbi treba uzeti vrijednosti 40, 140, 240 a u drugoj 10, 110, 210.
+
+Rešetka
+'''''''
+
+Izmijenite program tako da se vertikalne crte crtaju u jednoj petlji, a vodoravne u drugoj petlji.
+
+.. activecode:: PyGame_loop__grid
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\7a_UsingLoops\Tasks\grid.py
+    
+    pg.draw.line(canvas, pg.Color("black"), (10, 10), (10, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (30, 10), (30, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (50, 10), (50, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (70, 10), (70, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (90, 10), (90, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (110, 10), (110, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (130, 10), (130, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (150, 10), (150, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (170, 10), (170, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (190, 10), (190, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (210, 10), (210, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (230, 10), (230, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (250, 10), (250, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (270, 10), (270, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (290, 10), (290, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (310, 10), (310, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (330, 10), (330, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (350, 10), (350, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (370, 10), (370, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (390, 10), (390, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (410, 10), (410, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (430, 10), (430, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (450, 10), (450, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (470, 10), (470, height - 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (490, 10), (490, height - 10), 1)
+    
+    pg.draw.line(canvas, pg.Color("black"), (10, 10), (width - 10, 10), 1)
+    pg.draw.line(canvas, pg.Color("black"), (10, 30), (width - 10, 30), 1)
+    pg.draw.line(canvas, pg.Color("black"), (10, 50), (width - 10, 50), 1)
+    pg.draw.line(canvas, pg.Color("black"), (10, 70), (width - 10, 70), 1)
+    pg.draw.line(canvas, pg.Color("black"), (10, 90), (width - 10, 90), 1)
+    pg.draw.line(canvas, pg.Color("black"), (10, 110), (width - 10, 110), 1)
+    pg.draw.line(canvas, pg.Color("black"), (10, 130), (width - 10, 130), 1)
+    pg.draw.line(canvas, pg.Color("black"), (10, 150), (width - 10, 150), 1)
+    pg.draw.line(canvas, pg.Color("black"), (10, 170), (width - 10, 170), 1)
+    pg.draw.line(canvas, pg.Color("black"), (10, 190), (width - 10, 190), 1)
+    pg.draw.line(canvas, pg.Color("black"), (10, 210), (width - 10, 210), 1)
+    pg.draw.line(canvas, pg.Color("black"), (10, 230), (width - 10, 230), 1)
+    pg.draw.line(canvas, pg.Color("black"), (10, 250), (width - 10, 250), 1)
+    pg.draw.line(canvas, pg.Color("black"), (10, 270), (width - 10, 270), 1)
+    pg.draw.line(canvas, pg.Color("black"), (10, 290), (width - 10, 290), 1)
+

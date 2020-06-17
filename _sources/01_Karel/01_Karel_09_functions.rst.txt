@@ -1,0 +1,614 @@
+Napravite grupu naredbi
+============================
+
+Podsjetimo se zadatka *Pokupi lopticu na susjednom polju*. Zadatak je bio da Karel u svakom smjeru pokuša da ode na susedno polje i (ako uspije otići na susedno polje) da pokuša pokupiti lopticu. Naravno, da bi Karel mogao pokušati u sljedećem smjeru, bilo je potrebno i da se poslije svakog pokušaja vrati na početno polje.
+
+Program koji rješava zadatak može izgledati ovako:
+
+.. activecode:: Karel_functions__take_neighboring_ball_1
+    :passivecode: true
+
+    from karel import *
+    for i in range(4):   # u svakom od 4 smjera
+        if front_is_clear(): # potrazi polje u tom smjeru
+            move()
+            if is_ball_on_square():
+                pick_ball()
+            turn_left()          # vrati se na pocetno polje
+            turn_left()
+            move()
+            turn_left()          # okreni se pram polju koje si probao
+            turn_left()
+        turn_left()          # sljedeći smjer
+
+Vjerojatno vam je dio programa od sedme do jedanaeste linije malo teži za praćenje. U tom dijelu možda zamišljate Karela kako izvršava naredbu po naredbu kako biste razumijeli što se tu dešava.
+
+Komentari donekle pomažu da se ovaj dio programa lakše razumije. Pored komentara, još bi bolje bilo kada bi postojala funkcija *back()*, pomoću koje bi Karel napravio korak unatrag. Tada bi program bio kraći i jasniji:
+
+.. activecode:: Karel_functions__take_neighboring_ball_2
+    :passivecode: true
+
+    from karel import *
+    for i in range(4):          # u savkom od 4 smjera
+        if front_is_clear():       # potrazi polje u tom smjeru
+            move()
+            if is_ball_on_square():
+                pick_ball()
+            back()                     # vrati se na pocetno polje
+        turn_left()                # sljedeci smjer
+        
+Funkcija *back()* nije dio Karelove biblioteke, ali možemo vrlo jednostavno napraviti sami tu funkciju. Kada napravimo, funkciju *back()* moći ćemo je koristiti ravnopravno s funkcijama biblioteke *Karel*, kao što su *move()* ili *turn_right()*.
+
+Kako se pišu funkcije
+---------------------
+
+Za sada ćemo se upoznati samo s najjednostavnijim načinom pisanja funkcije u Pythonu, a ostale, složenije oblike ćemo upoznati kasnije.
+
+.. activecode:: Karel_functions__function_def
+    :passivecode: true
+
+    def function_name():
+        naredba_1
+        ...
+        naredba_k
+
+.. infonote::
+      
+   Pisanje bilo koje funkcije u Pythonu, riječ ``def`` na početku, zagrade ``()`` i dvotočke ``:`` na kraju prvog reda su obavezni. Kao *function_name* može se pojaviti bilo koje pravilno napisano ime koje smo izabrali. Naredbe koje slijede, pišu se uvučeno i čine tijelo funkcije (ako se piše više naredbi u jednom redu, onda se te naredbe razdvajaju znakom ``;``). Naredbe u tijelu funkcije će se izvršavati svaki put kada se prilikom izvršavanja programa naiđe na ime funkcije, to jest kada ta funkcija bude povezana.
+
+U skladu s ovim pravilima, funkciju *back()* možemo napisati ovako:
+
+.. activecode:: Karel_functions__backwards_def
+    :passivecode: true
+
+    def back():
+        turn_left(); turn_left()
+        move()
+        turn_left(); turn_left()
+
+Tada bi cijeli program izgledao ovako:
+   
+.. karel:: Karel_functions__take_neighboring_ball_final
+   :blockly:
+
+   {
+      setup:function() {
+         function random(n) {
+            return Math.floor(n * Math.random());
+         }
+         
+         var ww = [
+            [
+               '█████',
+               '█0.0█',
+               '███.█',
+               '█1.N█',
+               '███.█',
+               '█0.0█',
+               '█████'
+            ],
+            [
+               '█████',
+               '█1.0█',
+               '█...█',
+               '█E.0█',
+               '█████'
+            ],
+            [
+               '███████',
+               '█0█0█0█',
+               '█.█.█.█',
+               '█0.W.0█',
+               '█.█.█.█',
+               '█0█1█0█',
+               '███████'
+            ]
+         ];
+         let choice = random(ww.length);
+         var w = ww[choice];
+         var ny = Math.floor(w.length / 2);
+         var nx = Math.floor(w[0].length / 2);
+         var world = new World(nx, ny);
+         
+         for (let y = 1; y <= ny; y++) {
+            let wy = 2*(ny-y) + 1;
+            for (let x = 1; x <= nx; x++) {
+               let wx = 2*x - 1;
+               if (y < ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+               if (x < nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+               let c = w[wy].charAt(wx);
+               let pos = "SWEN".indexOf(c);
+               if (pos > -1) {
+                  world.setRobotStartAvenue(x);
+                  world.setRobotStartStreet(y);
+                  world.setRobotStartDirection("SWEN".charAt(pos));
+               }
+               let d = w[wy].charCodeAt(wx);
+               if (d >= 48 && d < 58) world.putBalls(x, y, d - 48);
+            }
+         }
+         
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "def back():",
+                     "    turn_left(); turn_left()",
+                     "    move()",
+                     "    turn_left(); turn_left()",
+                     "",    
+                     "for i in range(4):",
+                     "    if front_is_clear():",
+                     "        move()",
+                     "        if is_ball_on_square():",
+                     "            pick_ball()",
+                     "        back()",
+                     "    turn_left()  # sljedeci smjer",
+                     ""];
+                     
+         return {robot:robot, world:world, code:code};
+      },
+      
+      isSuccess: function(robot, world) {
+         return robot.getBalls() > 0;
+      }
+   }
+
+.. infonote::
+    Kada neku logičku cjelinu izdvojimo u funkciju, možemo napisati programe koji su kraći i jasniji, jer smo problem podijelili na dijelove koji su manje složene dijelove.
+    
+    Još jedna prednost pisanja funkcija je da ih lako možemo iskoristiti u drugim programima (ovdje ćemo napisane funkcije povremeno kopirati, ali u stvarnom programiranju postoji bolji i jednostavniji način).
+
+
+Izlaz iz funkcije ili petlje prije njenog kraja
+-----------------------------------------------
+
+U primjeru traženja loptice na susednom polju, radi jednostavnosti programa smo odlučili da Karel i kad nađe lopticu, on ju nastavlja tražiti u preostalim smjerovima. Postoji način da izbegnemo ovo nepotrebno izvršavanje preostalih naredbi.
+
+.. infonote::
+    **Kada želimo prekinuti izvršavanje petlje**, pišemo specijalnu naredbu ``break``. Efekt naredbe *break* je da „iskočimo” iz petlje i nastavimo izvršavanje programa od prve naredbe poslije petlje.
+    
+    Naredbom *break*, ćemo iskočiti iz najbliže (najuže) *for* ili *while* koja sadrži *break* naredbu. Ako se *break* naredba nalazi u dvije ili više umetnutih petlji, izvršavanje se nastavlja naredbom koja slijedi poslije unutarnje (najuže) petlje.
+    
+Koristeći *break* naredbu, mogli bismo modificirati glavni dio programa:
+
+.. activecode:: Karel_functions__break_intro_1
+    :passivecode: true
+
+    for i in range(4):
+        if front_is_clear():
+            move()
+            if is_ball_on_square():
+                pick_ball()
+            back()
+        turn_left()  # next direction
+
+da prepravimo u:
+
+.. activecode:: Karel_functions__break_intro_2
+    :passivecode: true
+
+    for i in range(4):
+        if front_is_clear():
+            move()
+            if is_ball_on_square():
+                pick_ball()
+                break
+            back()
+        turn_left()  # sljedeci smjer
+
+Na taj način se iz petlje izlazi čim je loptica pronađena i Karel ju je pokupio. Kako poslije ove petlje nema drugih naredbi, u ovom slučaju se izvršavanjem naredbe *break* završava i rad programa.
+
+~~~~
+
+Vrlo slično izlasku iz petlje, iz funkcije također možemo izaći prije nego što se sve njene naredbe izvrše.
+
+.. infonote::
+    **Kada želimo prekinuti izvršavanje funkcije**, pišemo specijalnu ``return`` naredbu. Efekt naredbe *return* je da „iskočimo” iz funkcije i nastavimo izvršavanje programa od prve naredbe poslije mjesta odakle je funkcija pozvana.
+    
+    Naredbom *return* iskačemo iz funkcije bez obzira na to koliko petlji okružuje naredbu *return*.
+
+Od programa za traženje loptice na susednom polju možemo napraviti funkciju. U tom bismo slučaju mogli napisati:
+
+.. activecode:: Karel_functions__return_intro
+    :passivecode: true
+
+    def take_at_neighboring_square():
+        for i in range(4):
+            if front_is_clear():
+                move()
+                if is_ball_on_square():
+                    pick_ball()
+                    return # izlaz iz funkcije
+                back()
+            turn_left()  # sljedeci smjer
+            
+    take_at_neighboring_square()
+    
+Zadaci za vježbu
+----------------
+
+Ostavljaj loptice dok ima polja i loptica
+'''''''''''''''''''''''''''''''''''''''''
+
+.. questionnote::
+
+    Karel na početku ima nekoliko loptica i treba ih rasporediti uz dužinu puta po jednu na svako polje (počevši od polja na kojem stoji) do kuda je moguće. Karel prekida s postavljanjem loptica kada naiđe na prepreku ili kada ostane bez loptica (šta se prije dogodi). Pri tome nije važno da li će se Karel zaustaviti na poslednjem popunjenom, ili na prvom praznom polju.
+        
+Prijedlog: Stavite jedan od ova dva uvjeta u *while* petlju, tako da se petlja završi kada uvjet ne bude više ispunjen. Koristite *break* naredbu da izađete iz petlje ako drugi uvjet nije ispunjen.
+   
+.. karel:: Karel_functions__put_balls_until_wall_or_no_more_balls
+   :blockly:
+
+    {
+        setup:function() {
+            function random(n) {
+                return Math.floor(n * Math.random());
+            }
+            var choice = random(3); // need initial world to get rid of 'choice'
+            var N = [3, 4, 5];
+            var world = new World(N[choice], 1);
+            world.setRobotStartAvenue(1);
+            world.setRobotStartStreet(1);
+            world.setRobotStartDirection("E");
+            
+            var robot = new Robot();
+            if (choice == 0) robot.setBalls(3);
+            if (choice == 1) robot.setBalls(6);
+            if (choice == 2) robot.setBalls(2);
+           
+            var code = ["from karel import *",
+                        " # dovršite program",
+                        ""];
+                        
+            //var code = ["from karel import *",
+            //            "while any_balls_with_karel():",
+            //            "    drop_ball()",
+            //            "    if not front_is_clear():",
+            //            "        break",
+            //            "    move()",
+            //            ""];
+                        
+            return {robot:robot, world:world, code:code};
+        },
+    
+        isSuccess: function(robot, world) {
+            var X = world.getAvenues();
+            var zeroBallsFound = false;
+            for (var x = 1; x <= X; x++) {
+                var b = world.getBalls(x, 1);
+                if (b > 1) return false;
+                if (b == 1 && zeroBallsFound) return false;
+                if (b == 0) zeroBallsFound = true;
+            }
+           
+           if (robot.getBalls() > 0 && zeroBallsFound)
+               return false;
+                 
+           return true;
+        },
+    }
+
+Pomakni sve loptice jedno polje unatrag
+'''''''''''''''''''''''''''''''''''''''
+
+.. questionnote::
+
+    Ispred Karela je pravi put nepoznate dužine. Na početnom polju nema loptica. Karel treba svaku lopticu premjesti za jedno polje prema lijevoj strani ekrana.
+  
+Ovaj zadatak možete riješiti tako što, dok god ima polja ispred Karela, ponavljate sljedeće korake:
+
+- idi na sljedeće polje
+- uzmi sve loptice s tog polja
+- idi korak unatrag (to jest, okreni se dva puta i idi naprijed)
+- ostavi sve loptice
+- vrati se na polje s kojeg si uzeo loptice
+
+Pri tome, za vraćanje na polje na koje Karel premješta loptice možete koristiti ranije napisanu funkciju *back()*. Trebate je samo iskopirati ili prepisati u prostor za rješavanje.
+
+.. karel:: Karel_functions__all_balls_one_square_back
+   :blockly:
+
+    {
+        setup:function() {
+           function random(n) {
+              return Math.floor(n * Math.random());
+           }
+           var choice = random(3); // need initial world to get rid of 'choice'
+           var N = [3, 4, 5];
+           var world = new World(N[choice], 1);
+           world.setRobotStartAvenue(1);
+           world.setRobotStartStreet(1);
+           world.setRobotStartDirection("E");
+           
+           var B = 0;
+           if (Math.random() > 0.8) B = random(3);
+           if (choice == 0) {
+              world.putBalls(2, 1, B);
+              world.putBalls(3, 1, B + 2);
+           }
+           if (choice == 1) {
+              world.putBalls(2, 1, B);
+              world.putBalls(3, 1, B + 3);
+              world.putBalls(4, 1, B + 1);
+           }
+           if (choice == 2) {
+              world.putBalls(2, 1, B);
+              world.putBalls(3, 1, B + 2);
+              world.putBalls(4, 1, B + 1);
+              world.putBalls(5, 1, B + 0);
+           }
+
+           var robot = new Robot();
+
+           var code = ["from karel import *",
+                       "",
+                       "# kopirajte funkciju 'back()'",
+                       "",
+                       "while front_is_clear():  # dok ima polja ispred Karela, ponavljaj",
+                       "    move();                  # idi naprijed",
+                       "    # complete the line      # pokupi sve loptice s polja",
+                       "    # complete the line      # idi jedno polje natrag",
+                       "    # complete the line      # ispusti sve loptice",
+                       "    # complete the line      # vrati se naprijed na prazno polje",
+                       ""];
+                       
+           return {robot:robot, world:world, code:code};
+        },
+    
+        isSuccess: function(robot, world) {
+           var N = world.getAvenues();
+           var B = world.getBalls(1, 1);
+           if (N == 3) {
+              if (world.getBalls(2, 1) != B + 2)
+                return false;              
+           }
+           if (N == 4) {
+              if (world.getBalls(2, 1) != B + 3)
+                return false;
+              if (world.getBalls(3, 1) != B + 1)
+                return false;              
+           }
+           if (N == 5) {
+              if (world.getBalls(2, 1) != B + 2)
+                return false;
+              if (world.getBalls(3, 1) != B + 1)
+                return false;
+              if (world.getBalls(4, 1) != B + 0)
+                return false;
+           }
+           
+           if (world.getBalls(N, 1) != 0) 
+              return false;
+
+           if (robot.getBalls() > 0)
+                 return false;
+                 
+           return true;
+        },
+    }
+   
+.. reveal:: Karel_functions__all_balls_one_square_back_reveal
+    :showtitle: Rješenje
+    :hidetitle: Sakrij rješenje
+
+    .. activecode:: Karel_functions__all_balls_one_square_back_solution
+        :passivecode: true
+      
+        from karel import *
+        def back():      # idi jedno polje natrag, ostani isto okrenut
+            turn_left(); turn_left();
+            move(); 
+            turn_left(); turn_left();
+
+        while front_is_clear():       # dok ima polja ispred Karela, ponavljaj
+            move();                       # idi na novo polje
+            while is_ball_on_square():    # uzmi sve loptice na polju
+                pick_ball()            
+            back()                        # korak natrag
+            while any_balls_with_karel(): # ostavi sve loptice
+                drop_ball()
+            move()                        # idi na polje koj si ispraznio
+
+
+Prati loptice
+''''''''''''''''
+
+.. questionnote::
+
+    Na svakom polju se nalazi po jedna ili nijedna loptica. Polja s lopticama formiraju put, koji počinje na polju pored Karela. Karel treba pratiti taj put i pokupiti sve loptice.
+
+Prijedlog: kako bi riješili ovaj zadatak, možete napisati funkciju *go_to_neighboring_nonempty_square()*, koja treba samo premjestiti Karela na susjedno polje na kojem postoji loptica (*return* naredba može biti korisna). Funkcija *go_to_neighboring_nonempty_square()* treba se razlikovati od ranije napisane funkcije *take_at_neighboring_square()* samo po tome što ne kupi loptice.
+
+Kada Karel pokupi sve loptice, sljedeći poziv ove funkcije će ostaviti Karela na nekom praznom polju (to će biti polje na kojme je Karel uzeo posljednju lopticu). Po tome što nema loptice na polju na kojme se nalazi Karel, znat ćemo da je Karel već uzeo sve loptice.
+
+.. karel:: Karel_functions__follow_the_balls
+   :blockly:
+
+    {
+        setup:function() {
+            function random(n) {
+                return Math.floor(n * Math.random());
+            }
+         
+            var ww = [
+                [
+                   '███████████',
+                   '█0.0.1.1.0█',
+                   '█.........█',
+                   '█0.N.0.1.0█',
+                   '█.........█',
+                   '█0.1.1.1.0█',
+                   '███████████'
+                ],
+                [
+                   '███████████',
+                   '█1.1.1.1.1█',
+                   '█.........█',
+                   '█1.0.0.0.1█',
+                   '██........█',
+                   '█S.1.1.1.1█',
+                   '███████████'
+                ]
+            ];
+            let choice = random(ww.length);
+            var w = ww[choice];
+            var ny = Math.floor(w.length / 2);
+            var nx = Math.floor(w[0].length / 2);
+            var world = new World(nx, ny);
+            
+            for (let y = 1; y <= ny; y++) {
+                let wy = 2*(ny-y) + 1;
+                for (let x = 1; x <= nx; x++) {
+                    let wx = 2*x - 1;
+                    if (y < ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+                    if (x < nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+                    let c = w[wy].charAt(wx);
+                    let pos = "SWEN".indexOf(c);
+                    if (pos > -1) {
+                        world.setRobotStartAvenue(x);
+                        world.setRobotStartStreet(y);
+                        world.setRobotStartDirection("SWEN".charAt(pos));
+                    }
+                    let d = w[wy].charCodeAt(wx);
+                    if (d >= 48 && d < 58) world.putBalls(x, y, d - 48);
+                }
+            }
+         
+            var robot = new Robot();
+         
+            var code = ["from karel import *",
+                        "def back():",
+                        "    turn_left(); turn_left()",
+                        "    move()",
+                        "    turn_left(); turn_left()",
+                        "",    
+                        "def go_to_neighboring_nonempty_square():", 
+                        "    # napišite funkciju",
+                        "",
+                        "go_to_neighboring_nonempty_square()",
+                        "while ??? # dodajte uvjet",
+                        "    pick_ball()",
+                        "    ??? # dovršite program",
+                        ""];
+                     
+            //var code = ["from karel import *",
+            //            "def back():",
+            //            "    turn_left(); turn_left()",
+            //            "    move()",
+            //            "    turn_left(); turn_left()",
+            //            "",
+            //            "def go_to_neighboring_nonempty_square():",
+            //            "    for i in range(4):",
+            //            "        if front_is_clear():",
+            //            "            move()",
+            //            "            if is_ball_on_square():",
+            //            "                return",
+            //            "            back()",
+            //            "        turn_left()  # sljedeci smjer",
+            //            "",
+            //            "go_to_neighboring_nonempty_square()",
+            //            "while is_ball_on_square():",
+            //            "    pick_ball()",
+            //            "    go_to_neighboring_nonempty_square()",
+            //            ""];
+            
+            return {robot:robot, world:world, code:code};
+        },
+      
+        isSuccess: function(robot, world) {
+            var X = world.getAvenues();
+            var Y = world.getStreets();
+            for (var y = 1; y <= Y; y++)
+                for (var x = 1; x <= X; x++)
+                    if (world.getBalls(x, y) > 0)
+                        return false;
+               
+            return true;
+        },
+    }
+
+Pokupi sve loptice s cijele ploče
+'''''''''''''''''''''''''''''''''
+
+.. questionnote::
+
+  Karel je na početku okrenut prema sjeveru (gore), a nalazi se u donjem lijevom kutu pravokutne ploče nepoznate veličine, bez unutranjih zidova. Na svakom polju može biti nekoliko loptica. Karel treba uzeti sve loptice sa svih polja ploče.
+  
+Prijedlog: Napišite funkciju *empty_one_row()*, pomoću koje Karel:
+
+- okreće na lijevo (prema istoku), gledajući uzduž reda na čijem je početku
+- prolazi cijeli red ploče i usput kupi sve loptice sa svakog polja iz tog reda, uključujući i prvo polje u redu, s kojg je krenuo
+- okreće se na početak reda (prema zapadu, tj. prema desnoj strani ekrana)
+- vraća se na početak reda i okreće se prema sjeveru (gore), kao što je stajao prije poziva funkcije
+
+Program koji rješava zadatak pomoću ove funkcije nije dugačak. Potrebno je:
+
+- isprazniti prvi red
+- dok ima redova ispred Karela, ići na sljedeći red i isprazniti ga
+
+.. karel:: Karel_functions_take_all_balls_2D
+   :blockly:
+
+   {
+      setup:function() {
+         function random(n) {
+            return Math.floor(n * Math.random());
+         }
+
+         var sizes = [1, 2, 3, 3, 4, 4, 4];
+         var numBalls = [0, 0, 1, 1, 1, 3];
+         var X = sizes[random(sizes.length)];
+         var Y = sizes[random(sizes.length)];
+         var world = new World(X, Y);
+         world.setRobotStartAvenue(1);
+         world.setRobotStartStreet(1);
+         world.setRobotStartDirection("N");
+         
+         for (var col = 1; col <= X; col++) {
+             for (var row = 1; row <= Y; row++) {
+                 let B = numBalls[random(numBalls.length)];
+                 world.putBalls(col, row, B);
+             }
+         }
+      
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "# dovršite program",
+                     ""];
+        //var code = ["from karel import *
+        //            "def empty_one_row():",
+        //            "    turn_right()                # turn towards end of the row (eastwards)",
+        //            "    while is_ball_on_square():  # empty first square in the row",
+        //            "        pick_ball()",
+        //            "    while front_is_clear():     # while there are unvisited squares",
+        //            "        move()                      # go to a new square",
+        //            "        while is_ball_on_square():  # emtpy the new square",
+        //            "            pick_ball()",
+        //            "        ",
+        //            "    turn_right(); turn_right()  # turn towards beginning of the row (westwards)",
+        //            "    while front_is_clear():     # come back to the first square in that row",
+        //            "        move()",
+        //            "    turn_right()                # turn towards next row (northwards)",
+        //            "",
+        //            "empty_one_row()             # pick up the balls from the first row",
+        //            "while front_is_clear():     # while there are new rows",
+        //            "    move(); empty_one_row()     # go to the next row and empty it",
+        //            ""];
+
+         return {robot:robot, world:world, code:code};
+        },
+
+        isSuccess: function(robot, world) {
+           var X = world.getAvenues();
+           var Y = world.getStreets();
+           for (var col = 1; col <= X; col++) {
+              for (var row = 1; row <= Y; row++) {
+                 if (world.getBalls(col, row) > 0)   
+                    return false;
+              }
+           }
+                 
+           return true;
+      },
+   }

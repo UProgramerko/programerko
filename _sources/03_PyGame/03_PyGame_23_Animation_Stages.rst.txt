@@ -1,0 +1,140 @@
+Animacije po fazama
+-------------------
+
+Semafor
+'''''''
+
+Jedan od najpoznatijih primjera uređaja koji radi po fazama je semafor. Na primjeru semafora objasnit ćemo rad po fazama i kako možemo animirati događaje koji se odvijaju u fazama na računalu.
+
+Postoji nekoliko stanja u kojima se semafor može naći. Na primjer, može prikazivati crveno svjetlo, da svjetli treptajuće žuto, da bude isključen itd. Period u toku kojeg semafor ne mijenja stanje zvat ćemo faza. Pri normalnom radu semafora faze se izmjenjuje ciklično i svaka faza ima svoje trajanje. Uzmimo kao primjer semafor na kome se smjenjuju sljedeće četiri faze: 1 - crveno svjetlo, 2 - crveno i žuto svjetlo, 3 - zeleno svjetlo, i 4 - žuto svjetlo.
+
+Da bismo animaciju pojednostavili, trajanje svake faze prikazat ćemo brojem okvira (umjesto u sekundi). Neka trajanja navedenih faza budu :math:`n_1`, :math:`n_2`, :math:`n_3` i :math:`n_4` frameova redom. Tada cijeli ciklus traje :math:`N = n_1 + n_2 + n_3 + n_4` frameova. Od tih :math:`N` frameova, prvih :math:`n_1` pripada prvoj fazi, sljedećih :math:`n_2` drugoj fazi itd.
+
+Da bismo znali kojoj fazi pripada trenutni frame, možemo uvesti globalnu varijablu koja će brojati frameove. Budući da cijeli ciklus traje :math:`N` frameova, dovoljno je brojati modulom :math:`N`. To znači da kada brojač okvira dosegne vrijednost :math:`N-1`, sljedeća vrijednost je nula (računamo samo u jednom ciklusu). U ovom slučaju, za vrijednosti od 0 :math:`n_1 - 1`, frame pripada prvoj fazi, za vrijednosti od :math:`n_1` do :math:`n_1 + n_2 - 1` druge faze, za vrijednosti od :math:`n_1 + n_2` do :math:`n_1 + n_2 + n_3 - 1` trećoj fazi, a za vrijednosti od :math:`n_1 + n_2 + n_3` do :math:`N-1` četvrtoj fazi.
+
+Evo kako bi program na temelju te logike mogao izgledati:
+
+.. activecode:: PyGame__anim_stages_traffic_lights1
+    :nocodelens:
+    :modaloutput:
+    :includesrc: src/PyGame/2_Animation/2c_Anim_Stages/TrafficLights1.py
+
+Zadaci
+''''''
+
+.. questionnote::
+
+    **Peta faza:** kopirajte prethodni program, a zatim umetnite fazu za treptanje zelenog svjetla, nakon zelenog i prije žutog svjetla (kao što je prikazano u primjeru - gumb "Play Task").
+    
+**Pomoć:** U petoj fazi nećemo imati niti jedan poziv funkcije *draw_trafficlights*, već dio koda koji izgleda ovako:
+
+.. code::
+
+        if i_frame % 2 == 0:
+            draw_trafficlights(...)
+        else:
+            draw_trafficlights(...)
+
+
+.. activecode:: PyGame__anim_stages_traffic_lights1a
+    :nocodelens:
+    :modaloutput:
+    :playtask:
+    :includehsrc: src/PyGame/2_Animation/2c_Anim_Stages/TrafficLights1a.py
+
+.. questionnote::
+
+    **Avion:** Napisati program koji radi kao što je prikazano u primjeru (gumb "Play Task"). 
+    
+    Opis kretanja: ravnina kreće od središta lijevog ruba prozora. Prvo se pomiče za 20 frameova 2 piksela udesno i gore, a zatim 20 frameova 2 piksela udesno i dolje. Kad izađe kroz desni rub prozora, na lijevoj se strani pojavljuje na istoj visini. Brzina prikazivanja je 50 frameova u sekundi.
+
+.. image:: ../../_images/airplane.png
+   :width: 50px
+.. image:: ../../_images/sun.png
+   :width: 50px
+
+.. activecode:: PyGame__anim_stages_plane
+    :nocodelens:
+    :modaloutput:
+    :playtask:
+    :includehsrc: src/PyGame/2_Animation/2c_Anim_Stages/airplane.py
+    
+    import pygame as pg, pygamebg
+    (width, height) = (800, 350)
+    canvas = pygamebg.open_window(width, height, "Plane")
+    
+    def new_frame():
+        pass
+    
+    pygamebg.frame_loop(50, new_frame)
+
+
+    sun_image = pg.image.load("sun.png")        # slika sunca
+    plane_image = pg.image.load("airplane.png") # slika aviona
+    plane_width = plane_image.get_width()       # širina slike aviona
+    plane_height = plane_image.get_height()     # visina slike aviona
+
+    # dovršite program
+
+
+.. questionnote::
+
+    **Krtica**: Napišite program koji radi kao što je prikazano u primjeru (gumb "Play Task").  
+    
+    Učitava se 10 slika na kojima krtica redom sve više viri iz rupe. Ciklus ima četiri faze, koje zajedno traju 28 frameova.
+    
+    - Prva faza traje 10 frame-ova i tijekom ove faze krtica izlazi iz rupe (slike su prikazane redoslijedom, od prve do desete).
+    - Druga faza traje 5 frame-ova tijekom kojih je krtica u najvišem položaju (prikazana je deseta slika).
+    - Treća faza traje 10 frame-ova i tijekom ove faze krtica ulazi u rupu (slike su prikazane od desetog do prvog).
+    - Faza četiri traje 3 frame-ova i za vrijeme nje je krtica u rupi (prikazana je prva slika).
+
+.. image:: ../../_images/mole1.png
+   :width: 50px
+.. image:: ../../_images/mole2.png
+   :width: 50px
+.. image:: ../../_images/mole3.png
+   :width: 50px
+.. image:: ../../_images/mole4.png
+   :width: 50px
+.. image:: ../../_images/mole5.png
+   :width: 50px
+.. image:: ../../_images/mole6.png
+   :width: 50px
+.. image:: ../../_images/mole7.png
+   :width: 50px
+.. image:: ../../_images/mole8.png
+   :width: 50px
+.. image:: ../../_images/mole9.png
+   :width: 50px
+.. image:: ../../_images/mole10.png
+   :width: 50px
+
+.. activecode:: PyGame__anim_stages_mole
+    :nocodelens:
+    :modaloutput:
+    :playtask:
+    :includehsrc: src/PyGame/2_Animation/2c_Anim_Stages/mole.py
+
+    import pygame as pg, pygamebg
+    (width, height) = (150, 150)
+    canvas = pygamebg.open_window(width, height, "Mole")
+
+    images = []   # lista koja će sadržavati slike
+    for i in range(1, 11): # učitaj sliku mole1.png, ..., mole10.png u listu
+        image_name = "mole" + str(i) + ".png"  # gradimo ime slike iz dijelova
+        images.append(pg.image.load(image_name))
+
+    brown = (60, 42, 3)
+    Y_HORIZON = 125
+    GROUND = (0, Y_HORIZON, width, height - Y_HORIZON) # dio slike ispod horizonta
+    i_frame = 0 # brojač okvira
+    i_image = 0
+
+    def new_frame():
+        # dovršite funkciju - izračunajte koja će se slika prikazati u ovom okviru
+
+        canvas.fill(pg.Color("skyblue"))     # obojite pozdainu
+        pg.draw.rect(canvas, brown, GROUND)  # obojite pravokuinik ZEMLJA u smeđe
+        canvas.blit(images[i_image], (0, 0)) # prikažite sliku
+
+    pygamebg.frame_loop(10, new_frame)

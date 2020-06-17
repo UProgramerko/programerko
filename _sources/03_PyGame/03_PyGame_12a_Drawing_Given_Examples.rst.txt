@@ -1,0 +1,250 @@
+Cratnje zadanih crteža
+----------------------
+
+Upravo smo naučili kako crtati neke osnovne oblike u okruženju PyGame koristeći funkcije crtanja. Kao što je već spomenuto, sve se takve slike sastoje od piksela. To su takozvane rasterske, bitmap slike. Vidjeli smo da, da bismo nacrtali osnovne oblike, moramo znati koordinate piksela koje određuju svaki takav oblik. Međutim, u realnijoj situaciji te se koordinate ne daju izravno i moramo ih sami odrediti. 
+
+Ako želimo programski generirati sliku koristeći se postojećom bitmapom kao referencom, možemo odrediti koordinate točaka iz dane slike. Sliku možemo povećati u jednom od programa za pregled slika kako bi svaki piksel izgledao kao kvadrat. To može izgledati ovako:
+
+.. image:: ../../_images/PyGame/ladder_grid.png
+   :width: 300px   
+   :align: center 
+
+Možemo vidjeti da je ta slika nastala crtanjem 4 vodoravne i 2 okomite linije, također da je svih 6 linija crno i široko 1 piksel. Budući da znamo da se *x* koordinata broji s lijeva na desno, a *y* od vrha do dna, kao i da brojanje počinje od nule, možemo odrediti koordinate početne i krajnje točke svih šest linija jednostavno brojenjem.
+
+Ljestve
+'''''''
+
+Pročitajte koordinate s povećane slike iznad i napišite program koji crta takve ljestve.
+
+
+**Pomoć:** brojanjem (od nule) možemo vidjeti da su koordinate krajnjih točaka lijeve okomite linije (5, 3) i (5, 36). Koordinate krajnjih točaka ostalih 5 linija moraju biti određene na isti način.
+
+.. activecode:: PyGame__drawing_ladder_assist
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :includexsrc: src\PyGame\1_Drawing\3_ByGrid\ladder_small.py
+
+   canvas.fill(pg.Color("white")) # obojite pozadinu u bijelo
+
+   pg.draw.line(canvas, pg.Color("black"), ( 5, 3), ( 5, 36), 1)  # lijeva strana
+   pg.draw.line(canvas, pg.Color("black"), (???, ???), (???, ???), 1)  # desna strana
+
+   pg.draw.line(canvas, pg.Color("black"), (???, ???), (???, ???), 1) # greda
+   pg.draw.line(canvas, pg.Color("black"), (???, ???), (???, ???), 1) # greda
+   pg.draw.line(canvas, pg.Color("black"), (???, ???), (???, ???), 1) # greda
+   pg.draw.line(canvas, pg.Color("black"), (???, ???), (???, ???), 1) # greda
+   
+Slika stvarne veličine vrlo je mala, samo 20 piksela i visoka 40 piksela. Također bismo mogli odrediti koordinate točaka za veće slike brojenjem, ali to bi bilo zamorno i sklono pogreškama (zato smo u ovom primjeru odabrali tako malu sliku). Dobra vijest je da programi za prikaz i uređivanje slika obično prikazuju koordinate piksela na kojem se trenutno nalazi pokazivač miša. Koordinate kursora obično se pišu negdje na statusnoj traci na dnu prozora u kojem se program izvodi, često u donjem lijevom kutu.
+
+Na primjer, u programu za crtanje *Paint* kada se slika uveća 8 puta i prikaže mreža koja naglašava pojedine piksele, pokazivač možemo lako postaviti na bilo koji piksel i pročitati njegove koordinate. Na ovoj slici pokazivač miša nalazio se na crvenom pikselu koji, kao što smo ranije rekli, ima koordinate (5, 36).
+
+.. image:: ../../_images/PyGame/read_xy.png
+   :width: 600px   
+   :align: center 
+
+~~~~
+
+U sljedećim zadacima morate napisati program koji crta crtež što je sličniji zadanom. Kada kliknete gumb "Prikaži primjer", možete vidjeti crteže koje trebate nacrtati.
+
+Da bi vam pomogao u određivanju koordinata važnih točaka na crtežu, program koji pokrenete klikom na tipku "Prikaži primjer" pored crteža prikazat će koordinate točke u kojoj se nalazi pokazivač miša. Da bi se čitanje olakšalo, u svim su primjerima koordinate svih značajnih točaka zaokružene na 5 piksela (koordinate završavaju s nulom ili pet).
+
+Ako želite riješiti ove zadatke izvan web preglednika, u svom programskom okruženju možete preuzeti slike koje vaši programi trebaju nacrtati, otvoriti ih u pregledniku slika i pročitati koordinate važnih točaka.
+
+.. image:: ../../_images/PyGame/drawing_grid_antenna.png
+   :width: 120px
+.. image:: ../../_images/PyGame/drawing_grid_balance.png
+   :width: 120px                
+.. image:: ../../_images/PyGame/drawing_grid_house.png
+   :width: 120px                
+.. image:: ../../_images/PyGame/drawing_grid_smiley.png
+   :width: 120px                
+.. image:: ../../_images/PyGame/drawing_grid_trees.png
+   :width: 120px                
+
+Аntena
+''''''
+
+Prije kabelske televizije, televizijske signale primale su antene koje su obično postavljane na krovove zgrada i kuća. U ovom zadatku treba nacrtati jednu takvu antenu.
+
+Kao što možete vidjeti kada pokrećete primjer, crtež se sastoji od sedam linija. Širina okomite crte je 4 piksela, gornja dva horizontalna 1, srednja dva 2, a donja dva debljine 3 piksela. Boja pozadine je "skyblue".
+
+.. activecode:: PyGame__drawing_antenna_simple_assist
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\3_ByGrid\antenna_assist.py
+   
+    pg.draw.line(canvas, color???, (150, y1???,), (150, y2???,), 4)
+    pg.draw.line(canvas, ???
+    pg.draw.line(canvas, ???
+    pg.draw.line(canvas, ???
+    pg.draw.line(canvas, ???
+    pg.draw.line(canvas, ???
+    pg.draw.line(canvas, ???
+
+
+.. reveal:: PyGame__drawing_antenna_simple_reveal
+   :showtitle: Prikaži rješenje
+   :hidetitle: Sakrij rješenje
+
+   Kompletan program je dostupan, možete isprobati i ovdje.
+	       
+   .. activecode:: PyGame__drawing_antenna_simple_solution
+      :nocodelens:
+      :enablecopy:
+      :modaloutput:
+      :includesrc: src\PyGame\1_Drawing\3_ByGrid\antenna.py
+                   
+
+Vaga
+''''
+
+Ovaj se crtež sastoji od crte (čija je širina 2) i tri trokuta. Srednji trokut, koji predstavlja potporu ravnoteže, napunjen je bojom, tako da prilikom crtanja parametar širine treba izostaviti, dok za ostala dva trokuta treba navesti širinu 2.
+
+.. activecode:: PyGame__drawing_balance
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :playtask:
+   :includexsrc: src\PyGame\1_Drawing\3_ByGrid\balance_assist.py
+   
+   canvas.fill(color???)) # obojati pozadinu u zeleno
+   pg.draw.line(canvas, color???, (x1???, y1???), (x2???,  y2???), 2) # letva
+   
+   # oslonac
+   pg.draw.polygon(canvas, pg.Color("brown"), [(???, ???), ...
+   
+   # lijevi pan
+   pg.draw.polygon(canvas, pg.Color("brown"), [(???, ???), ...
+   
+   # desni pan
+   pg.draw.polygon(canvas, pg.Color("brown"), [(???, ???), ...
+
+.. commented out 
+
+    .. reveal:: PyGame__drawing_balance_reveal
+       :showtitle: Show solution
+       :hidetitle: Hide solution
+
+       The complete program is provided, you can try it here as well.
+               
+       .. activecode:: PyGame__drawing_balance_solution
+          :nocodelens:
+          :enablecopy:
+          :modaloutput:
+          :includesrc: src\PyGame\1_Drawing\3_ByGrid\balance.py
+
+Smajlić
+'''''''
+
+U ovom zadatku posao je nešto složeniji. Kako je crtež sastavljen od krugova i elipsa, ne možemo točno pročitati sve koordinate i mjerenja koja su nam potrebna. What we can do is to read for each ellipse the :math:`x` coordinate of its leftmost and rightmost point ((:math:`X_L` and :math:`X_R`), as well as the :math:`y` coordinate of the highest and lowest point (:math:`Y_T` and :math:`Y_B`). After that, the width and height of the ellipse can be calculated as the differences of the corresponding :math:`x` (for width), and :math:`y` coordinates (for height).
+
+Što se kruga tiče, imamo razne mogućnosti:
+
+- možemo nacrtati krug kao elipsu upisanu u kvadrat (pomoću funkcije *pg.draw.ellipse*)
+- možemo približno očitati kordinate centralnog kruga
+- ako želimo preciznije odrediti koordinate centra kruga, prvo možemo pronaći točke :math:`X_L`, :math:`X_R`, :math:`Y_T`, i :math:`Y_B` kao što smo učinili za elipse, a zatim izračunajte koordinate centra kruga koristeći formule :math:`X_c = {{X_R + X_L} \over 2}` i :math:`Y_c = {{Y_T + Y_B} \over 2}`
+
+.. activecode:: PyGame__drawing_smiley
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :playtask:
+   :includexsrc: src\PyGame\1_Drawing\3_ByGrid\smiley_assist.py
+   
+   canvas.fill(color???) # obojite pozadinu u bijelu
+   pg.draw.circle(canvas, color???, (x???, y???), r???)           # glava
+   pg.draw.ellipse(canvas, color???, (x???, y???, w???, h???))    # lijevo oko
+   pg.draw.ellipse(canvas, ???, (???, ???, ???, ???))             # desno oko
+   pg.draw.ellipse(canvas, ???, (???, ???, ???, ???))             # unutrašnjost usta
+   pg.draw.ellipse(canvas, ???, (???, ???, ???, ???), thickness?) # granica usta
+   
+.. commented out
+
+    .. reveal:: PyGame__drawing_smiley_reveal
+       :showtitle: Prikaži rješenje
+       :hidetitle: Sakrij rješenje
+
+       Kompletan program je dostupan, možete isprobati i ovdje.
+               
+       .. activecode:: PyGame__drawing_smiley_solution
+          :nocodelens:
+          :enablecopy:
+          :modaloutput:
+          :includesrc: src\PyGame\1_Drawing\3_ByGrid\smiley.py
+
+Kuća
+''''
+
+Crtež kuće sastoji se od smeđeg pravokutnika i crvenog trokuta. Trokut možemo nacrtati kao poligon s tri vrha. Sunce je prikazano kao narančasti krug, a trava kao zeleni pravokutnik. Pazite na redoslijed crtanja za travu i sunce.
+
+Dovoljno je približno pročitati koordinate centra kruga koji predstavlja Sunce. Za one koji žele malo matematičkog izazova, imajte na umu da se koordinate centra mogu točnije odrediti slično prethodnom zadatku, iako najniža točka nije vidljiva i koordinata :math:`Y_B` ne može čitati.
+
+Ako želite vidjeti kako možete preciznije očitati i izračunati koordinate centra, kliknite na gumb "Određivanje središta".
+
+.. reveal:: PyGame__drawing_house_circle_center_reveal
+   :showtitle: Određivanje središta
+   :hidetitle: Sakrij određivanje središta
+
+    Kao u predhodnom zadatku, neka :math:`X_L` i :math:`X_R` označe :math:`x` koordinate krajnje lijeve i desne točke kruga koja predstavlja Sunce, a :math:`Y_T`, :math:`Y_B` i :math:`y` koordinate najviše i najniže točke tog kruga. 
+    
+    Možemo odrediti :math:`x` kordinatu kao u predhodnom primjeru, :math:`X_C = {{X_R + X_L} \over 2}`.
+    
+    Kako najniža točka kruga nije vidljiva, ne možemo očitati vrijednost :math:`Y_B`, ali polumjer :math:`r` možemo odrediti pomoću :math:`r = X_C - X_L` or :math:`r = X_R - X_C`. Sada se :math:`y` koordinata središta se lako dobiva: :math:`Y_C = Y_T + r`, pa nam :math:`Y_B` uopće nije potrebna.
+    
+.. activecode:: PyGame__drawing_house
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :playtask:
+   :includexsrc: src\PyGame\1_Drawing\3_ByGrid\house2D_assist.py
+   
+   canvas.fill(color???) # obojite pozadinu u svjetlo plavu
+   ???
+   ???
+   pg.draw.rect(canvas, color???, (x???, y???, w???, h???)) # kuća
+   pg.draw.polygon(canvas, color???, [(x1???, y1???), (x2???, y2???), (x3???, y3???)]) # krov
+
+.. commented out
+
+    .. reveal:: PyGame__drawing_house_reveal
+       :showtitle: Prikaži rješenje
+       :hidetitle: Sakrij rješenje
+
+       Kompletan program je dostupan, možete isprobati i ovdje.
+               
+       .. activecode:: PyGame__drawing_house_solution
+          :nocodelens:
+          :enablecopy:
+          :modaloutput:
+          :includesrc: src\PyGame\1_Drawing\3_ByGrid\house2D.py
+   
+Stabla
+''''''
+
+Treba nacrtati tri potpuno ista stabla, tako da se svako sljedeće stablo dobije pomicanjem prethodnog udesno. Ovaj zadatak je mogao biti zadan i samo opisom prvog stabla i zadavanjem razmaka između dva susjedna stabla. Program koji crta sliku ipak se daje jer je upotreba slike za zadavanje zadatka jasnija i jednostavnija.
+
+Da bi zadatak malo više sličio stvarnoj situaciji (u kojoj nema slike), u ovom primjeru čitajte :math:`x` koordinata je namjerno onemogućena za desnu stranu slike. Sve potrebne koordinate koje ne možete pročitati mogu se izračunati.
+
+.. activecode:: PyGame__drawing_trees
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :playtask:
+   :includexsrc: src\PyGame\1_Drawing\3_ByGrid\trees_assist.py
+   
+.. commented out
+
+    .. reveal:: PyGame__drawing_trees_reveal
+       :showtitle: Prikaži rješenje
+       :hidetitle: Sakrij rješenje
+
+       Kompletan program je dostupan, možete isprobati i ovdje.
+               
+       .. activecode:: PyGame__drawing_trees_solution
+          :nocodelens:
+          :enablecopy:
+          :modaloutput:
+          :includesrc: src\PyGame\1_Drawing\3_ByGrid\trees.py

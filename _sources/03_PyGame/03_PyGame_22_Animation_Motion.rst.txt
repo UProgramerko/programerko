@@ -1,0 +1,126 @@
+Kretanje crteža
+---------------
+
+Animacije koje smo do sada vidjeli temelji se na prikazivanju drugačije slike koju smo unaprijed pripremili u svakom kadru. Sada ćemo također premjestiti prikazane slike, tako da se ista slika pojavljuje na različitim mjestima u prozoru, odnosno kreće se.
+
+Pogledajmo prvo primjer:
+
+.. image:: ../../_images/car.png
+   :width: 50px
+
+.. activecode:: PyGame__anim_car_oneway
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src/PyGame/2_Animation/2b_Anim_Motion/car_rightwards_only.py
+
+Kao i prije, imamo funkciju *new_frame* koja prikazuje sliku u svakom okviru. Ono što je novo u ovom primjeru jest da se položaj te slike mijenja iz okvira u okvir.
+
+Slika je prikazana tako da se njezin gornji lijevi ugao pojavljuje na točki (*car_x*, *car_y*). Da bi se automobil pomaknuo udesno, u svakom kadru povećavamo *x* koordinatu slike. Imajmo samo na umu da kada automobil ide predaleko udesno, vratimo automobil tako da mu se desni kraj poravna s lijevim rubom prozora. Na ovaj se način automobil počinje postupno pojavljivati na lijevoj strani.
+
+~~~~
+
+Slično tome, možemo i premještati crteže koje crtamo sami (a ne samo gotove slike). Pri tome možemo pomaknuti sliku ili crtež u bilo kojem smjeru. Evo jednog primjera:
+
+.. activecode:: PyGame__anim_billiards
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src/PyGame/2_Animation/2b_Anim_Motion/billiards.py
+
+Obratite pažnju na to kako provjeravamo je li bilijarska kugla dotaknula neki rub ekrana. Krajnja desna točka kugle ima *x* koordinatu jednaku :math:`cx+r`. Ako bi ta vrijednost postala jednaka širini prozora, to bi značilo da kugla dodiruje desni rub prozora, a ako je :math:`cx + r > width`, znači da je kugla bar dijelom već prošla desni rub prozora. U tom slučaju naredbom :math:`dx = -dx`, postižemo da se od sljedećeg frejma *x* koordinati kugle dodaje suprotna vrijednost u odnosu na dosadašnju, odnosno da se ubuduće kugla pomiče za 3 piksela u lijevo. To će izgledati kao da se kugla odbila od desnog ruba prozora.
+
+Primijetite još jedan detalj: umjesto :math:`cx + r > width` mogli bismo upotrijebiti i :math:`cx + r >= width` i program bi radio gotovo isto. No, kako se kugla **ne pomiče za jedan piksel**, ne bi valjalo da smo koristili uvjet :math:`cx + r == width`, jer bi tada lopta mogla preskočiti položaj koji provjeravamo i proći kroz rub prozora.
+
+Temeljito smo analizirali slučaj desnog ruba prozora, a isto obrazloženje primijenjeno je i na ostale rubove dok se program pisao. Ukupni učinak dviju *if* naredbi je da se kugla odbije od svaki rub prozora.
+
+Provjerite razumjete li to odgovaranjem na sljedeća pitanja.
+
+Kretanje crteža - pitanja
+'''''''''''''''''''''''''''''
+
+.. dragndrop:: pygame__anim_quiz_bounce1
+    :feedback: Pokušaj ponovo!
+    :match_1: za lijevi rub ||| if cx - r < 0
+    :match_2: za desni rub ||| if cx + r > width
+    :match_3: za gornji rub ||| if cy - r < 0
+    :match_4: za donji rub ||| if cy + r > height
+
+    Povežite provjeru je li kugla iz prethodnog primjera prešla određeni rub s odgovarajućom naredbom *if*.
+
+.. mchoice:: pygame__anim_quiz_bounce2
+    :answer_a: desno
+    :answer_b: gore
+    :answer_c: lijevo
+    :answer_d: dolje
+    :correct: c
+    :feedback_a: Pokušaj ponovo
+    :feedback_b: Pokušaj ponovo
+    :feedback_c: Točno!
+    :feedback_d: Pokušaj ponovo
+
+    Na koju se stranu pomiče slika dodavanjem negativne vrijednosti na njenu *x* koordinatu?
+
+.. mchoice:: pygame__anim_quiz_bounce3
+    :answer_a: if x + im_width < 0:
+    :answer_b: if y + im_height < 0:
+    :answer_c: if x < 0:
+    :answer_d: if y < 0:
+    :correct: b
+    :feedback_a: Pokušaj ponovo
+    :feedback_b: Točno!
+    :feedback_c: Pokušaj ponovo
+    :feedback_d: Pokušaj ponovo
+
+    Neka su dimenzije određene slike *im_width* i *im_height*, a gornji lijevi kut (*x*, *y*). Kako možemo provjeriti je li slika potpuno prešla gornji rub prozora i nijedan dio nije vidljiv?
+    
+.. dragndrop:: pygame__anim_quiz_bounce4
+    :feedback: Pokušaj ponovo!
+    :match_1: slika je izašla kroz lijevi rub prozora ||| x + im_width < 0
+    :match_2: slika je počela izlaziti kroz lijevi rub prozora ||| x < 0
+    :match_3: slika je izašla kroz desni rub prozora ||| x > width
+    :match_4: slika je počela izlaziti kroz desni rub prozora ||| x + im_width > width
+
+    Neka je 'width' širina prozora, 'im_width' širina slike i (x, y) gornji lijevi kut slike. Povežite logičke uvjete s njihovim značenjem.
+
+.. mchoice:: pygame__anim_quiz_bounce5
+    :answer_a: x = width; dx = -10
+    :answer_b: x = width + im_width; dx = -10
+    :answer_c: x = width - im_width; dx = -10
+    :answer_d: x = width + im_width; dx = 10
+    :correct: a
+    :feedback_a: Točno!
+    :feedback_b: Ne, to je predaleko od desnog ruba.
+    :feedback_c: Ne, na taj je način cijela slika već na prozoru.
+    :feedback_d: Ne, slika je predaleko i nastavit će biti sve dalje.
+
+    Neka je *width* širina prozora, *im_width* širina slike, (*x*, *y*) gornji lijevi kut slike i *dx* vrijednost kojom će se *x* koordinata slike kasnije mijenjati. Koje će naredbe uzrokovati da se slika počne pojavljivati u prozoru kroz desni rub?
+
+Zadatak - auto ide lijevo-desno
+'''''''''''''''''''''''''''''''
+
+Pokušajte ponovo izraditi prvi program tako da se automobil kreće naizmjenično na jednu i drugu stranu, kao u primjeru (gumb "Play Task"). Program već sadrži naredbe za formiranje n-torki od dvije slike. Slika automobila okrenuta udesno se učitava, dok se slika automobila okrenuta prema drugoj strani dobiva pomoću funkcije *pg.transform.flip*, koja pretvara zadanu sliku u jednu simetričnu za nju.
+
+.. activecode:: PyGame__anim_car_right_left
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includehsrc: src/PyGame/2_Animation/2b_Anim_Motion/car_right_left.py
+    
+    import pygame as pg, pygamebg
+    (width, height) = (400, 300)
+    canvas = pygamebg.open_window(width, height, "Car")
+    
+    car_rightwards_image = pg.image.load("car.png") 
+    # stvarajući okrenutu sliku (simetričnu u odnosu na okomitu os)
+    car_leftwards_image = pg.transform.flip(car_rightwards_image, True, False)
+    car_images = (car_rightwards_image, car_leftwards_image)
+    fps = 50
+    
+    def new_frame():
+        pass
+        
+    pygamebg.frame_loop(fps, new_frame)
+
+        

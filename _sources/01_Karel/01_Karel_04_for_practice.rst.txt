@@ -1,0 +1,413 @@
+Naredba *for* - vježbanje
+=========================
+
+U ovom djelu ćemo samo uvježbavati upotrebu *for* naredbe.
+
+Zadaci za vježbu
+----------------
+
+Tri puta gore-dole
+''''''''''''''''''
+
+.. questionnote::
+
+  Karel je na pravokutnoj ploči od 5 redova i 7 kolona i treba stići do donjeg desnog polja.
+
+
+Karel treba tri puta ponoviti jednu složenu radnju, a to je: da pređe u sljedeću (desnu) kolonu, ode do njenog vrha, ode još jednu kolonu desno, siđe do prvog reda i na kraju se okrene prema poslednjoj koloni da bi se pripremio za sljedeće ponavljanje.
+
+Dovršite program, vodeći računa da se brojač u *for* naredbama koje dodajete ne zove ``i`` (to ime je već upotrebljeno u vanjskoj petlji).
+
+.. karel:: Karel_for_up_col_down_col_constant
+   :blockly:
+
+   {
+      setup:function() {
+
+         var X2 = 3;
+         var Y = 5;
+         var world = new World(2*X2+1, Y);
+         world.setRobotStartAvenue(1);
+         world.setRobotStartStreet(1);
+         world.setRobotStartDirection("E");
+            
+         world.addEWWall(1, 1, 1);
+         for (let x = 0; x < X2; x++) { 
+            world.addNSWall(2*x + 1, 2, Y - 1);
+            world.addNSWall(2*x + 2, 1, Y - 1);
+         }
+         
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "for i in range(3):   # tri puta ponovi sve sto slijedi",
+                     "    move(); turn_left()  # udji u sljedecu kolonu i okreni se na sjever",
+                     "    # upotrijebite for naredbu i recite Karelu da ode do gornjeg kraja",
+                     "    ",
+                     "    turn_right(); move() # predji u sljedecu kolonu",
+                     "    turn_right()             # okreni se na jug",
+                     "    # upotrijebite for nardbu i recite Karelu da ode do donjeg kraja",
+                     "    ",
+                     "    turn_left()          #    okreni se na istok",
+                     ""];
+    
+         return {robot:robot, world:world, code:code};
+      },
+    
+      isSuccess: function(robot, world) {
+         return robot.getAvenue() == world.getAvenues() &&
+            robot.getStreet() == 1;
+      },
+   }
+
+.. reveal:: Karel_for_up_col_down_col_constant_reveal
+   :showtitle: Rješenje
+   :hidetitle: Sakrij rješenje
+
+   .. activecode:: Karel_for_up_col_down_col_constant_solution
+      :passivecode: true
+      
+      from karel import *
+      for i in range(3):       # 3 puta ponovi sve što sljedi
+          move(); turn_left()      # udji u sljedecu kolonu i okreni se na sjever
+          for i_up in range(4):    # idi do gornjeg kraja
+              move()
+
+          turn_right(); move()     # predji u sljedecu kolonu
+          turn_right()             # okreni se na jug
+          for i_down in range(4):  # idi do donjeg kraja
+              move()
+
+          turn_left()              # okreni se na istok
+
+Pokupi sve loptice sa svih polja
+''''''''''''''''''''''''''''''''
+
+.. questionnote::
+
+  Karel bi trebao pokupiti svih 12 loptica i donijeti na polazno polje.
+
+Karel treba četiri puta prći u sljedeću kolonu i isprazni je, a na kraju treba doći na polazno polje i ostavi sve loptice. Karel će isprazniti kolonu ako tri puta ponovi korak naprijed i pokupi, a zatim se vrati na početak kolone u isti položaj.
+
+Dovršite program.
+
+.. karel:: Karel_for_fetch_from_matrix
+   :blockly:
+
+   {
+      setup:function() {
+         var X = 5;
+         var Y = 4;
+         var world = new World(X, Y);
+         world.setRobotStartAvenue(1);
+         world.setRobotStartStreet(1);
+         world.setRobotStartDirection("E");
+
+         world.addEWWall(1, 1, 1);
+         world.addNSWall(1, 2, Y - 1);
+         
+         for (var col = 2; col <= X; col++) {
+            for (var row = 2; row <= Y; row++) {
+               world.putBall(col, row);
+            }
+         }
+         
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "for i_column in range(4):      # ponovi 4 puta ciscenje kolone",
+                     "    move()                     # udji u sljedecu kolonu",
+                     "    turn_left()                # okreni se prema sjeveru",
+                     "    #for ...                       # 3 puta ponovi korak naprijed i pokupi",
+                     "",
+                     "    turn_right(); turn_right() # okreni se na jug",
+                     "    #for ...                   # idi 3 koraka naprijed da donjeg kraja",
+                     "",
+                     "    turn_left()                # okreni se na istok",
+                     "    ",
+                     "# (sada smo prosli sva polja)",
+                     "turn_left()                    # okreni se na zapad",
+                     "turn_left()",
+                     "#for ...                       # vrati se na pocetno polje",
+                     "    ",
+                     "for i_ball in range(12):       # isputi sve loptice",
+                     "    drop_ball()",
+                     ""];
+    
+         return {robot:robot, world:world, code:code};
+      },
+    
+      isSuccess: function(robot, world) {
+         return world.getBalls(1, 1) == 12 &&
+            robot.getAvenue() == 1 &&
+            robot.getStreet() == 1;
+      },
+   }
+
+.. reveal:: Karel_for_fetch_from_matrix_reveal
+   :showtitle: Solution
+   :hidetitle: Hide solution
+
+   .. activecode:: Karel_for_fetch_from_matrix_solution
+      :passivecode: true
+      
+      from karel import *
+      for i_column in range(4):    # cetiri puta ponovi ciscenje kolone
+          move()                       # udji u sljedecu kolonu
+          turn_left()                  # okreni se na sjever
+          for i_row in range(3):       # idi do gornjeg kraja i usput pokupi
+              move()
+              pick_ball()
+
+          turn_right(); turn_right()   # okreni se na jug
+          for i_row in range(3):       # idi do donjeg kraja
+              move()
+
+          turn_left()                  # okreni se na zapad (u sljedecu kolonu)
+         
+      turn_left()                  # okreni se na zapad
+      turn_left()
+      for i_column in range(4):    # vrati se na pocetno polje
+          move()
+         
+      for i_ball in range(12):     # ostavi sve loptice
+          drop_ball()
+
+
+Trostruka petlja
+''''''''''''''''
+
+.. questionnote::
+
+  Sada se na svakom od 6 polja nalazi po 4 loptice, slično prethodnom zadatku. Karel treba donijeti sve 24 loptice na početno polje.
+
+Ovaj se program razlikuje od prethodnog po tome što naredba *pick_ball()* treba stajati u dodatnoj petlji, trećoj u dubinu. Također, razlikuje se i broj loptica koje Karel na kraju programa ostavlja na početno polje. Možete iskopirati prethodni program i prepraviti ga.
+
+.. karel:: Karel_for_fetch_24_from_matrix
+   :blockly:
+
+   {
+      setup:function() {
+         var X = 3;
+         var Y = 4;
+         var world = new World(X, Y);
+         world.setRobotStartAvenue(1);
+         world.setRobotStartStreet(1);
+         world.setRobotStartDirection("E");
+
+         world.addEWWall(1, 1, 1);
+         world.addNSWall(1, 2, Y - 1);
+         
+         for (var col = 2; col <= X; col++) {
+            for (var row = 2; row <= Y; row++) {
+               world.putBalls(col, row, 4);
+            }
+         }
+         
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "# dovrši program",
+                     ""];
+    
+         return {robot:robot, world:world, code:code};
+      },
+    
+      isSuccess: function(robot, world) {
+         return world.getBalls(1, 1) == 24 &&
+            robot.getAvenue() == 1 &&
+            robot.getStreet() == 1;
+      },
+   }
+
+.. reveal:: Karel_for_fetch_24_from_matrix_reveal
+   :showtitle: Rješenje
+   :hidetitle: Sakrij rješenje
+
+   .. activecode:: Karel_for_fetch_24_from_matrix_solution
+      :passivecode: true
+      
+      from karel import *
+      for i_column in range(2):   # cetiri puta ponovi ciscenje kolone
+          move()                      # udji u sljedecu kolonu
+          turn_left()                 # okreni se na sjever
+          for i_row in range(3):      # idi do gornjeg kraja i usput pokupi
+              move()                   
+              for i_ball in range(4): 
+                  pick_ball()                  
+
+          turn_right(); turn_right()  # okreni se na jug
+          for i_row in range(3):      # idi do donjeg kraja
+              move()                   
+
+          turn_left()                 # okreni se na istok
+
+      turn_left()                 # okreni se na zapad
+      turn_left()                           
+      for i_column in range(2):   # vrati se na pocetno polje
+          move()
+
+      for i_ball in range(24):    # ostavi sve loptice
+          drop_ball()
+
+
+Popni se pa se spusti
+'''''''''''''''''''''
+
+.. questionnote::
+
+  Karel se treba popesti uz prve stepenice, a nakon toga se treba spustiti niz druge stepenice i završiti u donjem desnom kutu.
+
+Sada nam trebaju samo dvije petlje jedna za drugom (ne umetnute). U prvoj petlji Karel se treba popeti uz prve, a u drugoj da siđe niz druge stepenice. U svakoj petlji Karel treba obaviti po 4 radnje koje predstavljaju jedan korak uz ili niz stepenice.
+
+.. karel:: Karel_for_stairs_constant
+   :blockly:
+
+   {
+      setup:function() {
+
+         var Y = 4;
+         var X = 2 * Y - 1;
+         var world = new World(X, Y);
+         world.setRobotStartAvenue(1);
+         world.setRobotStartStreet(1);
+         world.setRobotStartDirection("E");
+
+         // Vertical walls
+         for (let y = 1; y < Y; y++) world.addNSWall(y, y, 1); // low left
+         for (let y = 1; y < Y; y++) world.addNSWall(X - 1 - y, y, 1); // low right
+         for (let y = 3; y <= Y; y++) world.addNSWall(y - 2, y, 1); // high left
+         for (let y = 2; y <= Y; y++) world.addNSWall(X + 1 - y, y, 1); // high right
+         
+         // Horizontal walls
+         for (let y = 1; y < Y - 1; y++) world.addEWWall(y + 1, y, 1); // low left
+         for (let y = 2; y < Y; y++) world.addEWWall(y - 1, y, 1); // high left
+         for (let y = 1; y < Y - 1; y++) world.addEWWall(X - 1 - y, y, 1); // low right
+         for (let y = 1; y < Y; y++) world.addEWWall(X + 1 - y, y, 1); // high right
+
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "turn_left()                  # na sjvere",
+                     "for i_stair in range(3):         # ponovi 3 puta",
+                     "    # recite Karelu da se popne na stepenicu",
+                     "",
+                     "turn_right(); turn_right()   # na jug",
+                     "",
+                     "# recite Karelu da sidje 3 stepenice",
+                     ""];
+    
+         return {robot:robot, world:world, code:code};
+      },
+    
+      isSuccess: function(robot, world) {
+         return robot.getAvenue() == world.getAvenues() &&
+            robot.getStreet() == 1;
+      },
+   }
+
+.. reveal:: Karel_for_stairs_constant_reveal
+   :showtitle: Rješenje
+   :hidetitle: Sakrij rješenje
+
+   .. activecode:: Karel_for_stairs_constant_solution
+      :passivecode: true
+      
+      from karel import *
+      turn_left()                # na sjever
+      for i_stair in range(3):   # ponovi 3 puta
+          move(); turn_right()       # popni se na jednu stepenicu
+          move(); turn_left() 
+
+      turn_right(); turn_right() # na jug
+      
+      for i_stair in range(3):   # ponovi 3 puta
+          move(); turn_left()        # idi jednu stepenicu dolje
+          move(); turn_right() 
+
+Pokupi loptice sa stepenica
+'''''''''''''''''''''''''''
+
+.. questionnote::
+
+  Karel ponovo treba završiti u donjem desnom kutu, a usput treba pokupiti sve loptice.
+
+Dobar način da se riješi ovaj zadatak je da se počne od rješenja prethodnog zadatka. Preporuka: iskopirajte rješenje prethodnog zadatka ovdje, a zatim ubacite petlje za pokupi loptica.
+
+.. karel:: Karel_for_stairs_and_balls_constant
+   :blockly:
+
+   {
+      setup:function() {
+
+         var Y = 4;
+         var X = 2 * Y - 1;
+         var world = new World(X, Y);
+         world.setRobotStartAvenue(1);
+         world.setRobotStartStreet(1);
+         world.setRobotStartDirection("E");
+
+         // Vertical walls
+         for (let y = 1; y < Y; y++) world.addNSWall(y, y, 1); // low left
+         for (let y = 1; y < Y; y++) world.addNSWall(X - 1 - y, y, 1); // low right
+         for (let y = 3; y <= Y; y++) world.addNSWall(y - 2, y, 1); // high left
+         for (let y = 2; y <= Y; y++) world.addNSWall(X + 1 - y, y, 1); // high right
+         
+         // Horizontal walls
+         for (let y = 1; y < Y - 1; y++) world.addEWWall(y + 1, y, 1); // low left
+         for (let y = 2; y < Y; y++) world.addEWWall(y - 1, y, 1); // high left
+         for (let y = 1; y < Y - 1; y++) world.addEWWall(X - 1 - y, y, 1); // low right
+         for (let y = 1; y < Y; y++) world.addEWWall(X + 1 - y, y, 1); // high right
+         
+         // Balls
+         for (let y = 2; y <= Y; y++) {
+            world.putBalls(y - 1, y, 3);
+            world.putBalls(y, y, 4);
+         }
+         for (let y = 1; y < Y; y++) {
+            world.putBalls(X - y, y, 2);
+            world.putBalls(X + 1 - y, y, 3);
+         }
+
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "# napisite program",
+                     ""];
+    
+         return {robot:robot, world:world, code:code};
+      },
+    
+      isSuccess: function(robot, world) {
+         return robot.getBalls() == 36 &&
+            robot.getAvenue() == world.getAvenues() &&
+            robot.getStreet() == 1;
+      },
+   }
+
+.. reveal:: Karel_for_stairs_and_balls_constant_reveal
+   :showtitle: Rješenje
+   :hidetitle: Sakrij rješenje
+
+   .. activecode:: Karel_for_stairs_and_balls_constant_solution
+      :passivecode: true
+      
+      from karel import *
+      turn_left()                     # na sjever
+      for i_stair in range(3):        # ponovi 3 puta
+          move(); turn_right()            # popni se jednu stepenicu
+          for i_ball in range(3):
+              pick_ball()
+          move(); turn_left() 
+          for i_ball in range(4):
+              pick_ball()
+
+      turn_right(); turn_right()      # na jug
+      
+      for i_stair in range(3):        # ponovi 3 puta
+          move(); turn_left()             # idi jednu stepenicu dolje
+          for i_ball in range(2):
+              pick_ball()
+          move(); turn_right() 
+          for i_ball in range(3):
+              pick_ball()

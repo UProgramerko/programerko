@@ -1,0 +1,247 @@
+Crtanje pravokutnika, elipsa i krugova
+--------------------------------------
+
+Sve funkcije crtanja u biblioteci PyGame počinju s ``pg.draw``. Ovisno o tome koji oblik želimo nacrtati, pozivamo različite funkcije. U objašnjenjima koja slijede značenje parametara je:
+
+- Parametar *prozor* je područje u kojem crtamo. Programi će u ovom vodiču već imati formiranu varijablu (točnije objekt) *prozor*, dobivenu kao rezultat poziva funkcije ``pygamebg.open_window``.
+- Parametar *boja* je boja koju koristimo za crtanje. Kao što je ranije rečeno, boja se može odrediti imenom (na primjer :code:`pg.Color("black")`), ili kao n-torka ili lista dužine 3 (na primjer :code:`[255, 0, 0]` za crvenu).
+- Parametar *pravokutinik* je n-torka ili lista dužine četiri :math:`(x, y, w, h)` ili :math:`[x, y, w, h]`, koja opisuje pravokutnik, kao što je objašnjeno ranije (koordinate gornje lijeve verte, širina i visina pravokutnika).
+- Parametar *centar* predstavlja neku točku. Kao što smo ranije spomenuli, točka se može navesti kao n-torka (ili lista) od 2 elementa, koji predstavljaju koordinate točke u prozoru u koji crtamo.
+- Parametar *debljina* je debljina linija koje koristimo za crtanje. U funkcijama koje ovdje objašnjavamo ovaj parametar nije obvezan i može se izostaviti.
+
+Sada ćemo vidjeti detaljnije opise funkcija za crtanje pravokutnika, elipsa i krugova. Nakon svakog opisa funkcije dat je kratki primjer jednog ili dvije linije koda. Svaki od ovih primjera možete pokrenuti tako da ga kopirate u program ispod (koji za sada ne sadrži ništa). Slike koje slijede primjere dobivaju se na isti način.
+
+
+.. activecode:: pygame__drawing_primirives_def
+    :nocodelens:
+    :modaloutput: 
+
+    import pygame as pg, pygamebg
+    canvas = pygamebg.open_window(200, 200, "Pygame")
+
+    canvas.fill(pg.Color("gray"))
+
+    pygamebg.wait_loop()
+
+Crtanje pravokutnika
+''''''''''''''''''''
+
+Za crtanje pravokutnika koristimo funkciju ``pg.draw.rect``, koja ima dva oblika:
+
+.. code::
+
+    pg.draw.rect(prozor, boja, pravokutnik, debljina)
+    pg.draw.rect(prozor, boja, pravokutnik)
+
+Koristimo obrazac bez parametra *debljine* kada želimo da i unutrašnjost pravokutnika bude ispunjena naznačenom bojom.
+
+Na primjer, prvom od sljedeće dve naredbe zadajemo:
+
+- nacrtati pravokutnik (funkcija *rect*)
+- obojite je crnom bojom (parametar (0, 0, 0) navodi crnu boju) 
+- Gornji lijevi vrh pravokutnika ima koordinate (40, 80)
+- širina pravokutnika je 50, a visina 30 piksela
+- samo se crta okvir pravokutnika, a linije trebaju biti debljine 3 piksela
+
+Značenje druge naredbe je:
+
+- nacrtati pravokutnik (funkcija *rect*)
+- obojite je crnom bojom (parametar pg.Color("black") također određuje crnu boju) 
+- Gornji lijevi vrh pravokutnika ima koordinate (140, 80)
+- pravokutnik treba biti 20 piksela širok i visok, tako da će zapravo biti kvadrat
+- Kvadrat će bit i ispunjen bojom jer ne postoji parametar debljine
+
+.. activecode:: pygame__drawing_rectangles_def
+    :passivecode: true
+    
+    pg.draw.rect(canvas, (0, 0, 0), (40, 80, 50, 30), 3)
+    pg.draw.rect(canvas, pg.Color("black"), (140, 80, 20, 20))
+
+.. image:: ../../_images/PyGame/drawing_rectangles.png
+   :width: 200px   
+   :align: center 
+
+Crtanje elipse
+''''''''''''''
+
+Za crtanje elipse se koristi funkcija ``pg.draw.ellipse``, sa ili bez parametra debljine:
+
+.. code::
+
+    pg.draw.ellipse(prozor, boja, pravokutnik, debljina)
+    pg.draw.ellipse(prozor, boja, pravokutnik)
+
+Parametar *pravokutnik* predstavlja pravokutnik u koji je upisana elipsa, a ostali parametri imaju isto značenje kao i prije. Ako nam zatreba, možemo izračunati sredinu i glavne i manje polu-osi elipse pomoću n-torke :math:`(x, y, w, h)` ili liste :math:`[x, y, w, h]` koji definira pravokutnik. Koordinate središta pravokutnika, koje je ujedno i središte elipse, su :math:`(x + w/2, y + h/2)`, a glavne i manje poluosi elipse su :math:`w/2` and :math:`h/2`. Tako, na primjer, naredba
+
+.. activecode:: pygame__drawing_ellipse_def
+    :passivecode: true
+
+    pg.draw.ellipse(canvas, pg.Color("yellow"), (100, 160, 60, 40))
+
+crta žuto ispunjenu elipsu. Središte elipse je središte određenog pravokutnika, koji je u točki (130, 180). Vodoravna poluos elipse duga je 30 piksela, a okomita 20.
+
+.. image:: ../../_images/PyGame/drawing_ellipse.png
+   :width: 200px   
+   :align: center 
+
+Crtanje kruga
+'''''''''''''
+
+Za crtanje kruga koristimo funkciju ``pg.draw.circle``, sa ili bez parametra debljine:
+
+.. code::
+
+    pg.draw.circle(prozor, boja, centar, radijus, debljina)
+    pg.draw.circle(prozor, boja, centar, radijus)
+
+Parametar *centar* je točka koja predstavlja središte kruga, a parametar *radijus* je broj koji predstavlja polumjer kruga u pikselima. Na primjer, sljedeća naredba crta krug crvene boje, debljine 3 piksela, radijusa 50 piksela, čije je središte u točki (100, 100 ):
+
+.. activecode:: pygame__drawing_circle_def
+    :passivecode: true
+
+    pg.draw.circle(canvas, pg.Color("red"), (100, 100), 50, 3)
+
+.. image:: ../../_images/PyGame/drawing_circle.png
+   :width: 200px   
+   :align: center 
+
+Ako je zadnji parametar (debljina linije jednaka 3 pikslea) izostavljen, unutrašnjost kruga također bi bila crvena.
+
+Crtanje pravokutnika, elipsa i krugova - pitanja
+''''''''''''''''''''''''''''''''''''''''''''''''
+
+Provjerite koliko razumijete i zapamtili ove funkcije crtanja:
+
+.. mchoice:: pygame__drawing_quiz_circle_arglist
+   :multiple_answers:
+   :answer_a: Koordinate gornjeg lijevog vrha
+   :answer_b: Radijus
+   :answer_c: Koordinate centra
+   :answer_d: Širina i visina
+   :answer_e: Boja
+   :correct: b, c, e
+   :feedback_a: Koordinate gornje lijeve vrhove navode se pri crtanju elipse ili pravokutnika
+   :feedback_b: Točno
+   :feedback_c: Točno 
+   :feedback_d: Širina i visina su određene pri crtanju elipse ili pravokutnika
+   :feedback_e: Točno
+
+   Što trebate navesti prilikom crtanja kruga?
+
+.. mchoice:: pygame__drawing_quiz_circle_right_args
+   :answer_a: pg.draw.circle(prozor, boja, 100, 100, 30, 5)
+   :answer_b: pg.draw.circle(prozor, boja, (100, 100), 30, 5)
+   :answer_c: pg.draw.circle(prozor, boja, (100, 100, 30, 5))
+   :answer_d: pg.draw.circle(prozor, boja, (100, 100), (30, 5))
+   :correct: b
+   :feedback_a: Pokušaj ponovo
+   :feedback_b: Točno
+   :feedback_c: Pokušaj ponovo
+   :feedback_d: Pokušaj ponovo
+
+   Da biste nacrtali krug centriran u točki :math:`(100, 100)`, čiji je radijus :math:`30` piksela, debljine :math:`5` piksela, koji poziv funkcije trebate obaviti?
+
+.. mchoice:: pygame__drawing_quiz_circle_opt_arg
+   :answer_a: potonji crta elipsu čije su polu-glavne i polu-manje osi jednake r i 1.
+   :answer_b: potonji ispunjava unutrašnjost kruga bojom.
+   :answer_c: prvi crta disk (ispunjeni krug), a drugi kružnu liniju.
+   :answer_d: prvi crta kružnu liniju, a drugi disk (ispunjeni krug).
+   :correct: c
+   :feedback_a: Pokušaj ponovo
+   :feedback_b: Pokušaj ponovo
+   :feedback_c: Točno
+   :feedback_d: Pokušaj ponovo
+
+   Razlika između `pg.draw.circle(prozor, boja, (cx, cy), r)` i `pg.draw.circle(prozor, boja, (cx, cy), r, 1)` je ta:
+
+.. mchoice:: pygame__drawing_quiz_rect_args_1
+   :answer_a: Koordinate gornjeg lijevog vrha
+   :answer_b: Debljina
+   :answer_c: Širina
+   :answer_d: Visina
+   :answer_e: Koordinate centra
+   :correct: e
+   :feedback_a: Pokušaj ponovo
+   :feedback_b: Pokušaj ponovo
+   :feedback_c: Pokušaj ponovo
+   :feedback_d: Pokušaj ponovo
+   :feedback_e: Točno
+
+   Što se NE zadaje pri crtanju pravokutnika?
+
+.. mchoice:: pygame__drawing_quiz_rect_args_2
+   :answer_a: pg.draw.rect(prozor, boja, 100, 100, 30, 50)
+   :answer_b: pg.draw.rect(prozor, boja, (100, 100), (30, 50))
+   :answer_c: pg.draw.rect(prozor, boja, (100, 100), 30, 50)
+   :answer_d: pg.draw.rect(prozor, boja, (100, 100, 30, 50))
+   :correct: d
+   :feedback_a: Pokušaj ponovo
+   :feedback_b: Pokušaj ponovo
+   :feedback_c: Pokušaj ponovo
+   :feedback_d: Točno
+
+   Nacrtati pravokutnik čiji je gornji lijevi vrh u točki 
+   :math: `(100, 100)`, :math:`30` širine i :math:`50` 
+   piksela visine, koju funkciju je potrebno pozvati?
+
+.. mchoice::  pygame__drawing_quiz_rect_args_3
+   :answer_a: pg.draw.rect(prozor, boja, (80, 80, 50, 80))
+   :answer_b: pg.draw.rect(prozor, boja, (80, 80), (130, 160))
+   :answer_c: pg.draw.rect(prozor, boja, (80, 80, 130, 160))
+   :answer_d: pg.draw.rect(prozor, boja, (80, 80), (50, 80))
+   :correct: a
+   :feedback_a: Točno
+   :feedback_b: Pokušaj ponovo
+   :feedback_c: Pokušaj ponovo
+   :feedback_d: Pokušaj ponovo
+
+   Nacrtati pravokutnik čiji je gornji lijevi vrh u točki
+   :math:`(80, 80)`, a donja desna u točki 
+   :math:`(130, 160)`, potrebno je izvršiti poziv funkcije:
+
+Crtanje po uputama
+''''''''''''''''''
+
+U sljedećim zadacima možete vidjeti što bi vaš program trebao crtati pritiskom na gumb "Prikaži primjer". Da bismo vam pružili potrebne podatke za pisanje izjava koje su vam potrebne, date su i detaljne upute s opisima parametara.
+
+Imajte na umu da prije crtanja pozadinu trebate obojiti odgovarajućom bojom, za koju koristite naredbu ``canvas.fill(pg.Color(...))`` (umjesto točaka navedite boju).
+
+.. questionnote::
+
+    **Zadataka - meta:** 
+    
+    Nacrtajte na bijeloj pozdaini metu pomoću tri ispunjena kruga. Središta sva tri kruga trebaju biti u središtu prozora, a svi krugovi trebaju biti ispunjeni bojom. Prvo nacrtajte crveni krug polumjera 100, zatim plavi krug radijusa 75, a zatim zeleni krug polumjera 50 piksela.
+    
+Što mislite, mogu li se ovi krugovi crtati drugačijim redoslijedom? Ako niste sigurni što bi se dogodilo ako se redoslijed promijeni, pokušajte.
+
+.. activecode:: PyGame__drawing_target
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :playtask:
+   :includexsrc: src/PyGame/1_Drawing/1_BasicExamples/target.py
+
+.. questionnote::
+
+    **Zadatak - patka:** 
+    
+    Na zelenoj pozadini nacrtajte patku kao lik iz crtanih filmova. Crtež se sastoji od sljedećih dijelova:
+    
+    - Glava: žuto ispunjena elipsa, upisana u pravokutnik dimenzija 320 x 300 piksela, s gornjim lijevim vrhom u točki (40, 50)
+    - Granica glave: crna elipsa koja uokviruje prethodnu elipsu linijom širine 1
+    - Lijevo oko: crna elipsa ispunjena crnom bojom, upisana u pravokutnik dimenzija 40 x 40 piksela s gornjom lijevom vrhom u točki (130, 130)
+    - Desno oko: crna elipsa ispunjena crnom bojom, upisana u pravokutnik dimenzija 40 x 40 piksela s gornjom lijevom vrhom u točki (280, 120)
+    - Usta (kljun): crvena ispunjena elipsa, upisana u pravokutnik dimenzija 120 x 140 piksela, s gornjim lijevim vrhom u točki (200, 170)
+    - Granica usta: crna elipsa koja uokviruje prethodnu elipsu linijom debljine 1
+
+Ovdje imamo više slobode s redoslijedom crtanja, ali još uvijek trebamo slijediti neki red. Pokušajte objasniti koji se dijelovi slike trebaju crtati točno ovim redoslijedom, a koji ne.
+
+Imajte na umu da su oči upisane u pravokutnike koji su zapravo kvadratići. Kako (zahvaljujući tome) iste oči možemo nacrtati na drugačiji način?
+
+.. activecode:: PyGame__drawing_duckling
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :playtask:
+   :includexsrc: src/PyGame/1_Drawing/1_BasicExamples/duckling.py
+

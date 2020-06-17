@@ -1,0 +1,203 @@
+Tekstualne vrijednosti
+======================
+
+Pored cjelobrojnih i realnih brojeva, jedna od osnovnih vrsta podataka u programiranju je tekst. Tekstualni podaci nazivaju se **niz ili string**. Uz slova mogu sadržavati i sve druge znakove koji se koriste u tekstu: interpunkcijske zagrade, zagrade, brojeve, matematičke operatore, razne posebne znakove poput ``%``, ``$``, ``^``. ``&``.
+
+Tekstualne vrijednosti pišu se između navodnika. Teksta pod navodnicima zovemo **tekstualna konstanta** ili **doslovnim**. U Pythonu se mogu ravnopravno koristiti jednostruki ``'...'`` i dvostruki ``"..."`` navodnici (važno je samo da su na početku i na kraju stringa (niza) navodnici iste vrste). Na primjer:
+
+.. code::
+
+    s1 = 'Jedan tekst'
+    s2 = "Drugi tekst"
+
+Koristit ćemo riječ string za vrstu tekstualnih podataka, kao i za svaki izraz čija je vrijednost ta vrsta. Najvažniji primjeri string izraza su tekstualne konstante (doslovno) i varijable koje sadrže tekst.
+
+Ispis teksta
+------------
+
+Stringovi (nizovi) se ispisuju na isti način kao i numerički podaci. String (niz) koji želimo ispisati jednostavno je naveden kao argument funkcije *print()*.
+
+.. activecode:: console__text_hello
+
+    print("Pozdrav svijetu!")
+
+Kada funkcija *print()* ima više argumenata, ti argumenti mogu biti različitog tipa:
+
+.. activecode:: console__text_compute
+
+    print('2+2 =', 2+2)
+
+Kad koristimo više argumenata, pišemo ih odvojene zarezima (kao i kod bilo koje funkcije). Vrijednosti svih navedenih argumenata ispisat će se istim redoslijedom i bit će odvojene jednim razmakom.
+
+Više o ispisu brojeva
+---------------------
+
+Ponekad ispisani rezultat izgleda nepregledno:
+
+.. activecode:: console__text_format1a
+
+    print(5/3)
+
+Najčešće nam ne trebaju sve ove znamenke. Stvarni brojevi mogu izgledati čitljiviji ako koristimo funkciju *format*. Ovom funkcijom (između ostalog) možemo odrediti koliko znamenki nakon decimalne točke želimo prikazati: 
+
+.. activecode:: console__text_format1b
+
+    x = 5/3
+    s = format(x, '.2f')
+    print(s)
+    
+Da bismo odredili broj decimalnih mjesta koji će se prikazati, pozvali smo funkciju *format* ovako: prvi argument funkcije je vrijednost koju ispisujemo, a drugi argument je opis ispisa. U ovom opisu, dio '.2' znači da želimo dva decimalna mjesta, a dio 'f', skraćeno od *float*, znači da dajemo opis stvarnog broja (vrsta stvarnih brojeva naziva se *float*). Funkcija vraća string u kojem je zapisan broj x kao što je specificirano.
+
+Imajte na umu da ovaj formatirani ispis ne mijenja vrijednost varijable *x*.
+
+Primjere smo podijelili u korake da bi bilo jasnije, iako se može napisati i u jednoj liniji koda. Na primjer, za ispis s 4 decimalna mjesta:
+
+.. activecode:: console__text_format1c
+
+    print(format(5/3, '.4f'))
+    
+~~~~
+
+Kada prikazujemo više stvarnih brojeva jedan ispod drugog, možemo ih učiniti preglednijima poravnavanjem decimalnih točaka. Na primjer, ovaj način ispisa nije lako razumljiv: 
+
+.. activecode:: console__text_format2a
+
+    print(-1.23)
+    print(7251.7)
+    print(84.15)
+
+Da bismo dobili pregledniji prikaz, možemo funkciju *format* upotrijebiti ovako:
+
+.. activecode:: console__text_format2b
+
+    print(format(-1.23, '8.2f'))
+    print(format(7251.7, '8.2f'))
+    print(format(84.15, '8.2f'))
+
+U opisu '8.2f' broj 8 znači da želimo prikaz broja zauzme ukupno 8 mjesta. U tih 8 mjesta se broje brojevi, decimalna točka, eventualni znak broja i razmaci ispred broja. 
+
+Dijelovi opisa ’.2’ i ’f’ imaju isto značenje kao i prije.
+
+
+Funkcija *format* ima i mnoge druge mogućnosti, od kojih ćemo još neke upoznati kasnije.
+
+
+String operacije
+----------------
+
+Spajanje stringova
+''''''''''''''''''
+
+Stringovi se mogu spojiti jedan na drugi operacijom **pridruživanje stringova**. Ova se operacija označava znakom ``+``, baš kao i operacija zbrajanja, pa se u programiranju često neformalno naziva zbrajanje stringova.
+
+.. activecode:: console__text_concat1
+
+    s = 'continu' + 'ation'
+    print(s)
+
+Povremeno se dešava da u stringu imamo zapis cijelog ili stvarnog broja, pa je važno da razumijemo kada se u programima znak ``+`` odnosi na zbrajanje brojeva, a kada na pridruživanje stringova. Na primjer, u sljedećem programu, prvo *a + b* je zbrajanje brojeva, a drugo je pridruživanje stringova. U skladu s tim, ispisani rezultati se također razlikuju (isprobajte).
+
+.. activecode:: console__text_concat2
+
+    a = 14.2
+    b = 1
+    print(a + b)
+    
+    a = '14.2'
+    b = '1'
+    print(a + b)
+
+Vjerojatno će se povremeno događati da kasnije prilikom izvršavanja nekog vašeg prorgama budete zbunjeni rezultatom. Rezultat može biti različit od očekivanog iz puno razloga, a jedna mogućnost je i da ste slučajno zbrajali stringove umjesto brojeva.
+
+Znak ``+`` može stajati između dva numerička izraza ili između dva stringa, ali ne između stringa i broja. Ovakve kombinacije dovode do greške tipa *TypeError* (pokušajte).
+
+.. activecode:: console__text_concat3
+
+    print('2' + 2)
+
+Umnožavanje stringova
+'''''''''''''''''''''
+
+Stringovi se mogu i umnožavati. To znači da je dopušteno množenje stringa s cijelim brojem (bilo s lijeve ili s desne strane), a rezultat je novi string, koji se dobiva ponavljanjem zadanog stringa u određenom broju puta.
+
+U slijedećem primjeru, crta kojojm podvlačimo brojeve je dobivena množenjem stringa '-' s 12.
+
+.. activecode:: console__text_str_mult
+
+    a = 1.23958
+    b = 5467251.707256
+    c = 384.150576
+    sum = a + b + c
+    print(format(a, '12.2f'))
+    print(format(b, '12.2f'))
+    print(format(c, '12.2f'))
+    print(12 * '-')
+    print(format(sum, '12.2f'))
+
+    
+Pitanja i zadaci
+----------------
+
+.. dragndrop:: console__text_quiz_format
+    :feedback: Pokušaj ponovno!
+    :match_1: '12.34'|||format(12.34, '.2f')
+    :match_2: '__12.34'|||format(12.34, '7.2f')
+    :match_3: '_12.34'|||format(12.34, '6.2f')
+    :match_4: '__12.3'|||format(12.34, '6.1f')
+    :match_5: '12.3'|||format(12.34, '.1f')
+
+    Uparite pozive funkcije *format* s rezultatima.Razmaci su predstavljeni znakom '_' jer inače ne bi bili vidljivi.
+
+.. mchoice:: console__text_quiz_quotes
+    :answer_a: s = 'a' + "b"
+    :answer_b: s = 'ab"
+    :answer_c: s = 'ab'
+    :correct: b
+    :feedback_a: Pokušaj ponovno
+    :feedback_b: Točno!
+    :feedback_c: Pokušaj ponovno
+    
+    Koja od naredbi je neispravna?
+
+.. mchoice:: console__text_quiz_tralala
+   :multiple_answers:
+   :answer_a: print('tra' + 2 * '-la')
+   :answer_b: print('tra-' + 2 * 'la-')
+   :answer_c: print('tra-' + 'la-' + 'la')
+   :answer_d: print('tra-' + 'la-la')
+   :answer_e: print('tra-la-' + '-la')
+   :correct: a, c, d
+
+   Koja naredba ispisuje `` tra-la-la ''? (Označite sve točne odgovore)
+       
+.. dragndrop:: console__text_quiz_nanana
+    :feedback: Pokušaj ponovno!
+    :match_1: 'NA' * 3 ||| 'NANANA'
+    :match_2: 'N' + 3 * 'A' ||| 'NAAA'
+    :match_3: 'N' * 3 + 'A' ||| 'NNNA'
+    :match_4: 'N' * 3 + 3 * 'A' |||'NNNAAA'
+
+    Uparite izraze s njihovim vrijednostima.
+
+.. fillintheblank:: console__text_quiz_N_A
+
+    Što ispisuje naredba **print(('N' + 'A') * 2)**?
+    
+    - :NANA: Točno!
+      :NNAA: Prvo se izračunava dio u zagradi (kao u matematici)
+      :.*: Pokušaj ponovno.
+
+.. questionnote::
+
+    **Zadatak - dijeljenje zarade**
+
+    Tri prijatelja su se dogovorila da zaradu od zajedničkog posla podijele da prvom pripadne 2/7 zarade, drugom 1/3, a trećem preostali iznos. Ukupna zarada je bila 40000. Dovršite program, koji će na dve decimale prikazati zaradu svakog od trojice prijatelja.
+    
+.. activecode:: console__computing_earnings
+
+    total_earnings = 40000
+    first = total_earnings * 2 / 7
+    second = 0 # ispravite
+    third = total_earnings - first - second
+    # dodajte naredbe za ispisivanje
+

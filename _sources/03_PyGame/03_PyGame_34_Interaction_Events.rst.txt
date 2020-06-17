@@ -1,0 +1,83 @@
+Događaji
+--------
+
+Kad očitavanje stanja nije dovoljno
+'''''''''''''''''''''''''''''''''''
+
+Na početku poglavlja o interakciji spomenuli smo da postoje dva osnovna načina da program dobije informacije o korisničkim radnjama. Prvi način je očitavanje stanja miša i tipkovnice, a taj smo način u međuvremenu upoznali.
+
+Očitavanje stanja miša i tipkovnice je jednostavno i dovoljno za mnoge aplikacije. Međutim, u nekim situacijama to nije najprikladniji način rada. Na primjer, ako želimo znati kada korisnik klikne mišem:
+
+- često čitanje stanja miša može rezultirati višestrukim uzastopnim očitavanjima koja upućuju na to da je gumb miša pritisnut, ali ne znamo je li sve isti klik ili je bilo više klikova.
+- rijetko čitanje stanja miša može rezultirati time da korisnik pritisne i pusti gumb nakon jednog čitanja i prije sljedećeg. U tom slučaju program neće primati podatke o tom kliku.
+
+.. commented out
+
+    Druga situacija u kojoj čitanje statusa nije najprikladniji način rada je kada redoslijed pritiska tipki za nas važan. Recimo da kontroliramo lik pomoću tipki sa strelicama. Čitanje može reći da su strelice gore i dolje pritisnute, ali ne može reći koja je bila pritisnuta prva. Tako da ne znamo treba li lik prvo krenuti udesno, a zatim gore ili gore, a zatim udesno (a desno može biti opasno polje).
+
+
+Pogledajmo sljedeći primjer.
+
+.. questionnote::
+
+    **Primjer - pokvareni prekidač:** 
+    
+    Sljedeći program crta sliku električne sheme za svaki frame, a potom preko njega slike prekidača i žarulje. Ideja je „uključiti i isključiti svjetlo“ klikom na prekidač.
+
+Prilikom rješavanja zadatka čitanjem stanja miša, mogu se pojaviti različita neželjena ponašanja zbog gore opisanih nedostataka, poput ne reagiranja na klik (prečesto čitanje stanja) ili treperenja svjetla (prečesto čitanje stanja ). Čak i ako vam je brzina klika dobra, pa možete izbjeći ove neželjene efekte i normalno uključiti ili isključiti svjetlo, netko tko klikne brže ili sporije, mogao bi osjetiti problem.
+
+Isprobajte program klikajući različitom brzinom.
+
+.. image:: ../../_images/Shema1_Off.png
+   :width: 50px
+.. image:: ../../_images/Shema1_On.png
+   :width: 50px
+.. image:: ../../_images/SwitchOff.png
+   :width: 50px
+.. image:: ../../_images/SwitchOn.png
+   :width: 50px
+.. image:: ../../_images/BulbOff.png
+   :width: 50px
+.. image:: ../../_images/BulbOn.png
+   :width: 50px
+
+.. activecode:: PyGame__interact_switch_read_state_bad
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src/PyGame/3_Interaction/3d_Mouse_events/Switch_read_state.py
+
+Informacije o promjenama stanja
+'''''''''''''''''''''''''''''''
+
+Kao što smo spomenuli u uvodu ovog poglavlja, radnje korisnika možemo pratiti i na drugi način, a to je korištenje sistemskih događaja. Događaji kojima se ovdje bavimo mogu se shvatiti kao **promjene stanja miša ili tipkovnice** (iako postoje i drugi događaji, poput onih koje generira sistemski sat). Na primjer, kada tipka na tipkovnici ili tipka miša spusti, operacijski sustav računala prima signal s uređaja za unos i registrira ga kao događaj. Isto se događa u trenutku podizanja tipki, promjene položaja miša itd.
+
+Svi se događaji bilježe i pamte, tako da se ne može dogoditi da propustimo korisničku radnju, primjerice kad čitamo samo status.
+
+PyGame knjižnica omogućava nam da dobijemo po jedan objekt za svaki događaj s informacijama o tom događaju, da ispitamo o kakvom se događaju radi i da po potrebi programski odgovorimo na događaj.
+
+Korištenje događaja u programima
+''''''''''''''''''''''''''''''''
+
+U programima koji koriste događaje napisat ćemo posebnu funkciju ``handle_event(event)`` (možete joj dati drugačije ime). Ova funkcija dobiva objekt PyGame *događaj* kao argument, koji sadrži sve potrebne informacije o događaju. Ime naše funkcije obrade događaja dodamo kao treći argument pozivu funkcije *pygamebg.frame_loop*. To omogućava pozivanje naše funkcije *handle_event* za svaki događaj koji se dogodi dok se program pokreće.
+
+Pogledajmo sada kako točno postupamo s događajem. 
+
+U funkciji *handle_event* provjeravamo je li ovaj događaj tipa "tipka miša ide dolje". To radimo usporedbom tipa događaja, pohranjenog u polju ``event.type``, s konstantom PyGame ``pg.MOUSEBUTTONDOWN``, koja ima opisano značenje.
+
+Ako je događaj koji nas zanima (pomicanje tipke miša prema dolje, tj. početak klika), pomoću naredbe ``mouse_point = event.pos`` u varijablu *mouse_point* postavljamo koordinate točke u kojoj je miš bio u to vrijeme događaj, jer želimo znati na što je korisnik kliknuo.
+
+Sljedeće naredbe provjeravaju je li korisnik kliknuo na prekidač, i ako jest, promijene vrijednost logičke varijable *switch_on*, koja pokazuje stanje prekidača.
+
+.. questionnote::
+
+    **Primjer - prekidač:** 
+    
+    Ovaj program radi isto što i prethodni, ali koristi događaj spuštanja tipke miša pa nema neželjenih efekata.
+   
+.. activecode:: PyGame__interact_Switch
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src/PyGame/3_Interaction/3d_Mouse_events/Switch.py
+

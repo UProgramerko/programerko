@@ -1,0 +1,169 @@
+Skripte i *for* petlje
+======================
+
+Skripte
+-------
+
+Ljudi često pišu kratke programe u Python-u i koriste ih za izračun ili automatizaciju nečega. Takvi su programi poznati i kao **skripte.** Za skripte nije neobično da pojedini ili svi ulazni podaci budu sadržani u samoj skripti umjesto da se učitavaju. Na primjer, sljedeća skripta izračunava 20 posto popusta:
+
+.. activecode:: console__scripting_fixed
+
+    discount = 20
+    regular_price = 250
+    discounted_price = regular_price * (1 - discount / 100)
+    print(regular_price, discounted_price)
+
+Upute za korištenje ove skripte mogu biti: "U prva dva reda skripte postavite željene vrijednosti, a zatim pokrenite skriptu."
+
+Nećete vidjeti slične upute za programe koje instalirate na svoje računalo ili mobilni telefon. Takve programe nazivamo  **aplikacijama**, a napisane su tako da korisnici ne trebaju znati (a najčešće ne mogu znati) kako izgledaju pnaredbe tog programa.
+
+Sa skriptama nema stroge podjele između korisnika i programera kao kod aplikacija. Skripte se često pišu za osobnu upotrebu ili za korisnika koji koristi ili razumije programiranje. Svi programi u ovom vodiču zapravo su više skripti nego aplikacija.
+
+Već smo naglasili da ovaj priručnik nije namijenjen samo budućim profesionalcima u programiranju. Ako ne programirate programe, još uvijek možete imati koristi od programiranja. Možete napisati skriptu ili prilagoditi postojeću, kao što se očekuje u pretpostavljenoj uputi prethodnog primjera.
+
+Ponavljanje izračuna za više podataka
+-------------------------------------
+
+Napravimo prethodni primjer općenitijim. Pretpostavimo da u jednoj trgovini imamo pravo na 20 posto popusta na redovne cijene. Zanimaju nas snižene cijene raznih proizvoda, čije redovne cijene poznajemo.
+
+**Ponovno pokretanje programa koji učitava podatke**
+
+Rješenje koje već znamo napisati je učitati redovnu cijenu proizvoda, a zatim izračunati i ispisati sniženu cijenu. Ovaj program može izgledati ovako:
+
+.. activecode:: console__scripting_input
+
+    discount = 20
+    regular_price = int(input())
+    discounted_price = regular_price * (1 - discount / 100)
+    print(regular_price, discounted_price)
+
+Program možemo pokrenuti više puta, postavljajući svaki put redovnu cijenu za jedan od proizvoda koji nas zanimaju.
+
+
+**Višestruki ulazi podaci u samom programu**
+
+U slučaju kada su nam unaprijed poznate sve redovne cijene proizvoda koji nas interesiraju, više pokretanja programa i unošenje jedne po jedne cijene nije najbolji način da dobijemo sve snižene cijene. Umjesto toga, najbolje bi bilo da sve redovne cijene unesemo direktno u program i da za svaki od tih podataka ponovimo računanje i ispisivanje rezultata.
+
+Naredba *for*
+-------------
+
+Da bismo mogli ponoviti neki dio programa za razne podatke, potrebna nam je naredba **for**, koja omogućava ponavljanje drugih naredbi. Sada ćemo upoznati jedan način korištenja naredbe *for*, a još neke načine ćemo upoznati tokom narednih lekcija.
+
+Vratimo se primjeru s popustom. Recimo da su redovne cijene proizvoda koji nas interesiraju 250, 120 i 310 i želimo da pomoću programa u jednom izvršavanju izračunamo cijene s popustom za te proizvode. To možemo napraviti ovako:
+
+.. activecode:: console__scripting_for
+
+    discount = 20
+    for regular_price in (250, 120, 310):
+        discounted_price = regular_price * (1 - discount / 100)
+        print(regular_price, discounted_price)
+
+Napomena: notacija (250, 120, 310) se zove **n-torka**.
+
+Pokretanjem programa vidimo da on ispisuje:
+
+.. code::
+
+    250 200.0
+    120 96.0
+    310 248.0
+
+Primjećujemo da su posljednja dva reda programa izvedena tri puta, pri čemu je varijabla *regular_price* dobivala redom vrijednosti 250, 120, 310. To smo postigli ``for`` naredbom. Dijelovi programa koji se ponavljaju nazivaju se petlje, pa možemo reći da smo u prethodnom primjeru koristili **for petlju**.
+
+Sljedeća slika prikazuje glavne elemente *for* petlje:
+
+.. image:: ../../_images/Console/console_loop_tuple.png
+  :width: 400px
+  :align: center
+
+- Obavezni elementi ispisuju se crvenom bojom (riječi ``for``, ``in`` i znak dvotočka ``:`` u prvom redu). Ti se elementi pišu na isti način u svakoj *for* naredbi.
+- Plavom bojom napisana je **varijabla petlje**. Na tom mjestu pišemo ime varijable koja će uzimati redom navedene vrijednosti. U našem primjeru, varijabla petlje je *regular_price*.
+- Zelenom bojom je napisana n-torka vrijednosti. Na to mjesto u zagrade postavljamo vrijednosti odvojene zarezima. To su vrijednosti koje će redom uzimati varijabla petlje. U našem primjeru, n-torka vrijednosti je (250, 120, 310).
+- **Tijelo petlje** je napisano crnom bojom. To su naredbe koje se po jedanput izvršavaju za svaku vrijednost varijable petlje. U naredbama tijela petlje mogu, a i ne moraju se koristiti varijble petlje.
+
+Naredbe tijela petlje se pišu uvučeno u odnosu na prvi red naredbe *for* i sve se uvlače za isti broj razmaka. Uobičajeno je koristi 4 razmaka za uvlačenje i mi ćemo se držati te preporuke.
+
+
+Primjeri i zadaci
+''''''''''''''''''
+
+.. questionnote::
+    
+    **Primjeri - kada krenuti**
+    
+    Ronnie bi trebao stići na odredište najkasnije u 17:00. Ovisno o odabranom putu putovanja, Ronnieu će možda trebati 55, 70, 85, ili 95 minuta. Napišite program koji ispisuje za svaki način putovanja kada Ronnie mora otići najkasnije kako bi stigao na vrijeme.
+    
+    
+Program koji rješava taj zadatak mogao bi izgledati ovako:
+
+.. activecode:: console__scripting_start_travel
+    
+    arrival = 17*60
+    for travel_duration in (55, 70, 85, 95):
+        leaving = arrival - travel_duration
+        leaving_hours = leaving // 60
+        leaving_minutes = leaving % 60
+        print("Ako put traje", travel_duration, "minuta, Ronnie treba krenuti u", leaving_hours, "sati i", leaving_minutes, "minuta.")
+
+
+
+
+.. questionnote::
+
+    **Zadatak - trajanje putovanja**
+
+    George namjerava krenuti na put autom aužine 600-kilometara u 9 sati ujutro, i zanima ga kada bi stigao na odredište ako bi se vozio prosječnom brzinom od 90, 100, 120 ili 130 kilometara na sat. Dovršite program koji ispisuje vrijeme dolaska na odredište za svaku od gore navedenih prosječnih brzina.
+    
+.. activecode:: console__scripting_speed
+
+    path_length = 600 # Km
+    leaving = 9       # h
+    for a in ():  # ispravite i dopunite
+        trip_duration = path_length / speed # h
+        arrival = leaving + trip_duration    # h
+        arrival_hours = int(arrival)
+        arrival_minutes = round((arrival - arrival_hours) * 60)
+        print("Na", brzini, "km / h dolazak je u", arrival_hours, "sati i", arrival_minutes, "minuta.")
+        
+.. commented out
+
+    path_length = 600
+    leaving = 9
+    for speed in (90, 100, 120, 130):
+        trip_duration = path_length / speed
+        arrival = leaving + trip_duration
+        arrival_hours = int(arrival)
+        arrival_minutes = round((arrival - arrival_hours) * 60)
+        print("Na", brzini, "km / h dolazak je u", arrival_hours, "sati i", arrival_minutes, "minuta.")
+
+
+
+
+.. questionnote::
+
+    **Zadatak - završna ocjena**
+
+    Zbroj dosadašnjih 5 Katieinih ocjena je 23. očekuje još jednu ocjenu od zadnjeg kontrolnog zadatka. Dovršite program u nastavku tako da za svaku moguću konačnu ocjenu (1, 2, 3, 4, ili 5) ispisuje koja bi prosječna ocjena bila u tom slučaju.
+    
+.. activecode:: console__scripting_final_mark
+
+    sum_grades_so_far = 23
+    num_grades_so_far = 5
+    for # dovršite naredbu
+        average_grade = 0 # ispravite
+        print("Zvaršna ocjena", final_grade, "srednja ocjena bi bila", average_grade)
+
+
+
+.. questionnote::
+
+    **Zadatak - džeparac**
+
+    Theo je napravio plan za trošenje džeparca tijekom 14-dnevnog odmora. Napišite program koji za prosječnu dnevnu potrošnju od 5, 10, ili 20 euro, ispisuje koliko bi novca Theo ukupno trebao za svaki slučaj.
+   
+
+.. activecode:: console__scripting_allowance
+
+    num_days = 14
+    # dovršite program
+

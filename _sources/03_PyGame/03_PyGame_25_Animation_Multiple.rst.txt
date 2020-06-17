@@ -1,0 +1,103 @@
+Pomicanje više objekata
+-----------------------
+
+Do sada smo napravili animacije u kojima su se kretali razni predmeti (automobil, bilijarska kugla, avion, tekst), ali u svakom od tih programa postojao je samo jedan pokretni objekt. Za globalne varijable koje opisuju scenu koristili smo koordinate tog pokretnog objekta, a ponekad smo koristili i druge vrijednosti, poput pomicanja, smjera kretanja i tako dalje.
+
+Kretanje više objekata nije u osnovi različito od kretanja jednog predmeta - jednostavno ćemo trebati pratiti vrijednosti koje opisuju kretanje za sve objekte. Na primjer, svaki objekt možemo predstaviti s n-torkom vrijednosti koji ga opisuju i sve takve vrhove ćemo držati na popisu.
+
+Lopte
+'''''
+
+U slijedećem primjeru vidjet ćemo animirano kretanje nekoliko lopti. Svaka lopta je predstavljena n-torkom :math:`(x, y, dx, dy, r, color)` tuple, gdje su :math:`x, y` koordinate središta kugle, :math:`dx, dy` su pomaci kugle po koordinati, :math:`r` je polumjer i :math:`color` je boja lopte. Sve takve n-torke su smještene u listu *lopte*.
+
+Prilikom raspakiranja n-torke s jednog elementa liste (naredba ``x, y, dx, dy, r, color = balls[i]``), kao i prilikom vraćanja na listu (naredba ``balls[i] = (x, y, dx, dy, r, color)``), trebamo paziti na redoslijed varijabli.
+
+U primjeru, mi koristimo ``random`` modul za stvaranje lopti kako bismo dobili slučajne odabire (uvezene pomoću naredbe *import*). Funkcija ``random.randint(a, b)`` vraća slučajni cijeli broj između *a* i *b* (uključujući granice), a funkcija ``random.choice(a)`` vraća slučajni element iz kolekcije *a*.
+
+.. activecode:: PyGame__anim_balls_bouncing
+    :nocodelens:
+    :modaloutput:
+    :includesrc: src/PyGame/2_Animation/2e_Anim_Multiple/balls_bouncing.py
+
+Usporedimo li ovaj program s animacijom pokreta bilijarske kugle, primijetit ćemo veliku sličnost. Funkcija *new_frame* se razlikuje samo po tome što su sada sve radnje (pomicanje, odskakivanje, crtanje) izvedene u petlji, jer ih treba izvoditi za svaku kuglu. Postavljanje početnog stanja također je nešto složenije, jer postoji više objekata i pohranjujemo više podataka za svaki od njih, a koristimo i slučajne odabire.
+
+~~~~
+
+U prethodnom primjeru svi su predmeti (lopte) prisutni od početka do kraja programa. Postoje situacije kada želimo da neki objekti prestanu postojati tijekom izvođenja programa ili da se pojavi neki novi objekti (ili oba). U takvim slučajevima možemo upotrijebiti pomoćnu listu u funkciji *new_frame* u koji ćemo staviti vrijednosti koje opisuju novo stanje. Tipičan niz aktivnosti je sljedeći:
+
+- na početku funkcije *new_frame* napravimo novu praznu listu
+- prolazimo kroz listu postojećih n-torki, mijenjamo ih, i one koje nam i dalje trebaju dodajemo u novu listu
+- ako je potrebno, popis dopunite novim n-torkama
+- na kraju ažuriramo globalnu listu unošenjem vrijednosti s nove, pomoćne liste
+
+Pogledajmo primjer.
+
+Zvijezde
+''''''''
+
+U ovom primjeru simuliramo kretanje kroz svemir. Zvijezde koje susrećemo predstavljene su bijelim krugovima i određuju se njihovim položajem i polumjerom.
+
+Za svaki je frame izračunao novu pomoćnu listu koju opisuje sljedeće stanje. Pomićemo zvijezde slijedeći neko pravilo, a kopiramo one koje nisu u potpunosti napustile prozor na sljedeću listu stanja. Nakon obrade postojećih zvijezda, na sljedeću listu stanja dodajemo nove zvijezde kako se ukupni broj zvijezda ne bi smanjio. Na kraju premjestimo sve zvijezde na globalnu listu kako bismo kasnije mogli izračunati sljedeći frame.
+
+.. activecode:: PyGame__anim_trough_stars
+    :nocodelens:
+    :modaloutput:
+    :includesrc: src/PyGame/2_Animation/2e_Anim_Multiple/trough_stars.py
+
+Ovaj je primjer dat prvenstveno radi uvođenja drugačijeg načina rada s popisom n-torki koji opisuju prizor. Zbog toga su u pozadini ostali neki zanimljivi detalji. Pogledajmo malo te, u ovom kontekstu, bočne detalje. Da bi se postigli efekt približavanja, zvijezde ispred nas trebale bi se razdvojiti i povećati. Stoga se u programu vrijednosti *x* i *y* mijenjaju tako da se zvijezde pomiču iz središta prozora prema rubovima, krećući se brže kako odlaze dalje od središta.
+
+Nije posebno važno da u potpunosti razumijete naredbe koje mijenjaju vrijednosti *x*, *y*, i *r* kako biste naučili programiranje, ali možete isprobati kako se mijenja animacija kad malo promijenite koeficijente u tim naredbama (na primjer, zvijezde se mogu kretati sporije ili brže rasti).
+
+
+Zadaci
+''''''
+
+.. questionnote::
+
+    **Snježne pahulje:** Dovršite program tako da radi kao što je prikazano u primjeru (gumb "Play Task"). 
+    
+    Svaka snježna pahulja opisana je sa samo dva broja, njezinim koordinatama, tako da će n-torka koje ćemo koristiti biti zapravo parovi :math:`(x, y)`. 
+    
+    Snježne pahulje padaju po 1 piksel, a one koje prolaze kroz prozor zamjenjuju se novim snježnim pahuljama. Formiranje novog stanja slično je programu "zvijezde", samo su pravila za pomicanje pahuljica jednostavnija. 
+    
+    Snježne pahulje u početnom setu su odabrane bilo gdje u prozoru, a one koje su kasnije dodane biraju se negdje na gornjem rubu prozora.
+    
+.. image:: ../../_images/snowflake.png
+   :width: 50px
+    
+.. activecode:: PyGame__anim_snowflakes
+    :nocodelens:
+    :modaloutput:
+    :playtask:
+    :includehsrc: src/PyGame/2_Animation/2e_Anim_Multiple/snowflakes.py
+
+    import random, pygame as pg, pygamebg
+    (width, height) = (800, 400)
+    canvas = pygamebg.open_window(width, height, "Snowflakes")
+
+    snowflake_image = pg.image.load("snowflake.png")  # slika snježne pahulje
+    snowflake_height = snowflake_image.get_height()
+    num_flakes = 10 # ukupan broj pahulja
+
+
+.. questionnote::
+
+    **Odlazeće lopte:** Kopirajte ovdje prvi program (lopte), ovdje i modificirajte ga tako da se lopte ne odbijaju nego nastave dalje, a one koje odlaze zamijene novim loptama. Ovaj je program kombinacija dva dana primjera (lopte i zvijezde), pa pokušajte koristiti dijelove oba ova programa.
+
+.. activecode:: PyGame__anim_balls_passing
+    :nocodelens:
+    :modaloutput:
+    :playtask:
+    :includehsrc: src/PyGame/2_Animation/2e_Anim_Multiple/balls_passing.py
+
+
+.. questionnote::
+
+    **Tekst koji klizi** Isprobajte program i pokušajte shvatiti kako to funkcionira. Pokušajte izmijeniti nešto u programu (tekst koji se prikazuje, boju u kojoj se tekst prikazuje, brzinu kojom se tekst kreće ili bilo koju drugu pojedinost).
+    
+    Izazov: Pokušajte izmijeniti program tako da tekst klizi prema dolje umjesto prema gore.
+
+.. activecode:: PyGame__anim_gliding_text
+    :nocodelens:
+    :modaloutput:
+    :includesrc: src/PyGame/2_Animation/2e_Anim_Multiple/gliding_text.py

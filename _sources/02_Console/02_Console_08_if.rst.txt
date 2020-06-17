@@ -1,0 +1,322 @@
+Naredbe grananja
+================
+
+U lekcijama o Karelu smo redovito provjeravali na primjer može li robot ići naprijed. Ove provjere su nam bile portebne, jer ukoliko bismo pokušali ići s robotom naprijed kada polje ispred njega ne postoji, program bi prijavio pogrešku i prekinuo rad. Isto tako, trebalo je prije uzimanja loptice provjeravati postoji li loptica na polju, a prije ostavljanja loptica provjeravati ima li Karel loptica kod sebe.
+
+Slično tome, u programima u kojima računamo često nam je potrebno da usporedimo dvije vrijednosti, odnosno utvrditi jesu li jednake, je li jedna manja od druge, različita od druge i slično. Ovisno o ishodu usporedbe, program se može nastaviti izvršavati na različite načine.
+
+Neki od simbola koji se koriste za usporedbu isti su kao i u matematici (na primjer ``<`` and ``>``) a neki nisu. Sljedeća tablica daje prikaz svih standardnih usporedbi koje se koriste u matematici i na Pythonu (kao i u mnogim drugim programskim jezicima).
+
+====================   ==================== ========================================
+Math                   Python               Meaning
+====================   ==================== ========================================
+:math:`а < b`          a < b                a je manje od b
+:math:`a \leq b`       a <= b               a je manje ili jednako b
+:math:`a > b`          a > b                a je veće od b
+:math:`a \geq b`       a >= b               a je veće ili jednako b
+:math:`a = b`          a == b               a je jednako b
+:math:`a \neq b`       a != b               a nije jednako b
+====================   ==================== ========================================
+
+Napomena :math:`a<b` može se shvatiti kao izraz čija je vrijednost točna ili netočna u svakom slučaju. Te se vrijednosti pišu na Pythonu kao *True* i *False* i to su **logičke konstante**, odnosno konstante tipa ``bool`` koje nazivamo logičkim tipom. Izrazi čija je vrijednost true ili false (logički tip) nazivaju se **logičkim izrazima**. Svi izrazi u gornjoj tablici logički su izrazi (kasnije ćemo vidjeti više logičkih izraza).
+
+Naredba if
+----------
+
+Naredbu *if* smo već upoznali u lekcijama o Karelu, podsjetimo se:
+
+Naredba *if* koristi se za donošenje odluke koja grupa od dve grupe naredbi se treba izvršiti. Na Pythonu se ona piše ovako:
+
+.. activecode:: console__if_else_syntax
+   :passivecode: true
+
+   if condition:
+       naredba_a1
+       ...
+       naredba_ak
+   else:
+       naredba_b1
+       ...
+       naredba_bm
+
+.. infonote::
+
+    **Značenje naredbe if:**
+    
+    Naredba napisana gore znači: ako je uvjet ispunjen, izvrši naredbe *naredba_a1*, ... *naredba_ak*, u suprotnom izvršite *naredba_b1*, ... *naredba_bm*.
+    
+    **Pravila pisanja (sintaksa) naredbe if**
+    
+    - Nakon riječi ``if``, piše se logički izraz i na kraju reda obavezno znak ``:`` (dvotočka).
+    - U sljedećim redovima, uvučeno za isti broj razmaka (obično 4), pišu se naredbe koje trebaju biti izvršene ako logički izraz ima vrijednost *True*. Može biti jedna ili više naredbi.
+    - Nakon naredbi koje se izvršavaju ako je uvjet ispunjen, piše se riječ ``else`` i opet znak ``:`` (dvotočka). Riječ ``else`` je jednako uvučena kao i riječ ``if``.
+    - U sljedećim redovima, ponovno uvučeno za isti broj razmaka, pišu se naredbe koje trebaju biti izvršene ako logički izraz ima vrijednost *False*. Može biti jedna ili više naredbi.
+    
+    Naredba ``if`` se zove i *naredba grananja* zato što se tijek izvršavanja programa kod ove naredbe grana: sljedeća naredba koja će se izvršiti ovisi od vrijednosti logičkog izraza u uvjetu. Grupe naredbi poslije riječi *if* ili *else* se zato nazivaju i granama *if* naredbe.
+
+U slučaju da program ne treba ništa učiniti kada uvjet naredbe *if* nije ispunjen, odnosno kada nam ne treba druga grana naredbe *if*, možemo je izostaviti: 
+
+.. activecode:: console__if_syntax
+   :passivecode: true
+
+   if condition:
+       naredba_a1
+       ...
+       naredba_ak
+
+Ovaj kratki oblik *if* naredbe ćemo kasnije koristiti.
+
+Naredba if - primjeri i zadaci
+''''''''''''''''''''''''''''''
+
+.. questionnote::
+    
+    **Primjer - tko je mlađi:** 
+    
+    Peter i Mark žele odigrati partiju biljara. Dogovorili su se da prvi igra onaj koji je mlađi. Napišite program koji učitava broj godina Peter i Mark (koji nisu jednaki) i ispisuje tko će izvesti prvi potez.
+    
+.. activecode:: console__branching_younger
+
+    peter = int(input("Koliko godina ima Peter: "))
+    mark = int(input("Koliko godina ima Mark: "))
+    if peter < mark:
+        print('Peter igra prvi.')
+    else:
+        print('Mark igra drugi.')
+
+
+
+
+
+.. questionnote::
+    
+    **Primjer - pakiranje:** 
+    
+    Jaja se na farmi pakiraju u kutije po 10 komada, a pune kutije se šalju u trgovinu. Napišite program koji učitava broj jaja spremnih za pakiranje i ispiše možete li sva jaja pakirati i poslati u trgovinu, ili će nekoliko jaja biti privremeno ostati nepakirano.
+    
+Ovdje treba provijeriti je li broj jaja djeljiv sa 10. Zbog toga koristimo operator ``%``, koji daje ostatak nakon dijeljenja. Ako je ostatak nakon dijeljenja broja jaja s 10 jednak nuli, sva jaja se mogu pakirati i poslati.
+
+.. activecode:: console__branching_eggs
+
+    num_eggs = int(input("Koliko ima jaja: "))
+    if num_eggs % 10 == 0:
+        print('Sva se jaja mogu poslati.')
+    else:
+        print('Neka jaja će ostati.')
+
+
+
+
+
+.. questionnote::
+    
+    **Zadatak - Strana ulice:** 
+    
+    Parni brojevi se nalaze na desnoj a neparni na lijevoj strani ceste. Napišite program koji učitava traženi broj i ispisuje s koje strane se nalazi taj broj.
+
+
+Ovdje treba provijeriti je li traženi broj djeljiv sa 2. Zadatk je sličan predhodnom - ako je ostatak dijeljenja traženog broja s 2 jednak nuli, broj se nalazi na desnoj strani ulice, inače je na lijevoj strani.
+
+.. activecode:: console__branching_home_number
+
+    number = int(input("Koji je kućni broj: "))
+    # dovršite program
+
+
+
+
+.. questionnote::
+    
+    **Zadatak - kino:** 
+    
+    Imate 10 eura kod sebe. Napišite program koji učitava cijenu ulaznice za film i kokice, a zatim ispisujete imate li dovoljno novca za kartu i kokice. 
+    
+    
+
+.. activecode:: console__branching_cinema
+
+    ticket_price = int(input("Koliko košta karta : "))
+    popcorn_price = int(input("Koliko koštaju kokice: "))
+    # dovršite program
+
+
+Složeniji uvjeti
+----------------
+
+U nekim zadacima moramo izraziti složenije uvjete nego da jednostavno uspoređujemo dvije vrijednosti. Riječ **i**, **ili** i **ne** koriste se za povezivanje jaednostavnijih uvjeta, a Python koristi potupuno iste riječi za to na engleskom: **and**, **or**, **not**. Evo kako procijeniti tako složene uvjete. Ako su *a* i *b* uvjeti, tada:
+
+- uvjet ``a and b`` će biti ispunjen ako su ispunjena oba uvjeta *a* i *b*;
+- uvjet ``a or b`` će biti ispunjen ako je ispunjen barem jedan od uvjeta *a* i *b*;
+- uvjet ``not a`` će biti ispunjen ako uvjet *a* nije ispunjen (što smo već spomenuli u lekcijama o Karelu);
+
+Ovi se uvjeti mogu dodatno kombinirati u još složenije prema potrebama zadatka. U složenim uvjetima možemo koristiti zagrade da utičemo na redoslijed izračunavanja uvjeta (ili kad nismo sigurni koji je zadani poredak), i da program jasnije postavimo drugima koji ga čitaju. Ako u složenom uvjetu nema zagrade, prvo se primjenjuje *not*, zatim *and*, i na kraju *or*.
+
+Složeniji uvjeti - primjeri
+'''''''''''''''''''''''''''
+
+.. questionnote::
+    
+    **Primjer - prestupna godina:**
+
+    Napišite program koji ispisuje je li određena godina (između 1800. i 2200. godina, uključujući granice) prestupna ili normalna.
+    
+    Prema gregorijanskom kalendaru, za određivanje je li godina normalna ili prestupna koriste se sljedeća pravila:
+    
+    - godine koje nisu djeljive s 4 (npr., 1923, 1070, 2017) su normalne;
+    - godine koje su djeljive sa 100, a ne sa 400 (npr. 1700, 1800, 1900, 2100, 2200) također su normalne;
+    - sve ostale godine (npr. 1984, 2000, 2012) su prestupne. Te su godine djeljive sa 4, a ne sa 100, ili su djeljive sa 400.
+
+Zapisujući ta pravila u obliku logičkih uvjeta, dobivamo:
+    
+.. activecode:: console__branching_leap_year1
+
+    year = int(input())
+    if (year % 4 > 0) or (year % 100 == 0 and year % 400 > 0):
+        print("Godina", year, "je normalna.")
+    else:
+        print("Godina", year, "je prestupna.")
+
+Jednako dobro ćemo dobiti ako koristimo opis za prestupne godine dane u pravilu 3 (provjerite razmišljanjem i isprobavanjem oba programa da dobijete isti rezultat):
+    
+.. activecode:: console__branching_leap_year2
+
+    year = int(input())
+    if (year % 4 == 0 and year % 100 != 0) or year % 400 == 0:
+        print("Godina", year, "je prestupna.")
+    else:
+        print("Godina", year, "je normalna.")
+
+
+.. questionnote::
+
+    **Primjer - radno vrijeme:** 
+    
+    Radno vrijeme jedne suvenirnice je od 7 do 11 ujutro i od 17 do 22 sata navečer (treba uzeti u obzir da radi u 7:00 i u 17:00, a ne radi u 11:00 i u 22:00). Peter ja naišao na trgovinu u *H* sati *M* minuta. Napišite program koji učitava broj *H* (od 0 do 23) i odgovara je li Peter naišao na trgovinu tijekom radnog vremena.
+    
+.. activecode:: console__branching_working_hours1
+
+    h = int(input())
+    if (7 <= h and h < 11) or (17 <= h and h < 22):
+        print("Peter je naišao u toku radnog vremena.")
+    else:
+        print("Peter je naišao van radnog vremena.")
+    
+Do rješenja možemo doći i postupnim računanjem logičkih vrijednosti koristeći logičke varijable:
+
+.. activecode:: console__branching_working_hours2
+
+    h = int(input())
+    at_morning_office_hours  = 7 <= h and h < 11
+    at_evening_office_hours = 17 <= h and h < 22
+    at_office_hours = at_morning_office_hours or at_evening_office_hours
+    if at_office_hours:
+        print("Petar je naišao u toku radnog vremena.")
+    else:
+        print("Peter je naišao van radnog vremena.")
+
+U ovom rješenju samo je *h* cjelobrojna varijabla, a sve ostale (*at_morning_office_hours*, *at_evening_office_hours*, *at_office_hours*) su logičke, što znači da će prilikom izvršavanja programa dobiti vrijednost *True* ili *False*.
+
+Složeniji uvjeti - pitanja
+''''''''''''''''''''''''''
+
+.. dragndrop:: console__branching_quiz_compare
+    :feedback: Probajte ponovo!
+    :match_1: a <= b ||| a < b or a == b
+    :match_2: a >= b ||| b <= a
+    :match_3: not (a == b) ||| a < b or a > b
+    :match_4: not (a != b) ||| a == b
+
+    Usporedite ravnopravne uvjete
+
+.. mchoice:: console__branching_quiz_interval
+   :multiple_answers:
+   :answer_a: h < 7 and 11 <= h
+   :answer_b: h < 7 or 11 <= h
+   :answer_c: not(7 <= h) or not(h < 11)
+   :answer_d: h <= 7 or 11 < h
+   :correct: b, c
+   :feedback_a: Ne, ovaj uvjet nije ispunjen ni za jedan h.
+   :feedback_b: Točno.
+   :feedback_c: Točno.
+   :feedback_d: Ne, vrijednost uvjeta se razlikuje ako je h točno 7 ili 11.
+
+   Koji su svi uvjeti jednaki **not (7 <= h and h <11)**?
+
+
+.. dragndrop:: console__branching_quiz_abc_sign
+    :feedback: Probaj ponovo!
+    :match_1: Barem jedan od a, b, c je pozitivan ||| a > 0 or b > 0 or c > 0
+    :match_2: Niti jedan od a, b, c je pozitivan ||| a <= 0 and b <= 0 and c <= 0
+    :match_3: a, b i c nisu svi pozitivni ||| a <= 0 or b <= 0 or c <= 0
+    :match_4: a, b i c su svi pozitivni ||| a > 0 and b > 0 and c > 0
+
+    Uskladite uvjete i opise
+
+.. mchoice:: console__branching_quiz_sport_center
+   :multiple_answers:
+   :answer_a: (stanovnika <= 10000) ili (stanovnika > 10000 i prihoda <= 2000)
+   :answer_b: stanovnika <= 10000 i prihoda <= 2000
+   :answer_c: stanovnika <= 10000 i prihoda <= 2000
+   :answer_d: (prihoda <= 2000) or (prihoda > 2000 i stanovnika <= 10000)
+   :correct: a, b, d
+   :feedback_a: Točno.
+   :feedback_b: Točno.
+   :feedback_c: Netočno.
+   :feedback_d: Točno.
+
+   Državna vlada nudi pomoć za izgradnju sportskog centra. Naseljena mjesta do 10000 stanovnika mogu konkurirati, a od mjesta s više od 10000 stanovnika, mogu konkurirati samo ona u kojima je prosječan prihod do 2000. Koji od uvjeta ispravno provjeravaju može li mjesto konkurirati?
+
+Složeniji uvjeti - zadaci
+'''''''''''''''''''''''''
+
+.. questionnote::
+
+    **Zadatak - brojevi po redu:** 
+    
+    Napišite programkoji uzima cijele brojeve *a*, *b*, *c* i odgovara na pitanja je li b srednje veličine.
+
+    
+.. activecode:: console__branching_increasing3
+
+    a = int(input("a = "))
+    b = int(input("b = "))
+    c = int(input("c = "))
+    # dovršite program
+
+
+
+
+.. questionnote::
+
+    **Zadatak - srednji broj:** 
+    
+    Napišite program koji učitava cijele brojeve *a*, *b*, *c* i odgovara na pitanje je li *b* srednji po veličini. 
+
+    
+.. activecode:: console__branching_middlenum
+
+    a = int(input("a = "))
+    b = int(input("b = "))
+    c = int(input("c = "))
+    # dovršite program
+    
+    
+.. questionnote::
+
+    **Zadatak - čuvanje psa:** 
+    
+    Ana i Marko žive zajedno i imaju psa po imenu Bobby. Njih dvoje imaju planirano putovanje istog mjeseca, Ana od datuma *a1* da *a2*, i Marko od *m1* do *m2*. Oboje na put kreću ujutro, a vraćaju se navečer. Budući da ne žele Bobbya ostavljati samoga, pitaju se preklapaju li se njihova putovanja.
+    
+    Napišite program koji učitava cijele brojeve *a1*, *a2*, *m1* and *m2*, i odgovara na pitanje preklapaju li se Anina i Markova putovanja.
+    
+**Pomoć:** putovanja se preklapajuako Marko krene prije nego što se Ana vrati (dan Markovog odlaska je manji ili jednak danu Aninog povratka) ili obrnuto - ako Ana odlazi prije nego što se Marko vrati.
+
+.. activecode:: console__branching_intervals
+
+    a1 = int(input("a1 = "))
+    a2 = int(input("a2 = "))
+    m1 = int(input("m1 = "))
+    m2 = int(input("m2 = "))
+    # dovršite program
+    
+    

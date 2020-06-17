@@ -1,0 +1,645 @@
+Naredba *if* naredba - vježbanje
+================================
+
+U ovom djelu ćemo samo uvježbavati uporabu *if* naredbe i njeno kombiniranje s petljama.
+
+Zadaci za vježbu
+------------------
+
+Idi do kraja i pokupi samo jednu lopticu
+''''''''''''''''''''''''''''''''''''''''
+
+.. questionnote::
+
+   Karel bi trebao stići do kraja hodnika, a da usput uzme samo prvu lopticu na koju naiđe. Polje s koga Karel kreće nikad nema lopticu, a i Karel je na početku bez loptica.
+   
+.. karel:: Karel_if__take_first_ball_only
+   :blockly:
+
+   {
+      setup:function() {
+         function random(n) {
+            return Math.floor(n * Math.random());
+         }
+         
+         var ww = [
+            [
+               '█████████████',
+               '█E.0.1.0.3.0█',
+               '█████████████'
+            ],
+            [
+               '█████████',
+               '█E.0.2.2█',
+               '█████████'
+            ],
+            [
+               '███████',
+               '█E.1.0█',
+               '███████'
+            ]
+         ];
+         let choice = random(ww.length);
+         var w = ww[choice];
+         var ny = Math.floor(w.length / 2);
+         var nx = Math.floor(w[0].length / 2);
+         var world = new World(nx, ny);
+         
+         for (let y = 1; y <= ny; y++) {
+            let wy = 2*(ny-y) + 1;
+            for (let x = 1; x <= nx; x++) {
+               let wx = 2*x - 1;
+               if (y < ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+               if (x < nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+               let c = w[wy].charAt(wx);
+               let pos = "SWEN".indexOf(c);
+               if (pos > -1) {
+                  world.setRobotStartAvenue(x);
+                  world.setRobotStartStreet(y);
+                  world.setRobotStartDirection("SWEN".charAt(pos));
+               }
+               let d = w[wy].charCodeAt(wx);
+               if (d >= 48 && d < 58) world.putBalls(x, y, d - 48);
+            }
+         }
+         
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "# dovršite program",
+                     ""];
+                     
+         return {robot:robot, world:world, code:code};
+      },
+      
+      isSuccess: function(robot, world) {
+         return robot.getBalls() > 0;
+      }
+   }
+
+.. reveal:: Karel_if__take_first_ball_only_reveal
+    :showtitle: Pomoć
+    :hidetitle: Sakrij pomoć
+    
+    Ovdje smo započeli jedno rješenje, potrebno je dovršiti *if* naredbe odgovarajućim uvjetima.
+    
+    Karel treba pokupiti lopticu samo ako su ispunjena dva uvjeta:
+    
+    - jedan je uvjet koji provjeravamo pri svakom pokupljanju loptice (bez tog uvjeta program bi se trebao prekinuti zbog neizvodive operacije).
+    - u drugom uvjetu se nameću zahtjevi ovog zadatka, a to je da Karel uzima lopticu samo ako je već nije pokupio.
+    
+    Redoslijed ispitivanja ova dva uvjeta nije bitan, svakako oba dva trebaju biti ispunjena kako bi Karel pokupio lopticu.
+    
+    .. activecode:: Karel_if__take_first_ball_only_solution
+        :passivecode: true
+      
+        from karel import *
+        while front_is_clear():  # dok ima polja ispred Karela
+            move()                    
+            if ???
+                if ???
+                    pick_ball()
+
+Pokupi lopticu na susjednom polju
+'''''''''''''''''''''''''''''''''
+
+.. questionnote::
+
+   Na ploči se nalazi samo jedna loptica. Karel i loptica se nalaze na dva susedna polja, između kojih nema zida (Karela od loptice dijeli samo jedan korak, ako se prije toga okrene prema loptici). Između ostalih polja može a i ne mora biti zidova. Karel treba pokupiti lopticu i pri tome nije bitno na kojem polju će ostati kada se program završi.
+
+   Kao i obično, pokrenite program više puta kako biste ga testirali na različitim primjerima.
+
+Jedna od ideja je da u svakom od 4 smjera pokušamo Karelom ići korak naprijed i treba pokupiti lopticu. Pri svakom od 4 pokušaja mogu nastupiti razni slučajevi:
+
+- moguće da u tom smjeru nema polja za ići naprijed
+- moguće da postoji polje ispred Karela, ali da na njemu nema loptice
+- moguće da postoji polje i da je na njemu loptica
+
+
+Prilikom pokušaja sljedećeg smjera nam je puno jednostavnije ako ne moramo uzimati u obzir je li Karel u prethodnom smjeru našao polje bez loptice, ili uopće nije pronašao polje. Zbog toga je potrebno da Karel, kada završi pokušaj u jednom smjeru, stane na isti način kada je bio na praznom polju, kao i kada polja nije ni bilo. Kada nema polja u datom smjeru, Karel će ostati na početnom polju, okrenut u tom smjeru. Najjednostavnije za nastavak potrage je da Karela ostavimo na istom polju i u istom položaju i kada se vrati s praznog susjednog polja. U stvari, neće smetati ako to uradimo i kada Karel uzme lopticu (može se dogoditi da Karel nepotrebno nastavi tražiti, ali neće doći do pogreške).
+Budući da smo doveli Karela na isto stanje (pozicija i orijentacija) nakon bilo kojeg od tri navedena slučaja, za svaki sljedeći pokušaj točno znamo polazno stanje Karela za svaki sljedeći pokušaj. Nakon svakog pokušaja okrenemo Karela prema sljedećem smjeru u kojem ćemo pokušati doćo do loptice (lijevo ili desno).
+
+.. karel:: Karel_if__take_neighboring_ball
+   :blockly:
+
+   {
+      setup:function() {
+         function random(n) {
+            return Math.floor(n * Math.random());
+         }
+         
+         var ww = [
+            [
+               '█████',
+               '█0.0█',
+               '███.█',
+               '█1.N█',
+               '███.█',
+               '█0.0█',
+               '█████'
+            ],
+            [
+               '█████',
+               '█1.0█',
+               '█...█',
+               '█E.0█',
+               '█████'
+            ],
+            [
+               '███████',
+               '█0█0█0█',
+               '█.█.█.█',
+               '█0.W.0█',
+               '█.█.█.█',
+               '█0█1█0█',
+               '███████'
+            ]
+         ];
+         let choice = random(ww.length);
+         var w = ww[choice];
+         var ny = Math.floor(w.length / 2);
+         var nx = Math.floor(w[0].length / 2);
+         var world = new World(nx, ny);
+         
+         for (let y = 1; y <= ny; y++) {
+            let wy = 2*(ny-y) + 1;
+            for (let x = 1; x <= nx; x++) {
+               let wx = 2*x - 1;
+               if (y < ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+               if (x < nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+               let c = w[wy].charAt(wx);
+               let pos = "SWEN".indexOf(c);
+               if (pos > -1) {
+                  world.setRobotStartAvenue(x);
+                  world.setRobotStartStreet(y);
+                  world.setRobotStartDirection("SWEN".charAt(pos));
+               }
+               let d = w[wy].charCodeAt(wx);
+               if (d >= 48 && d < 58) world.putBalls(x, y, d - 48);
+            }
+         }
+         
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "for i in range(4):",
+                     "    if front_is_clear():",
+                     "        move()",
+                     "        # recite Karelu da pokuša pokupiti lopticu",
+                     "        # recite Karelu da se vrati na pocetno polje...",
+                     "        # ... i okrene se prema polju na kojem je upravo bio ",
+                     "        # (kao danije ni išao na to polje)",
+                     "    # recite Karelu da se pripremi za sljedeći pokusaj",
+                     ""];
+                     
+         return {robot:robot, world:world, code:code};
+      },
+      
+      isSuccess: function(robot, world) {
+         return robot.getBalls() > 0;
+      }
+   }
+
+.. commented out
+   .. reveal:: Karel_if__take_neighboring_ball_reveal
+       :showtitle: Rješenje
+       :hidetitle: Sakrij rješenje
+       
+       Rješenje može ovako izgledati:
+       
+       .. activecode:: Karel_if__take_neighboring_ball_solution
+           :passivecode: true
+         
+           from karel import *
+           for i in range(4):          # u svakom od 4 smjera
+               if front_is_clear():        # potražite polje u tom smjeru
+                   move()                    
+                   if is_ball_on_square():
+                       pick_ball()
+                   turn_left()                 # idi natrag na pocetno polje
+                   turn_left()
+                   move()
+                   turn_left()                 # okreni se prema polju na kojem si upravo bio
+                   turn_left()
+               turn_left()                 # sljedeći smjer
+
+Prati put
+'''''''''
+
+.. questionnote::
+
+  Postoji samo jedna loptica i Karel ju treba pokupiti. Put do loptice je krivudav, ali ne postoje raskrižja (uvijek postoji samo jedan nastavak puta, čak i sa početnog polja).
+  
+.. karel:: Karel_if__take_ball_no_branches
+   :blockly:
+
+   {
+      setup:function() {
+         function random(n) {
+            return Math.floor(n * Math.random());
+         }
+         
+         var ww = [
+            [
+               '███████████',
+               '█N█0.0.0.0█',
+               '█.█.█████.█',
+               '█0█0█0.1█0█',
+               '█.█.█.███.█',
+               '█0.0█0.0.0█',
+               '███████████'
+            ],
+            [
+               '█████████',
+               '█0.0.0.0█',
+               '█.█████.█',
+               '█0█0.0.0█',
+               '█.█.█████',
+               '█0█E█0.0█',
+               '█.███.█.█',
+               '█0.0.0█1█',
+               '█████████'
+            ],
+            [
+               '█████████████',
+               '█W.0.0█0.0.0█',
+               '█████.█.███.█',
+               '█0.0.0█0█0.0█',
+               '█.█████.█.███',
+               '█0.0.0.0█0.1█',
+               '█████████████'
+            ],
+            [
+               '███████████',
+               '█0.0█0.0█S█',
+               '█.█.█.█.█.█',
+               '█0█0.0█0.0█',
+               '█.█████████',
+               '█0█0.0█0.0█',
+               '█.█.█.█.█.█',
+               '█0.0█0.0█1█',
+               '███████████'
+            ]
+         ];
+         let choice = random(ww.length);
+         var w = ww[choice];
+         var ny = Math.floor(w.length / 2);
+         var nx = Math.floor(w[0].length / 2);
+         var world = new World(nx, ny);
+         
+         for (let y = 1; y <= ny; y++) {
+            let wy = 2*(ny-y) + 1;
+            for (let x = 1; x <= nx; x++) {
+               let wx = 2*x - 1;
+               if (y < ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+               if (x < nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+               let c = w[wy].charAt(wx);
+               let pos = "SWEN".indexOf(c);
+               if (pos > -1) {
+                  world.setRobotStartAvenue(x);
+                  world.setRobotStartStreet(y);
+                  world.setRobotStartDirection("SWEN".charAt(pos));
+               }
+               let d = w[wy].charCodeAt(wx);
+               if (d >= 48 && d < 58) world.putBalls(x, y, d - 48);
+            }
+         }
+         
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "... # dovršite program",
+                     ""];
+                     
+         return {robot:robot, world:world, code:code};
+      },
+      
+      isSuccess: function(robot, world) {
+         return robot.getBalls() > 0;
+      }
+   }
+
+.. reveal:: Karel_if__take_ball_no_branches_reveal
+    :showtitle: Pomoć
+    :hidetitle: Sakrij pomoć
+    
+    Uputstva za jedno moguće rješenje:
+
+    .. activecode:: Karel_if__take_ball_no_branches_solution
+        :passivecode: true
+      
+        # prvo se okreni prema (jedinom) praznom polju
+        
+        while you can't move forward: 
+            turn left
+            
+        while you can go forward:
+            move forward
+            if there is no free square in front of you: # ako ne mozes naprijed
+                turn left
+                if there is no free square in front of you: # ako ne mozes niti lijevo
+                    turn right twice
+        
+        take the ball
+
+.. commented out
+   .. reveal:: Karel_if__take_ball_no_branches_reveal
+       :showtitle: Rješenje
+       :hidetitle: Sakrij rješenje
+       
+       One possible solution is:
+   
+       .. activecode:: Karel_if__take_ball_no_branches_solution
+           :passivecode: true
+         
+           from karel import *
+           while not front_is_clear(): # okreni se prema praznom polju
+               turn_left()
+               
+           while front_is_clear():
+               move()
+               
+               # skrenite prema sljedecem slobodnom polju
+               if not front_is_clear():   # ako ne mozes naprijed,
+                   turn_left()                # pokusaj lijevo
+               if not front_is_clear():   # ako ne mozes niti lijevo
+                   turn_right(); turn_right() # pokusaj desno
+           
+           if is_ball_on_square():
+               pick_ball()
+
+Skrenuti
+''''''''
+
+.. questionnote::
+
+  Postoji samo jedna loptica i Karel ju treba pokupiti. Kako bi stigao do loptice, Karel prvo treba ići ravno samo kad ne može skrenuti ni lijevo ni desno (neće se pojaviti raskrižje na kojima se može skrenuti i lijevo i desno).
+  
+.. karel:: Karel_if__p1_left_p2_right_p3_forward
+   :blockly:
+
+   {
+      setup:function() {
+         function random(n) {
+            return Math.floor(n * Math.random());
+         }
+         
+         var ww = [
+            [
+               '███████████',
+               '█1.0█0.0.0█',
+               '███.█.█████',
+               '█0.0.0█0.0█',
+               '█████.███.█',
+               '█S.0.0.0.0█',
+               '███████████'
+            ],
+            [
+               '███████████',
+               '█0.0.0█0.0█',
+               '█████.█.███',
+               '█0.0.0█0.0█',
+               '█.█.█.█.█.█',
+               '█0█0█E█0█1█',
+               '█.█.███.███',
+               '█0█0.0.0.0█',
+               '███████████'
+            ],
+            [
+               '█████████████',
+               '█E.0.0█0.0.0█',
+               '███.█.█.█████',
+               '█0.0█0█0.0.0█',
+               '█.█.███.███.█',
+               '█0█0█0.0.0█0█',
+               '█.███.█████.█',
+               '█0.0.0.0.0█1█',
+               '█████████████'
+            ],
+            [
+               '█████████',
+               '█0.0.0█S█',
+               '█.█████.█',
+               '█0.0.0.0█',
+               '███.███.█',
+               '█0█0.0█0█',
+               '█.█.█.███',
+               '█0.0█0.1█',
+               '█████████'
+            ]
+         ];
+         let choice = random(ww.length);
+         var w = ww[choice];
+         var ny = Math.floor(w.length / 2);
+         var nx = Math.floor(w[0].length / 2);
+         var world = new World(nx, ny);
+         
+         for (let y = 1; y <= ny; y++) {
+             let wy = 2*(ny-y) + 1;
+             for (let x = 1; x <= nx; x++) {
+                 let wx = 2*x - 1;
+                 if (y < ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+                 if (x < nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+                 let c = w[wy].charAt(wx);
+                 let pos = "SWEN".indexOf(c);
+                 if (pos > -1) {
+                     world.setRobotStartAvenue(x);
+                     world.setRobotStartStreet(y);
+                     world.setRobotStartDirection("SWEN".charAt(pos));
+                 }
+                 let d = w[wy].charCodeAt(wx);
+                 if (d >= 48 && d < 58) world.putBalls(x, y, d - 48);
+             }
+         }
+         
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "... # dovršite program",
+                     ""];
+                     
+         return {robot:robot, world:world, code:code};
+      },
+      
+      isSuccess: function(robot, world) {
+         return robot.getBalls() > 0;
+      }
+   }
+   
+.. reveal:: Karel_if__p1_left_p2_right_p3_forward_reveal
+    :showtitle: Pomoć
+    :hidetitle: Sakrij pomoć
+
+    Uputstva za jedno moguće rješenje:
+    
+    .. activecode:: Karel_if__p1_left_p2_right_p3_forward_solution
+        :passivecode: true
+      
+        # okreni se prema (jedinom) praznom polju
+        
+        while you can move forward:
+            move forward
+            # probaj skrenuti lijevo (okreni se lijevo i probaj naprijed)
+            # ako ne mozes lijevo:
+                # probaj skrenuti desno
+                # if you can't go right either
+                    # probaj ravno u sljedecem ponavljanju
+        
+        take the ball
+
+.. commented out
+    .. reveal:: Karel_if__p1_left_p2_right_p3_forward_reveal
+        :showtitle: Rješenje
+        :hidetitle: Sakrij rješenje
+
+        .. activecode:: Karel_if__p1_left_p2_right_p3_forward_solution
+            :passivecode: true
+          
+            from karel import *
+            for i in range(3):        # okreni se prema (jedinom) praznom polju
+                if not front_is_clear():
+                    turn_left()
+            
+            while front_is_clear():
+                move()
+                turn_left()                # probaj lijevo
+                if not front_is_clear():   # ako ne mozes lijevo
+                    turn_right(); turn_right()     # probaj desno
+                if not front_is_clear():   # ako ne mozes desno
+                    turn_left() # probaj ravno u sljedecem ponavljanju
+            
+            pick_ball()
+
+Idi lijevo kad god možeš
+''''''''''''''''''''''''
+
+.. questionnote::
+
+  Postoji samo jedna loptica i Karel ju treba pokupiti. Karel će do loptice uvijek stići tako što će skrenuti lijevo kad god može, a inače ide ravno (kad ne može ni lijevo ni ravno, znači da je stigao). Karel je na početku okrenut kako treba i prvi korak mu je uvijek ravno.
+
+.. karel:: Karel_if_p1_left_p2_forward
+   :blockly:
+
+   {
+      setup:function() {
+         function random(n) {
+            return Math.floor(n * Math.random());
+         }
+         
+         var ww = [
+            [
+               '█████████████',
+               '█0.0.0.0.0.0█',
+               '█.███████.█.█',
+               '█0.0.0.1█0█0█',
+               '█████.███...█',
+               '█0.0.0.0█0.0█',
+               '█████████.███',
+               '█E.0.0.0.0.0█',
+               '█████████████'
+            ],
+            [
+               '█████████████',
+               '█0.0.0.0.0█0█',
+               '█..██████.█.█',
+               '█0.0█0.0.0█0█',
+               '█████..██.█.█',
+               '█0.0.0.1█0█0█',
+               '█████████..██',
+               '█E.0.0.0.0.0█',
+               '█████████████'
+            ],
+            [
+               '█████████████',
+               '█0.0.0.0.0█0█',
+               '█.█.........█',
+               '█0█0.0.0.0.0█',
+               '█.█.███████.█',
+               '█0█0.0.1█0█0█',
+               '█.█.█████.█.█',
+               '█0.0.0.0.0█N█',
+               '█████████████'
+            ],
+            [
+               '█████████████',
+               '█S█0.0.0.0█0█',
+               '█.███.███...█',
+               '█0█0.1█0█..0█',
+               '█.███████.█.█',
+               '█0.0.0.0.0█0█',
+               '█.███████████',
+               '█0.0.0.0.0.0█',
+               '█████████████'
+            ]
+         ];
+         let choice = random(ww.length);
+         var w = ww[choice];
+         var ny = Math.floor(w.length / 2);
+         var nx = Math.floor(w[0].length / 2);
+         var world = new World(nx, ny);
+         
+         for (let y = 1; y <= ny; y++) {
+            let wy = 2*(ny-y) + 1;
+            for (let x = 1; x <= nx; x++) {
+               let wx = 2*x - 1;
+               if (y < ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+               if (x < nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+               let c = w[wy].charAt(wx);
+               let pos = "SWEN".indexOf(c);
+               if (pos > -1) {
+                  world.setRobotStartAvenue(x);
+                  world.setRobotStartStreet(y);
+                  world.setRobotStartDirection("SWEN".charAt(pos));
+               }
+               let d = w[wy].charCodeAt(wx);
+               if (d >= 48 && d < 58) world.putBalls(x, y, d - 48);
+            }
+         }
+         
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "... # dovršite program",
+                     ""];
+                     
+         return {robot:robot, world:world, code:code};
+      },
+      
+      isSuccess: function(robot, world) {
+         return robot.getBalls() > 0;
+      }
+   }
+
+.. reveal:: Karel_if_p1_left_p2_forward_reveal
+    :showtitle: Pomoć
+    :hidetitle: Sakrij pomoć
+
+    Uputstva za jedno moguće rješenje:
+    
+    .. activecode:: Karel_if_p1_left_p2_forward_solution
+        :passivecode: true
+      
+        while you can go forward:
+            move forward
+            # ako ne postoji put na lijevo
+                # ostani okrenut ravno
+
+        take the ball
+
+.. commented out
+    .. reveal:: Karel_if_p1_left_p2_forward_reveal
+        :showtitle: Rješenje
+        :hidetitle: Sakrij rješenje
+
+        .. activecode:: Karel_if_p1_left_p2_forward_solution
+            :passivecode: true
+          
+            from karel import *
+            while front_is_clear():
+                move()
+                turn_left()
+                if not front_is_clear():
+                    turn_right()
+
+            if is_ball_on_square():
+                pick_ball()

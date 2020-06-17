@@ -1,0 +1,178 @@
+Riječnici
+=========
+
+Sada ćemo upoznati još jednu vrstu složenih tipova podataka, odnosno kolekcija, koja je drugačija od onih koje smo do sada upoznali.
+
+Pretpostavimo da moramo napisati program koji će odgovarati na pitanja o starosti pojedinih osoba. Imena i dob osoba poznate su nam, na primjer, Marija ima 14 godina, Mihael 15, Daniel također 15, a Matilda 16 (stvarni podaci bili bi opsežniji, ali ovo je samo ilustracija)
+
+Zadatak možemo rješiti tako što imena smijestimo u jednu n-torku, a dob u drugu. S ovako organiziranim podacima možemo pomoću petlje tražiti zadano ime u n-torci imena, pa kada ga nađemo, ispisujemo odgovarajuću dob.
+
+.. activecode:: dict__two_tuples
+
+    name = ('Mary', 'Michael', 'Daniel', 'Matilda')
+    age = (14, 15, 15, 16)
+    asked_name = input('Unisite ime: ')
+    name_has_been_found = False
+    for i in range(len(name)):
+        if asked_name == name[i]:
+            print(asked_name, 'ima', age[i], 'godina.')
+            name_has_been_found = True
+            break
+    
+    if not name_has_been_found:
+        print('Ime', asked_name, 'nije pronađeno.')
+
+Kao što vidimo, kolekcije koje već poznajemo mogu nam i u ovom slučaju poslužiti. Ipak, za ovakvu vrstu zadataka postoji kolekcija u kojoj se podaci zapisuju na pregledniji način, a potreban podatak se pronalazi lakše i učinkovitije. Pogledajmo drugo rješenje:
+
+.. activecode:: dict__1st_example
+
+    age = {'Mary':14, 'Michael':15, 'Daniel':15, 'Matilda':16}
+    asked_name = input('Unesite ime: ')
+    if asked_name in age:
+        print(asked_name, 'ima', age[asked_name], 'godina.')
+    else:
+        print('Ime', asked_name, 'nije pronađeno.')
+
+Kolekcija oblika {'Mary':14, 'Michael':15, 'Daniel':15, 'Matilda':16} se zove **rječnik**. Vidimo da se rječnik može postaviti slično kao n-torka i lista - nabrajanjem elemenata razdvojenih zarezima. Elementi rječnika se zapisuju između vitičastih zagrada ``{}``. Svaki element se sastoji od dva dijela između kojih stoji znak dvotačka ``:``. Prvi dio elementa naziva se **ključ**, a drugi **vrijednost**. Na primjer, za ključ 'Mary' odgovarajuća vrijednost je 14, itd.
+
+Koristimo rječnike za brzo i jednostavno dobivanje vrijednosti za određeni ključ. U našem primjeru u rječniku smo pronašli dob za određeno ime. U n-torkama i listama na sličan način pomoću rednog broja (indeksa) elementa pronalazimo vrijednost elementa. Možemo reći da ključ u rječniku igra ulogu koju indeks igra u n-torkama i listama. Bitna razlika između rječnika s jedne, i n-torki i listi s druge strane, je u tome što u rječniku ključ može biti bilo kojeg nepromjenjivog tipa (cijeli broj, realan broj, string, n-torka…) dok u n-torki ili listi indeksi moraju biti cijeli brojevi redom od 0.
+
+Izgradnja rječnika
+------------------
+
+Rječnik možemo formirati tokom rada programa. To radimo tako da u rječnik ubacujemo nove parove ključ - vrijednost, a zatim po potrebi mijenjamo vrijednost određenog ključa.
+
+U sljedećem primjeru, u početna n-torka sadrži imena nogometnih klubova koji su u periodu od 1965.-2019. godine osvajali Kup europskih prvaka (ili UEFA Ligu prvaka). Na temelju tih podataka formirat ćemo rječnik u kojem ćemo zadržati broj osvojenih prvenstava za svaki klub. Evo kako to možemo napraviti.
+
+.. activecode:: dict__counting
+
+    champions = (
+        'Real Madrid',       'Real Madrid',       'Real Madrid',       'Real Madrid',
+        'Real Madrid',       'Benfica',           'Benfica',           'Milan',
+        'Internazionale',    'Internazionale',    'Real Madrid',       'Celtic',
+        'Manchester United', 'Milan',             'Feyenoord',         'Ajax',
+        'Ajax',              'Ajax',              'Bayern Munich',     'Bayern Munich',
+        'Bayern Munich',     'Liverpool',         'Liverpool',         'Nottingham Forest',
+        'Nottingham Forest', 'Liverpool',         'Aston Villa',       'Hamburg',
+        'Liverpool',         'Juventus',          'Steaua București',  'Porto',
+        'PSV Eindhoven',     'Milan',             'Milan',             'Red Star Belgrade',
+        'Barcelona',         'Marseille',         'Milan',             'Ajax',
+        'Juventus',          'Borussia Dortmund', 'Real Madrid',       'Manchester United',
+        'Real Madrid',       'Bayern Munich',     'Real Madrid',       'Milan',
+        'Porto',             'Liverpool',         'Barcelona',         'Milan',
+        'Manchester United', 'Barcelona',         'Internazionale',    'Barcelona',
+        'Chelsea',           'Bayern Munich',     'Real Madrid',       'Barcelona',
+        'Real Madrid',       'Real Madrid',       'Real Madrid',       'Liverpool'
+    )
+    num_titles = {} # prazan rječnik
+    for club in champions:
+        if club in num_titles:
+            num_titles[club] += 1
+        else:
+            num_titles[club] = 1
+    
+    print('Klub            broj titula')
+    print('-' * 27)    
+    for club in num_titles:
+        s_num_titles = str(num_titles[club])
+        space = ' ' * (25 - len(club) - len(s_num_titles))
+        print(club + space + s_num_titles)
+
+Na početku formiramo prazan rječnik *num_titles*. Za svaki klub iz popisa prvaka, prvo provjerimo je li klub već postoji u rječniku *num_titles*. Ako postoji, na broj titula tog kluba dodajemo jedan, a ako ne postoji, upisujemo klub u rječnik s jednom osvojenom titulom.
+
+Na kraju brojanja prolazimo kroz rječnik pomoću petlje i ispisujemo ključeve i vrijednosti iz tog rječnika.
+
+
+Jedan od načina da se ovaj program skrati je upotreba funkcije (metoda) ``get``, koja je dio svakog rječnika, a zove se *dictionary_name.get(key, default_value)*. Kao što vidimo, ova funkcija ima dva argumenta. Prvi argument je ključ za koji nam je potrebna vrijednost. U slučaju da ključ postoji u rječniku, funkcija *get* vraća vrijednost koja odgovara tom ključu, a ako ključ nije u rječniku, funkcija vraća vrijednost svog drugog argumenta. Tako, na primjer, umjesto toga
+
+.. code::
+
+    if club in num_titles:
+        num_titles[club] += 1
+    else:
+        num_titles[club] = 1
+
+možemo pisati
+
+.. code::
+
+    num_titles[club] = num_titles.get(club, 0) + 1
+    
+a efekt je isti. U ovom primjeru, *num_titles.get(club, 0)* vraća broj naslova određenog kluba ako je taj klub već u rječniku, ili 0 ako ga još nema u rječniku. I u jednom i u drugom slučaju na tu vrijednost treba dodati 1 i da se nova vrijednost sačuva u rječniku.
+
+Zadaci za vježbu
+''''''''''''''''
+
+.. questionnote::
+
+    **Zadatak - cijene namirnica**
+    
+    Cijene u jednoj trgovini su:
+    
+    - Kruh: 1 (po kruhu - pola kilograma)
+    - Mlijeko: 0.8 (po litri)
+    - Jaja: 0.08 (po komadu)
+    - Pileća prsa: 7.3 (po kilogramu)
+    - Jabuke: 2.2 (po kilogramu)
+    - Rajčica: 1 (po kilogramu)
+
+    Stavite ove podatke u rječnik, a zatim dovršite program tako što ćete ubaciti naziv hrane i prikazati cijenu te hrane ili informacije da ona nije dostupna.
+    
+.. activecode:: console__dict__prices
+    
+
+.. questionnote::
+
+    **Zadatak - izostanci**
+    
+    U n-torki su dana imena učenika koji su izostali s nastave. Svako pojavljivanje jednog imena predstavlja izostanak s jednog sata. Dovršite program tako da izračuna i ispiše koliko je sati svaki učenik propustio.
+    
+    Kako bismo vam pomogli da provjerite program, dajemo i očekivani rezultat: za podatke dane u n-torki *absent*, trebate dobiti da James ima 4 izostanaka, Maya 3, Alexander 2, a Violet, Mark, Frankie, Peter, Ronnie i Oliver jedan izostanak svaki (ne nužno tim redom).
+    
+.. activecode:: console__dict__absence
+    
+    absent = (
+        'Maya', 'James', 'Violet', 'Alexander', 'James', 
+        'Mark', 'Maya', 'Frankie', 'James', 'Peter',
+        'Ronnie', 'Oliver', 'Maya', 'Alexander', 'James')
+        
+.. commented out
+
+    absences = {}
+    for name in absent:
+        absences[name] = absences.get(name, 0) + 1
+    for name in absences:
+        print(name, absences[name])        
+
+.. questionnote::
+
+    **Zadatak - stanje zaliha**
+    
+    Dane su kupovine i prodaje robe u obliku n-torke parova. U svakom je paru prvi element naziv robe, a drugi je promjena stanja zaliha. Na primjer, par *('cheese', -1.5)* znači da se raspoloživa količina sira smanjila za 1,5 (toliko je sira prodano).
+     
+    Dovršite program koji izračunava i ispisuje stanje nakon tih promjena na temelju danih promjena stanja. Pretpostavimo da na početku nema zaliha.
+    
+    Provjerite rezultat: za dane podatke, trebate dobiti (u bilo kojem redoslijedu)
+    
+    - cheese 18.5
+    - milk 297
+    - flour 985
+    - eggs 1988
+    - fish 47
+     
+Ovdje je najvažniji dio programa prolazak kroz sve parove. Radi jasnoće, svaki par iz n-torke promjene odmah raspakiramo u varijable *good*, *change*.
+
+.. activecode:: console__dict__stock_status
+    
+        changes = (
+            ('cheese', 20), ('milk', 300), ('cheese', -1.5), ('flour', 1000),
+            ('eggs', 2000), ('milk', -2), ('flour', -5), ('fish', 50),
+            ('eggs', -12), ('milk', -1), ('flour', -10), ('fish', -3)
+        )
+        
+        status = {}
+        for good, change in changes:
+            # dovrsite program
+            
+        for good in status:
+            print(good, status[good])

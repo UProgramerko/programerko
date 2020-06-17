@@ -1,0 +1,186 @@
+Računanje s listama
+===================
+
+Ovdje ćemo vježbati koristeći liste i kombinirati tehnike koje smo do sada naučili.
+
+
+.. questionnote::
+
+    **Zadatak - najmanji pozitivan broj**
+    
+    Daje se n-torka brojeva. Ispisati najmanji pozitivan broj iz te n-torke.
+
+Ovaj zadatak je kombinacija dosadašnjih zadataka. U prvom dijelu zadatka kopiramo pozitivne brojeve iz n-torke u listu, a u drugom dijelu primjenjujemo funkciju min na listu pozitivnih brojeva.
+
+.. activecode:: console__list_min_positive
+
+    a = (-4, 3, 4, -3, 5, 6, 2, -5)
+    positive = []
+    for x in a:
+        if x > 0:
+            positive.append(x)
+
+    print(min(positive))
+
+Spomenuli smo da se funkcije *min*, *max*, *sum*, *len* mogu primijeniti u različitim kolekcijama, a to smo pokazali i primjerima n-torki, opsega i stringa (osim zbroja elemenata stringa). Sada vidimo da funkcija *min* također prihvaća listu kao svoj argument. Isto vrijedi za funkcije *max*, *sum*, *len*.
+
+
+
+
+
+.. questionnote::
+
+    **Primjer - neuspjesi**
+    
+    U jednoj tvornici postoji 10 strojeva i oni su predstavljeni brojevima od 0 do 9. Za svaki kvar koji je nastao zabilježen je broj stroja koji ne radi. Ovi brojevi su dati u n-torki na početku skripte.
+
+    Napišite program koji ispisuje koliko je puta svaki od strojeva neispravno radio, a zatim i brojeve stroja koje se nisu ni jednom pokvarili.
+        
+.. activecode:: console__list_malfunctions
+
+    failures = (0, 2, 1, 3, 2, 4, 2, 6, 4, 7, 4, 8)
+
+Prvi dio zadatka zahtijeva da prebrojimo koliko se puta svaki broj pojavi u ulaznim podacima. Da bismo riješili ovaj dio zadatka, kreiramo niz *num_failures* od 10 elemenata (koji su u početku 0), u kojima svaki element odgovara jednom stroju i broji njegove nedostatke.
+
+.. code::
+    
+    num_failures = [0] * 10
+    for machine in failures:
+        num_failures[machine] += 1
+
+Nakon toga ispisujemo na svakom stroju koliko kvarova je bilo. Ovdje koristimo opseg jer želimo ispisati redni broj stroja i broj kvarova za svaki stroj:
+
+.. code::
+
+    for i in range(10):
+        print('Stroj', machine, 'se kvarila', num_failures[i], 'puta.')
+
+Drugi dio zadatka traži da ispišemo brojeve uređaja koji se nikad nisu kvarili. To su strojevi čiji je broj kvarova nula. Ponovo prolazimo kroz listu *num_failures* i indekse elemenata jednakih nuli ubacujemo u listu *not_failed*:
+
+.. code::
+
+    not_failed = []
+    for i in range(10):
+        if num_failures[i] == 0:
+            not_failed.append(i)
+            
+Na kraju ispisujemo elemente liste *not_failed*.
+
+.. code::
+
+    print('Strojevi koji se nisu pokvarili:')
+    for machine in not_failed:
+        print(machine)
+
+Evo kako izgleda cijeli program:
+
+.. activecode:: console__list_malfunctions_sol
+
+    failures = (0, 2, 1, 3, 2, 4, 2, 6, 4, 7, 4, 8)
+    num_failures = [0] * 10
+    for machine in failures:
+        num_failures[machine] += 1
+        
+    for machine in range(10):
+        print('Stroj', machine, 'se pokvarila', num_failures[machine], 'puta.')
+
+    not_failed = []
+    for machine in range(10):
+        if num_failures[machine] == 0:
+            not_failed.append(machine)
+            
+    print('Strojevi koji se nikada nisu kvarili:')
+    for machine in not_failed:
+        print(machine)
+
+
+
+
+
+
+.. questionnote::
+
+    **Zadatak - nogometni navijači**
+
+    Na turnir u gradu *X* dolaze nogometni navijači iz 8 zemalja. Organizatori turnira žele znati koliko navijača dolazi iz svake zemlje.
+    
+    
+    Svaka zemlja predstavljena je brojem od 0 do 7. Navedeni brojevi za svakog navijača govore iz koje zemlje dolazi. Ispunite donji program koji za svaku zemlju navodi koliko navijača dolazi iz nje.
+
+Zadatak traži da svaki broj 0 do 7 broji koliko se puta taj broj pojavljuje među zadanim brojevima. Dio koji nedostaje u skripti vrlo je sličan brojanju kvarova u navedenom primjeru.
+
+.. activecode:: console__list_counters
+
+    fans = (1, 2, 3, 2, 3, 0, 2, 4, 3, 5, 6, 4, 0, 5, 3, 7, 1, 6, 3)
+    num_fans = [0] * 8
+    for # dovršite program
+
+    for country in range(8):
+        print('Iz zemlje', country, 'dolazi', num_fans[country], 'navijača.')
+        
+
+.. commented out
+
+    fans = (1, 2, 3, 2, 3, 0, 2, 4, 3, 5, 6, 4, 0, 5, 3, 7, 1, 6, 3)
+    num_fans = [0] * 8
+    for country in fans:
+        num_fans[country] += 1
+
+    for country in range(8):
+        print('Iz zemlje', country, 'dolazi', num_fans[country], 'navijača.')
+
+
+
+
+
+
+.. questionnote::
+
+    **Zadatak - najviše navijača**
+    
+    Ovo je nastavak predhodnog zadatka. Organizatori sada dodatno žele znati iz koje zemlje dolazi najviše navijača.
+
+    Kopirajte prethodni program i dodajte ga tako da na kraju ispisuje broj zemlje iz koje dolazi najviše navijača.
+
+Ako zadatak ispunite pravilno, program bi trebao ispisati broj 3, jer se taj broj najčešće pojavljuje u podacima.
+
+.. questionnote::
+
+.. activecode:: console__list_max_counter
+
+    fans = (1, 2, 3, 2, 3, 0, 2, 4, 3, 5, 6, 4, 0, 5, 3, 7, 1, 6, 3)
+
+
+
+
+
+
+.. questionnote::
+
+    **Zadatak - najveći negativni broj**
+
+    Daje se n-torka brojeva. Ispišite najveći negativni broj iz te n-torke.
+
+.. activecode:: console__list_max_negative
+
+    a = (-4, 3, 4, -3, 5, 6, 2, -5)
+
+
+
+
+
+
+
+.. questionnote::
+
+    **Zadatak - mala prodaja**
+
+    Daje se n-torka koja sadrži iznose korisničkih računa u jednoj prodajnoj mreži. Sva prodaja manja od 500 smatra se malom prodajom. Napišite program koji će izračunati ukupni prihod od svih malih prodaja.
+
+Postoje dva načina za rješavanje ovog zadatka. Jedan je izvući male količine na zasebni listu i primijeniti funkciju *sum* na tu listu. Drugi način je postupno prikupljanje zbroja, kao što smo učinili u lekciji o brojanju i zbrajanju.
+
+.. activecode:: console__list_sum_small_sales
+
+    sales = (158, 681, 249, 1250, 335, 5400, 455)
+
+

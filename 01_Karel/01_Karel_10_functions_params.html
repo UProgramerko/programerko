@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dodatna uputstva funkciji &#8212; Textual Programming in Python</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/activecode.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/codemirror.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/clickable.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pytutor.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/modal-basic.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/datafile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/dragndrop.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fitb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/matrixeq.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/parsons.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/lib/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/poll.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/showEval.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabbedstuff.css" />
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/video.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/karel.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/notes.css" />
+    <link rel="stylesheet" href="../_static/user-highlights.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/flatly.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/petlja.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/runestonebase.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/jquery.highlight.js"></script>
+    <script type="text/javascript" src="../_static/bookfuncs.js"></script>
+    <script type="text/javascript" src="../_static/codemirror.js"></script>
+    <script type="text/javascript" src="../_static/xml.js"></script>
+    <script type="text/javascript" src="../_static/css.js"></script>
+    <script type="text/javascript" src="../_static/python.js"></script>
+    <script type="text/javascript" src="../_static/htmlmixed.js"></script>
+    <script type="text/javascript" src="../_static/javascript.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/CLDRPluralRuleParser.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.messagestore.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.fallbacks.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.language.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.parser.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.emitter.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.emitter.bidi.js"></script>
+    <script type="text/javascript" src="../_static/activecode-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/skulpt.min.js"></script>
+    <script type="text/javascript" src="../_static/skulpt-stdlib.js"></script>
+    <script type="text/javascript" src="../_static/activecode.js"></script>
+    <script type="text/javascript" src="../_static/clike.js"></script>
+    <script type="text/javascript" src="../_static/timed_activecode.js"></script>
+    <script type="text/javascript" src="../_static/animationbase.js"></script>
+    <script type="text/javascript" src="../_static/mchoice.js"></script>
+    <script type="text/javascript" src="../_static/timedmc.js"></script>
+    <script type="text/javascript" src="../_static/timed.js"></script>
+    <script type="text/javascript" src="../_static/mchoice-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/clickable.js"></script>
+    <script type="text/javascript" src="../_static/timedclickable.js"></script>
+    <script type="text/javascript" src="../_static/d3.v2.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.ba-bbq.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.jsPlumb-1.3.10-all-min.js"></script>
+    <script type="text/javascript" src="../_static/pytutor.js"></script>
+    <script type="text/javascript" src="../_static/codelens.js"></script>
+    <script type="text/javascript" src="../_static/datafile.js"></script>
+    <script type="text/javascript" src="../_static/dragndrop.js"></script>
+    <script type="text/javascript" src="../_static/timeddnd.js"></script>
+    <script type="text/javascript" src="../_static/dragndrop-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/fitb.js"></script>
+    <script type="text/javascript" src="../_static/timedfitb.js"></script>
+    <script type="text/javascript" src="../_static/fitb-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/matrixeq.js"></script>
+    <script type="text/javascript" src="../_static/lib/prettify.js"></script>
+    <script type="text/javascript" src="../_static/lib/hammer.min.js"></script>
+    <script type="text/javascript" src="../_static/parsons.js"></script>
+    <script type="text/javascript" src="../_static/parsons-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/timedparsons.js"></script>
+    <script type="text/javascript" src="../_static/poll.js"></script>
+    <script type="text/javascript" src="../_static/reveal.js"></script>
+    <script type="text/javascript" src="../_static/shortanswer.js"></script>
+    <script type="text/javascript" src="../_static/timed_shortanswer.js"></script>
+    <script type="text/javascript" src="../_static/showEval.js"></script>
+    <script type="text/javascript" src="../_static/tabbedstuff.js"></script>
+    <script type="text/javascript" src="../_static/runestonevideo.js"></script>
+    <script type="text/javascript" src="../_static/karelCorner.js"></script>
+    <script type="text/javascript" src="../_static/karelRobot.js"></script>
+    <script type="text/javascript" src="../_static/karelWorld.js"></script>
+    <script type="text/javascript" src="../_static/karelRobotDrawer.js"></script>
+    <script type="text/javascript" src="../_static/karelUI.js"></script>
+    <script type="text/javascript" src="../_static/karel.js"></script>
+    <script type="text/javascript" src="../_static/karel-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/notes.js"></script>
+    <script type="text/javascript" src="../_static/pygamelib-init.js"></script>
+    <script type="text/javascript" src="../_static/blockly/blockly_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/blocks_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/python_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/msg-sr.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/utilities.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/python_errors.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/ast_node_visitor.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/abstract_interpreter.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/pytifa.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/abstract_interpreter_definitions.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/python_to_blockly.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/imported.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/class.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/comment.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/comprehensions.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/dict.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/if.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/io.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/lists.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/sets.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/loops.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/parking.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/tuple.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/turtles.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/text.js"></script>
+    <script type="text/javascript" src="../_static/blockpy-modal.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-4.0.0-dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script type="text/javascript" src="../_static/waypoints.min.js"></script>
+    <script type="text/javascript" src="../_static/rangy-core.js"></script>
+    <script type="text/javascript" src="../_static/rangy-textrange.js"></script>
+    <script type="text/javascript" src="../_static/rangy-cssclassapplier.js"></script>
+    <script type="text/javascript" src="../_static/user-highlights.js"></script>
+    <script type="text/javascript" src="../_static/jquery.idle-timer.js"></script>
+    <script type="text/javascript" src="../_static/processing-1.4.1.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.hotkey.js"></script>
+    <script type="text/javascript" src="../_static/jquery-migrate-1.2.1.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Osnove programiranja u Pythonu" href="../02_Console/toctree.html" />
+    <link rel="prev" title="Napravite grupu naredbi" href="01_Karel_09_functions.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+<link rel="shortcut icon" href="../_static/favicon.ico" type="image/ico" />
+
+<script type="text/javascript">
+  eBookConfig = {};
+  eBookConfig.host = 'http://127.0.0.1:8000' ? 'http://127.0.0.1:8000' : 'http://127.0.0.1:8000';
+  eBookConfig.app = eBookConfig.host+'/runestone';
+  eBookConfig.ajaxURL = eBookConfig.app+'/ajax/';
+  eBookConfig.course = 'TxtProgInPython';
+  eBookConfig.logLevel = 0;
+  eBookConfig.loginRequired = false;
+  eBookConfig.build_info = "";
+  eBookConfig.isLoggedIn = false;
+  eBookConfig.useRunestoneServices = false;
+  eBookConfig.python3 = true;
+  eBookConfig.basecourse = 'TxtProgInPython';
+  eBookConfig.runestone_version = '3.1.1';
+  eBookConfig.imagesDir = '../_images/';
+  eBookConfig.staticDir = '../_static/';
+  if(typeof(Sk) != "undefined")
+      Sk.imgPath = eBookConfig.imagesDir;
+</script>
+
+<div id="fb-root"></div>
+
+
+
+  </head><body>
+
+
+<!-- Begin navbar -->
+
+<nav id="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+  <div class="container">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+     <img src="../_static/img/logo.png" style="width:80px; height: 80px;"> 
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top: 10px; margin-left: 25px;">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="../">Textual Programming in Python</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<br/>
+
+
+<div class="container col-md-12" id="continue-reading"></div>
+
+<div class="container col-md-8 col-md-offset-2" id="main-content">
+  
+  <div class="section" id="dodatna-uputstva-funkciji">
+<h1>Dodatna uputstva funkciji<a class="headerlink" href="#dodatna-uputstva-funkciji" title="Permalink to this headline">¶</a></h1>
+<p>Spomenuli smo da postoji nekoliko načina pisanja funkcija u Pythonu, a da su funkcije koje smo do sada pisali i koristili najjednostavijeg oblika. Takve su funkcije, na primjer, <em>move()</em>, <em>turn_left()</em>, <em>turn_right()</em>, <em>pick_ball()</em> i <em>drop_ball()</em> iz Karel biblioteke, kao i funkcije <em>back()</em>, <em>take_at_neighboring_square()</em> and <em>go_to_neighboring_nonempty_square()</em>, koje smo sami napisali. Sve ove funkcije obavljaju neki konkretan posao, uvijek na isti način.</p>
+<p>Funkcije se mogu napisati tako da u različitim izvršavanjima ne rade uvijek istu stvar, nego da obavljaju malo općenitiji zadatak. Kad takve funkcije zovemo, točno im kažemo kako želimo da odrade svoj zadatak. Na primjer, često bi mogli da nam bude korisna funkcija koja bi pomicala Karela za neki broj polja naprijed ili natrag. Za tu funkciju želimo da pri njenom pozivanju preciziramo zahtjev - za koliko se polja Karel treba pomaknuti i na koju stranu.</p>
+<div class="section" id="funkcije-s-parametrima">
+<h2>Funkcije s parametrima<a class="headerlink" href="#funkcije-s-parametrima" title="Permalink to this headline">¶</a></h2>
+
+    <div class="course-box course-box-info">
+        <div class="course-content">
+            <p>
+<p>Dodatni podaci koje dajemo funkciji pišu se u zagrade nakon naziva funkcije u prvom redu njene definicije. Između zagrada možemo navesti jednu vrijednost ili više vrijednosti odvojenih zarezima. Te se vrijednosti nazivaju argumentima ili parametrima funkcije. Riječi “argumenti” i “parametri” sinonimi su u programiranju i koristit ćemo ih jednako.</p>
+
+    </p></div></div>
+
+<div data-childcomponent="Karel_functions__function_with_args_def" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=Karel_functions__function_with_args_def data-lang="python" 
+      data-timelimit=25000  data-codelens="true"  
+    data-audio=''   
+             data-passivecode="true"  data-hidehistory=true
+       >
+def function_name(parametar1, ... parametarN):
+    naredba_1
+    ...
+    naredba_k
+</textarea>
+</div>
+<p>Funkcija koja Karela pomiče određeni broj polja naprijed ili natrag, mogla bi se nazvati <em>go</em> i da ima jedan parametar, čija je vrijednost cijeli broj. Ako je ovaj parametar pozitivan, Karel bi se pomaknuo toliko polja naprijed, a ako je negativan, Karel bi išao odgovarajući (suprotan) broj polja natrag. Na primjer, poziv go (5) značio bi “ići 5 polja naprijed”, dok bi go (-2) značio “ići 2 polja unatrag”. Evo kako možemo napisati takvu funkciju:</p>
+
+<div data-childcomponent="Karel_functions__function_go_def" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=Karel_functions__function_go_def data-lang="python" 
+      data-timelimit=25000  data-codelens="true"  
+    data-audio=''   
+             data-passivecode="true"  data-hidehistory=true
+       >
+def go(n):
+    if n > 0:
+        for i in range(n):
+            move()
+    else:
+        turn_left();turn_left()
+        for i in range(-n):
+            move()
+        turn_left();turn_left()
+</textarea>
+</div>
+<p>Ova funkcija može pojednostaviti mnoge programe koji bi trebali reći Karelu da se kreće nekoliko puta duž jedne staze u oba smjera. Evo primjera.</p>
+<div class="section" id="izvrsite-odredene-pomake">
+<h3>Izvršite određene pomake<a class="headerlink" href="#izvrsite-odredene-pomake" title="Permalink to this headline">¶</a></h3>
+
+    <div class="course-box course-box-special">
+        <div class="course-content">
+            <h4 class="carbox-title">
+                <img class="corner-image float-right" src="../_static/img/question-mark.png" />
+            </h4>
+            <p>
+<p>Karel se nalazi na početnom polju staze dovoljne dužine, a treba obaviti sljedeća premeštanja loptica:</p>
+<ul class="simple">
+<li><p>3 loptice s polja 3 na polje 4</p></li>
+<li><p>4 loptice s polja 5 na polje 1</p></li>
+</ul>
+
+    </p></div></div>
+<p>U rješavanju ovog zadatka upotrijebit ćemo opisanu funkciju <em>go</em>. Da bismo dodatno pojednostavili rješenje, možemo uvesti i funkciju <em>displace</em>, koja pomiče zadani broj lopti za određeni broj polja naprijed ili natrag. Ovaj opis pokazuje da funkcija <em>displace</em> treba imati dva argumenta.</p>
+<p>Da bi svrha svakog parametra bila jasnija, dat ćemo im imena koja opisuju njihovu ulogu:</p>
+
+<div data-childcomponent="Karel_functions__function_displace_def" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=Karel_functions__function_displace_def data-lang="python" 
+      data-timelimit=25000  data-codelens="true"  
+    data-audio=''   
+             data-passivecode="true"  data-hidehistory=true
+       >
+def displace(num_balls, num_squares):
+    for i in range(num_balls):
+        pick_ball()
+    go(num_squares)
+    for i in range(num_balls):
+        drop_ball()
+</textarea>
+</div>
+<p>Funkcija <em>displace</em> koristi predhodno napisanu funkciju <em>go</em>. Pozivanje funkcije iz druge funkcije poput ove može ići u dubinu onoliko koliko nam je potrebno. Važno je samo da se svaka funkcija definira prije nego što se ona pozove na izvršavanje.</p>
+<p>Sada kada su nam na raspolaganju ove dvije funkcije, vrlo je jednostavno riješiti početni zadatak:</p>
+
+<div data-childcomponent="Karel_functions__displace_balls" class="karel_section course-box course-box-problem">
+    <div class="course-content">
+        <p>
+
+    <div data-component="karel" id="Karel_functions__displace_balls" class="karel_section">
+        <div class="karel_actions col-md-12 mb-2"><button class="btn btn-success run-button">Покрени програм</button>
+        <button class="btn btn-default reset-button">Врати на почетак</button>
+        <button class="btn btn-default blockly-button" style="display: inline-block;">Blockly</button></div>
+        <div style="overflow: hidden;" class="karel_actions col-md-12" >
+            <section class="col-md-12">
+                <article>
+                    <textarea class="codeArea" id="Karel_functions__displace_balls" name="code" rows="10" style="width: 100%;height:300px"></textarea>
+                    <textarea class="configArea" style="display:none"><!--x {
+    setup:function() {
+        function random(n) {
+            return Math.floor(n * Math.random());
+    }
+
+    var ww = [
+        [
+           '███████████',
+           '█E.0.4.0.6█',
+           '███████████'
+        ],
+        [
+           '█████████████',
+           '█E.1.3.0.4.0█',
+           '█████████████'
+        ]
+    ];
+    let choice = random(ww.length);
+    var w = ww[choice];
+    var ny = Math.floor(w.length / 2);
+    var nx = Math.floor(w[0].length / 2);
+    var world = new World(nx, ny);
+
+    for (let y = 1; y &lt;= ny; y++) {
+        let wy = 2*(ny-y) + 1;
+        for (let x = 1; x &lt;= nx; x++) {
+           let wx = 2*x - 1;
+           if (y &lt; ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+           if (x &lt; nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+           let c = w[wy].charAt(wx);
+           let pos = "SWEN".indexOf(c);
+           if (pos > -1) {
+              world.setRobotStartAvenue(x);
+              world.setRobotStartStreet(y);
+              world.setRobotStartDirection(c);
+           }
+           let d = w[wy].charCodeAt(wx);
+           if (d >= 48 && d &lt; 58) world.putBalls(x, y, d - 48);
+        }
+     }
+
+        var robot = new Robot();
+
+        var code = ["from karel import *",
+                 "# umjesto rijeci 'pass' kopirajte tijela funkcije",
+                 "",
+                 "def go(n):",
+                 "    pass",
+                 "",
+                 "def displace(num_balls, num_squares):",
+                 "    pass",
+                 "",
+                 "go(2) # na polje 3",
+                 "displace(3, 1) # premjesti 3 loptice jedno polje naprijed",
+                 "go(1) # na polje 5 5",
+                 "displace(4, -4) # premjesti 4 loptice 4 polja unatrag",
+                 ""];
+
+        return {robot:robot, world:world, code:code};
+    },
+
+    isSuccess: function(robot, world) {
+        var X = world.getAvenues();
+        if (X == 5) {var tagret_layout = [4,0,1,3,2]}
+        if (X == 6) {var tagret_layout = [4,1,0,3,0,0]}
+
+        for (let x = 1; x &lt;= X; x++)
+            if (world.getBalls(x, 1) != tagret_layout[x-1]) return false;
+
+        if (robot.getBalls() > 0)
+            return false;
+
+        return true;
+    }
+} x--></textarea>
+                </article>
+            </section>
+            <section class="col-md-12">
+                <article>
+                    <canvas class="world" style="border-style: solid; border-width: 2px; border-color: inherit; background: white;" width="300" height="300">
+                        <p>Please try loading this page in HTML5 enabled web browsers. All the latest versions of famous browsers such as Internet explorer, Chrome, Firefox, Opera support HTML5.</p>
+                    </canvas>
+                </article>
+            </section>
+        </div>
+    </div>
+    <p class="karel_caption karel_caption_text"> (Karel_functions__displace_balls)</p>
+</p></div></div>
+
+</div>
+</div>
+<div class="section" id="zadaci-za-vjezbu">
+<h2>Zadaci za vježbu<a class="headerlink" href="#zadaci-za-vjezbu" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pokupi-zadani-broj-loptica">
+<h3>Pokupi zadani broj loptica<a class="headerlink" href="#pokupi-zadani-broj-loptica" title="Permalink to this headline">¶</a></h3>
+
+    <div class="course-box course-box-special">
+        <div class="course-content">
+            <h4 class="carbox-title">
+                <img class="corner-image float-right" src="../_static/img/question-mark.png" />
+            </h4>
+            <p>
+<p>Napišite funkciju <em>take_up_to(n)</em>, kojom Karel s polja na kojme se nalazi uzima najviše <em>n</em> loptica. Preciznije, ako je na polju <em>n</em> ili više loptica, Karel ih uzima <em>n</em>, a ako ima manje loptica, Karel uzima onoliko loptica koliko ih ima.</p>
+<p>Potrebno je da Karel, koji se nalazi na prvom polju, uzme s drugog polja do 4 loptice, s trećeg do 2, a s četvrtog do 3 loptice, a zatim sve prikupljene loptice donese na prvo polje. Naravno, za to treba koristiti funkciju <em>take_up_to(n)</em> napisanu u prvom dijelu zadatka.</p>
+
+    </p></div></div>
+
+<div data-childcomponent="Karel_functions__take_balls_up_to" class="karel_section course-box course-box-problem">
+    <div class="course-content">
+        <p>
+
+    <div data-component="karel" id="Karel_functions__take_balls_up_to" class="karel_section">
+        <div class="karel_actions col-md-12 mb-2"><button class="btn btn-success run-button">Покрени програм</button>
+        <button class="btn btn-default reset-button">Врати на почетак</button>
+        <button class="btn btn-default blockly-button" style="display: inline-block;">Blockly</button></div>
+        <div style="overflow: hidden;" class="karel_actions col-md-12" >
+            <section class="col-md-12">
+                <article>
+                    <textarea class="codeArea" id="Karel_functions__take_balls_up_to" name="code" rows="10" style="width: 100%;height:300px"></textarea>
+                    <textarea class="configArea" style="display:none"><!--x {
+    setup:function() {
+        function random(n) {
+            return Math.floor(n * Math.random());
+    }
+
+    var ww = [
+        [
+           '███████████',
+           '█E.3.4.1.2█',
+           '███████████'
+        ],
+        [
+           '█████████',
+           '█E.2.5.3█',
+           '█████████'
+        ]
+    ];
+    let choice = random(ww.length);
+    var w = ww[choice];
+    var ny = Math.floor(w.length / 2);
+    var nx = Math.floor(w[0].length / 2);
+    var world = new World(nx, ny);
+
+    for (let y = 1; y &lt;= ny; y++) {
+        let wy = 2*(ny-y) + 1;
+        for (let x = 1; x &lt;= nx; x++) {
+           let wx = 2*x - 1;
+           if (y &lt; ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+           if (x &lt; nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+           let c = w[wy].charAt(wx);
+           let pos = "SWEN".indexOf(c);
+           if (pos > -1) {
+              world.setRobotStartAvenue(x);
+              world.setRobotStartStreet(y);
+              world.setRobotStartDirection(c);
+           }
+           let d = w[wy].charCodeAt(wx);
+           if (d >= 48 && d &lt; 58) world.putBalls(x, y, d - 48);
+        }
+     }
+
+        var robot = new Robot();
+
+        var code = ["from karel import *",
+                 "def take_up_to(n):",
+                 "    pass # napisite funkciju",
+                 "",
+                 "move(); take_up_to(4)",
+                 "# dovrsite uzimanje loptica",
+                 "",
+                 "turn_left(); turn_left() # come back",
+                 "# dovrsite povratak i ostavljanje loptica",
+                 ""];
+
+        // from karel import *
+        // def take_up_to(n):
+        //     for i in range(n):
+        //         if is_ball_on_square():
+        //             pick_ball()
+        //
+        // move(); take_up_to(4)
+        // move(); take_up_to(2)
+        // move(); take_up_to(3)
+        //
+        // turn_left(); turn_left()
+        // move();move();move()
+        // while any_balls_with_karel():
+        //     drop_ball()
+
+        return {robot:robot, world:world, code:code};
+    },
+
+    isSuccess: function(robot, world) {
+        var X = world.getAvenues();
+        if (X == 5) {var tagret_layout = [6,0,2,0,2]} // = 0,3,4,1,2 - *,4,2,3
+        if (X == 4) {var tagret_layout = [7,0,3,0]}   // = 0,2,5,3   - *,4,2,3
+
+        for (let x = 1; x &lt;= X; x++)
+            if (world.getBalls(x, 1) != tagret_layout[x-1]) return false;
+
+        if (robot.getBalls() > 0)
+            return false;
+
+        return true;
+    }
+} x--></textarea>
+                </article>
+            </section>
+            <section class="col-md-12">
+                <article>
+                    <canvas class="world" style="border-style: solid; border-width: 2px; border-color: inherit; background: white;" width="300" height="300">
+                        <p>Please try loading this page in HTML5 enabled web browsers. All the latest versions of famous browsers such as Internet explorer, Chrome, Firefox, Opera support HTML5.</p>
+                    </canvas>
+                </article>
+            </section>
+        </div>
+    </div>
+    <p class="karel_caption karel_caption_text"> (Karel_functions__take_balls_up_to)</p>
+</p></div></div>
+
+</div>
+<div class="section" id="voznja-prema-uputstvima">
+<h3>Vožnja prema uputstvima<a class="headerlink" href="#voznja-prema-uputstvima" title="Permalink to this headline">¶</a></h3>
+
+    <div class="course-box course-box-special">
+        <div class="course-content">
+            <h4 class="carbox-title">
+                <img class="corner-image float-right" src="../_static/img/question-mark.png" />
+            </h4>
+            <p>
+<p>Date su funkcije <em>face_left_at_intersection()</em> i <em>go_left(n)</em> are given.</p>
+<ul class="simple">
+<li><p>Funkcija <em>face_left_at_intersection()</em> postavlja Karela da gleda u prvu ulicu s lijeve strane na koju naiđe. Prilikom izvršavanja ove funkcije, Karel ide naprijed dok ne dođe do polja na kojme može ići lijevo, i ostaje na tom polju okrenut na lijevo. Ako prije poziva funkcije s Karelove lijeve strane postoji polje, on se tokom rada ove funkcije neće ni pomicati sa svog polja, nego će se samo okrenuti na lijevo;</p></li>
+<li><p>Funkcija <em>go_left(n)</em> uvodi Karela jedno polje u n-tu ulicu s lijeve strane. Ako je Karel već u raskrižju, ulica lijevo od njega se broji kao prva;</p></li>
+</ul>
+<p>Napišite funkciju <em>face_left_at_intersection()</em> i <em>go_right(n)</em> koristeći zadane funkcije kao model.</p>
+<p>Napišite program koji (koristeći date i napisane funkcije) vodi Karela u treću ulicu s lijeve strane, zatim drugu s desne strane, a na kraju drugu s lijeve strane. Karel bi trebao stići do kraja te ulice i uzeti jedinu loptu na ploči.</p>
+
+    </p></div></div>
+
+<div data-childcomponent="Karel_functions__travel_instructions_1" class="karel_section course-box course-box-problem">
+    <div class="course-content">
+        <p>
+
+    <div data-component="karel" id="Karel_functions__travel_instructions_1" class="karel_section">
+        <div class="karel_actions col-md-12 mb-2"><button class="btn btn-success run-button">Покрени програм</button>
+        <button class="btn btn-default reset-button">Врати на почетак</button>
+        <button class="btn btn-default blockly-button" style="display: inline-block;">Blockly</button></div>
+        <div style="overflow: hidden;" class="karel_actions col-md-12" >
+            <section class="col-md-12">
+                <article>
+                    <textarea class="codeArea" id="Karel_functions__travel_instructions_1" name="code" rows="10" style="width: 100%;height:300px"></textarea>
+                    <textarea class="configArea" style="display:none"><!--x {
+   setup:function() {
+      function random(n) {
+         return Math.floor(n * Math.random());
+      }
+
+      var ww = [
+         [
+            '█████████████',
+            '█0.0.0█0█1█0█',
+            '█████.█.█.█.█',
+            '█0.0█0.0.0.0█',
+            '███.█.███████',
+            '█0█0█0.0.0.0█',
+            '█.█.█.█████.█',
+            '█E.0.0.0.0.0█',
+            '█████████████'
+         ],
+         [
+            '███████████████',
+            '█0.0.0.0.0.0█1█',
+            '███████.█████.█',
+            '█0.0.0.0.0.0█0█',
+            '███████.███.█.█',
+            '█0.0█0.0.0.0.0█',
+            '███.███.███████',
+            '█0█0█0.0.0.0█0█',
+            '█.█.███.█████.█',
+            '█E.0.0.0.0.0.0█',
+            '███████████████'
+         ]
+      ];
+      let choice = random(ww.length);
+      var w = ww[choice];
+      var ny = Math.floor(w.length / 2);
+      var nx = Math.floor(w[0].length / 2);
+      var world = new World(nx, ny);
+
+      for (let y = 1; y &lt;= ny; y++) {
+         let wy = 2*(ny-y) + 1;
+         for (let x = 1; x &lt;= nx; x++) {
+            let wx = 2*x - 1;
+            if (y &lt; ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+            if (x &lt; nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+            let c = w[wy].charAt(wx);
+            let pos = "SWEN".indexOf(c);
+            if (pos > -1) {
+               world.setRobotStartAvenue(x);
+               world.setRobotStartStreet(y);
+               world.setRobotStartDirection("SWEN".charAt(pos));
+            }
+            let d = w[wy].charCodeAt(wx);
+            if (d >= 48 && d &lt; 58) world.putBalls(x, y, d - 48);
+         }
+      }
+
+      var robot = new Robot();
+
+      var code = ["from karel import *",
+                  "def face_left_at_intersection():",
+                  "    turn_left()",
+                  "    while not front_is_clear():",
+                  "        turn_right()",
+                  "        move()",
+                  "        turn_left()",
+                  "    ",
+                  "def go_left(n):",
+                  "    for i in range(n-1):",
+                  "        face_left_at_intersection()",
+                  "        turn_right()",
+                  "        move()",
+                  "    face_left_at_intersection()",
+                  "    move()",
+                  "",
+                  "def face_right_at_intersection():",
+                  "    # ...",
+                  "    ",
+                  "def go_right(n):",
+                  "    # ...",
+                  "",
+
+                  "go_left(3) # treca lijevo",
+                  "# druga desno",
+                  "# druga lijevo",
+                  "# idi do kraja ulice",
+                  "# pokupi lopticu",
+                  ""];
+
+      //var code = ["from karel import *",
+      //            "def face_left_at_intersection():",
+      //            "    turn_left()",
+      //            "    while not front_is_clear():",
+      //            "        turn_right()",
+      //            "        move()",
+      //            "        turn_left()",
+      //            "    ",
+      //            "def go_left(n):",
+      //            "    for i in range(n-1):",
+      //            "        face_left_at_intersection()",
+      //            "        turn_right()",
+      //            "        move()",
+      //            "    face_left_at_intersection()",
+      //            "    move()",
+      //            "",
+      //            "def face_right_at_intersection():",
+      //            "    turn_right()",
+      //            "    while not front_is_clear():",
+      //            "        turn_left()",
+      //            "        move()",
+      //            "        turn_right()",
+      //            "    ",
+      //            "def go_right(n):",
+      //            "    for i in range(n-1):",
+      //            "        face_right_at_intersection()",
+      //            "        turn_left()",
+      //            "        move()",
+      //            "    face_right_at_intersection()",
+      //            "    move()",
+      //            "",
+      //
+      //            "go_left(3)",
+      //            "go_right(2)",
+      //            "go_left(2)",
+      //            "while front_is_clear():",
+      //            "    move()",
+      //            "if is_ball_on_square():",
+      //            "    pick_ball()",
+      //            ""];
+
+      return {robot:robot, world:world, code:code};
+   },
+
+   isSuccess: function(robot, world) {
+      return robot.getBalls() > 0;
+   }
+} x--></textarea>
+                </article>
+            </section>
+            <section class="col-md-12">
+                <article>
+                    <canvas class="world" style="border-style: solid; border-width: 2px; border-color: inherit; background: white;" width="300" height="300">
+                        <p>Please try loading this page in HTML5 enabled web browsers. All the latest versions of famous browsers such as Internet explorer, Chrome, Firefox, Opera support HTML5.</p>
+                    </canvas>
+                </article>
+            </section>
+        </div>
+    </div>
+    <p class="karel_caption karel_caption_text"> (Karel_functions__travel_instructions_1)</p>
+</p></div></div>
+
+</div>
+</div>
+</div>
+
+
+  
+      <div class="col-md-12">
+<ul class="pager">
+        <li id="relations-prev" title='Previous chapter - Napravite grupu naredbi' data-toggle="tooltip"><a href="01_Karel_09_functions.html">Previous chapter</a></li>
+    
+        <li id="relations-next" title='Next chapter - Osnove programiranja u Pythonu' data-toggle="tooltip"><a href="../02_Console/toctree.html">Next chapter</a></li>
+</ul>
+
+<!-- <ul class="pager"> -->
+    <!-- -->
+        <!-- <li id="relations-prev" title='Претходно поглавље - Napravite grupu naredbi' data-toggle="tooltip"><a href="01_Karel_09_functions.html">Претходно поглавље</a></li> -->
+    <!--  -->
+    <!-- -->
+        <!-- <li id="relations-next" title='Следеће поглавље - Osnove programiranja u Pythonu' data-toggle="tooltip"><a href="../02_Console/toctree.html">Следеће поглавље</a></li> -->
+    <!-- -->
+<!-- </ul> -->
+
+<script type="text/javascript">
+
+  $('#relations-prev').tooltip({'placement':'right', 'selector': '', 'delay': { show: 100, hide: 50}});
+  $('#relations-next').tooltip({'placement':'left', 'selector': '', 'delay': { show: 100, hide: 50}});
+
+</script>
+</div>
+  
+</div>
+<footer class="footer col-md-12">
+    <div class="container text-center">
+        <div class="text-center">
+            <hr>
+            <p class="text-muted">
+                <span class="text-center">&copy; 2019 <a href="https://petlja.org">Petlja.org</a> 
+                  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; vertical-align: text-bottom" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+                  (Created using  <a href="https://pypi.org/project/Sphinx/">Sphinx</a>, <a href="http://runestoneinteractive.org/">RunestoneComponents</a> and <a href="https://github.com/Petlja/PetljaDoc">PetljaDoc</a>)</span>
+            </p>
+        </div>
+    </div>
+</footer>
+
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-32029811-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </body>
+</html>

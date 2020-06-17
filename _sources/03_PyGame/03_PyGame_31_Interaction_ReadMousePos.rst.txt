@@ -1,0 +1,122 @@
+Čitanje položaja miša
+---------------------
+
+U PyGameu postoji jednostavan način čitanja trenutnog stanja miša. Podaci koji nas obično najviše zanimaju su položaj miša i pritiskanje tipki. U ovoj ćemo lekciji koristiti čitanje položaja miša, a u sljedećoj tipke miša. Osim položaja i pritiska na gumb, postoje i druge informacije o mišu koje možemo dobiti, ali to nećemo učiniti ovdje. Oni koji su zainteresirani mogu pronaći više detalja, na primjer `ovdje <https://www.pygame.org/docs/ref/mouse.html>`__ .
+
+Položaj miša možemo dobiti pozivanjem funkcije ``pg.mouse.get_pos()``, koja vraća uređeni par koordinata točke u kojoj se trenutno nalazi pokazivač miša.
+
+Kao što ćemo vidjeti u slijedećim primjerima i zadacima, uporaba ove funkcije vrlo je jednostavna, a položaj čitanja miša možemo dodatno koristiti na razne načine.
+
+Primjeri i zadaci
+'''''''''''''''''
+
+.. questionnote::
+
+    **Primjer - leptir prati miša:** 
+    
+    U ovom primjeru učitavamo dvije slike leptira i prikazuje ih naizmjenično, kao što smo to radili u animacijama. Ono što je novo jest da mjesto prikazivanja leptira određuje položaj miša koji smo dobili pomoću funkcije *pg.mouse.get_pos()*.
+
+.. image:: ../../_images/butterfly1.png
+   :width: 50px
+.. image:: ../../_images/butterfly2.png
+   :width: 50px
+
+.. activecode:: PyGame__interact_butterfly1
+    :nocodelens:
+    :modaloutput:
+    :includesrc: src/PyGame/3_Interaction/3a_Mouse_readpos/butterfly1.py
+
+Vjerojatno ste primijetili da kad brže pomičete miš, leptir malo zaostaje. To se događa jer se prikazuje samo 5 frameova u sekundi, tako da odgoda može biti do 0,2 sekunde.
+
+To se kašnjenje lako eliminira povećanjem brzine prikazivanja (prikazivanje više frameova u sekundi), ali tada se slike preklapaju prečesto i leptir prebrzo maše krilima. Rješenje je povećati broj frameova u sekundi, a istovremeno prikazivati svaku sliku tijekom više frameova.
+
+.. questionnote::
+
+    **Zadatak - brzo kretanje, sporo mahanje:** 
+    
+    Ovdje kopirajte prethodni program, a zatim ga modificirajte tako da leptir ne zaostaje za mišom, dok brzina mahanja ostaje ista.
+
+**Pomoć:** kako leptir ne bi zaostajao, sigurno nam treba više frameova u sekundi, na primjer *n* puta više. To znači da se funkcija *new_frame* poziva *n* puta češće nego prije. Da bi se održala jednaka brzina mahanja, svaka se slika mora prikazati *n* puta duže, to jest, *n* uzastopnih frameova.
+ 
+.. activecode:: PyGame__interact_butterfly2
+    :nocodelens:
+    :modaloutput:
+    :playtask:
+    :includehsrc: src/PyGame/3_Interaction/3a_Mouse_readpos/butterfly2.py
+
+.. questionnote::
+
+    **Zadatak - prema mišu:** Napisati program u kojem se zelena loptica kreće prema mišu, kao na primjeru (gumb "Play task").
+    
+**Pomoć:** U ovom zadatku je ključno kako se mijenjaju koordinate :math:`(x, y)` centra loptice. U situaciji kao na slici, želimo da *x* povećamo za *dx* a *y* povećamo za *dy*. Ovisno o tome kako želimo da se loptica kreće, vrijednosti *dx*, *dy* mogu se izračunati na različite načine. Jedan jednostavan način je odabrati :math:`dx = {1 \over 10} (xm - x), dy = {1 \over 10} (ym - y)`.
+
+.. image:: ../../_images/PyGame/towards_mouse.png
+   :width: 300px   
+   :align: center     
+
+.. activecode:: PyGame__interact_towards_mouse
+    :nocodelens:
+    :modaloutput:
+    :playtask:
+    :includehsrc: src/PyGame/3_Interaction/3a_Mouse_readpos/towards_mouse.py
+
+
+
+.. questionnote::
+
+    **Zadatak - prema mišu sa tragom:** Kopirajte prethodni program, a zatim ga modificirajte tako da loptica ostavi sivi trag, kao u primjeru (gumb "Play task"). 
+    
+**Pomoć:** Kretanje loptice je isto kao u prethodnom primjeru. Da bismo postigli trag, trebamo pohraniti listu od nekoliko (koristili smo 20) prethodnih položaja loptice.
+
+Prilikom izračunavanja novog stanja na popis dodamo najnoviju poziciju, a ako je lista postala preduga, brišemo najstariji položaj.
+
+Pri crtanju traga za svaki krug koristimo boju *(nijansa, nijansa, nijansa)*, gdje je nijansa 255 (bijela) prije petlje, a u petlji se smanjuje za određenu vrijednost, tako da u posljednjem prolazimo kroz petlju postaje nula (crna) ili što je moguće bliže nuli.
+
+Na primjer, ako se lista naziva *trace*, ove ili slične izjave trebale bi se pojaviti u vašem programu:
+
+.. code::
+
+    trace = []
+    ...
+    
+    def new_frame():
+        
+        ...
+        trace.append((x, y))
+        ...
+        if ...
+            trace = trace[1:]
+
+
+.. activecode:: PyGame__interact_towards_mouse_with_trace
+    :nocodelens:
+    :modaloutput:
+    :playtask:
+    :includehsrc: src/PyGame/3_Interaction/3a_Mouse_readpos/towards_mouse_with_trace.py
+
+~~~~
+
+Konačno, možete isprobati sljedeća dva programa i igrati se s njima.
+
+Da bi se napravili ovakvi programi, pored ovdje prikazanih programskih tehnika potrebno je neko znanje fizike (elastična sila, Newtonov drugi zakon) i matematike (pitagorina teorema). Pogledajte programe bez da ih morate u potpunosti razumjeti. Ako želite, pokušajte malo izmijeniti neke konstante kako biste vidjeli kako to utječe na ponašanje programa.
+
+.. questionnote::
+
+    **Primjer: Yо-yо**
+    
+.. activecode:: PyGame__interact_yoyo
+    :nocodelens:
+    :modaloutput:
+    :includesrc: src/PyGame/3_Interaction/3a_Mouse_readpos/yoyo.py
+
+.. questionnote::
+
+    **Primjer: Oči** 
+
+Ovaj program zahtijeva i malo više znanja matematike, tako da nećemo ulaziti u detalje. Ako vas zanima kako ovaj program funkcionira i dobri ste u matematici, pokušajte s malo nečije pomoći razumjeti detalje.
+
+
+.. activecode:: PyGame__interact_eyes
+    :nocodelens:
+    :modaloutput:
+    :includesrc: src/PyGame/3_Interaction/3a_Mouse_readpos/eyes.py

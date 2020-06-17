@@ -1,0 +1,126 @@
+Crtanje poligona pomoću petlji
+------------------------------
+
+Podsjetite se primjera programa koji crta ogradu:
+
+.. activecode:: PyGame_loops_fence_fixed
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :includesrc: src\PyGame\1_Drawing\7b_Loops_polygons\fence_fixed.py
+
+Kao što smo u međuvremenu naučili, crtanje svakog izloga s zasebnom naredbom nije najbolji način za crtanje ovog crteža. Fleksibilniji program postigao bi se crtanjem piketa u petlji. Pogledajmo kako trebamo nacrtati poligon (piket je predstavljen šesterokutom), kako bi bilo lako nacrtati isti poligon na drugim mjestima.
+
+Svakako je korisno uvesti glavnu točku (sidro), u vezi s kojom bi se izrazili svi vrhovi poligona. Kod ograde vrhovi prvog odabira su [(20, 80), (30, 70), (40, 80), (40, 270), (20, 270)]. Možemo odabrati prvu određenu točku (20, 80) za sidro, a ostale točke izraziti pomoću koordinata prve točke. Tako dobivamo da su vrhovi jednog piketa [(x, y), (x + 10, y-10), (x + 20, y), (x + 20, y + 190), (x, y + 190)] . Postavljanjem *x* = 20, *y* = 80, dobivamo koordinate prvog piketa u ogradi, a povećanjem *x* za po 40 možemo dobiti i ostale pikete.
+
+.. code:: 
+
+    y = 80
+    for x in range(20, 300, 40):
+        pg.draw.polygon(canvas, pg.Color('brown'), [(x, y), (x + 10, y-10), (x + 20, y), (x + 20, y+190), (x, y+190)])
+
+Budući da su svi piketi na istoj visini, *y* koordinata sidra se ne mijenja pa je ne moramo čak ni uvoditi (morali bismo unijeti *y* koordinate ako su neki od njih iznad drugih). To znači da u tom slučaju prethodni kod možemo napisati malo jednostavnije.
+
+.. code:: 
+
+    for x in range(20, 300, 40):
+        pg.draw.polygon(canvas, pg.Color('brown'), [(x, 80), (x + 10, 70), (x + 20, 80), (x + 20, 270), (x, 270)])
+
+Moguće su različite varijante ove osnovne ideje. Na primjer, ako u početku oblikujemo popis vrhova poligona (za prvi piket), možemo oblikovati popis pomaknutih vrhova na nekoliko načina.
+
+Možemo izračunati koordinate pomaknutih vrhova u dodatnoj petlji:
+
+.. code::
+
+    picket = [(0, 0), (10, -10), (20, 0), (20, 190), (0, 190)]
+    y0 = 80
+    for x0 in range(20, 300, 40):
+        displaced_picket = []
+        for x, y in picket:
+            displaced_picket.append((x+x0, y+y0))
+        pg.draw.polygon(canvas, color, displaced_picket)
+
+Možemo uvesti funkciju za crtanje određenog poligona na zadanom položaju, pa da listu pomaknutih vrhova formiramo u funkciji:
+
+.. code::
+
+    def draw_polygon(points, color, x0, y0):
+        displaced_points = []
+        for x, y in points:
+            displaced_points.append((x+x0, y+y0))
+        pg.draw.polygon(canvas, color, displaced_points)
+
+    picket = [(0, 0), (10, -10), (20, 0), (20, 190), (0, 190)]
+    for x0 in range(20, 300, 40):
+        draw_polygon(picket, pg.Color('brown'), x0, 80)
+
+
+Svaki od ova dva načina može zamijeniti sedam poziva funkcijie *pg.draw.polygon* u datom početnom primjeru, a svaki je bolji od crtanja piketa s zasebnim naredbama. Upotreba funkcije daje nešto duži kod, ali ima prednost što se potpuno ista funkcija može koristiti bez ikakvih preinaka za crtanje bilo kojeg poligona u novom položaju.
+
+Pokušajte s jednom ili obje predložene promjene u gornjem programu, a zatim upotrijebite jednu od ovih metoda za rješavanje sljedećih zadataka.
+
+
+Zadaci za vježbu
+''''''''''''''''
+
+.. questionnote::
+
+    **Zadatak - oktagoni**
+    
+    Napišite program koji crta osmerokut kao u primjeru (kliknite gumb "Play task").
+
+Funkcija crtanja poligona slična je prethodnoj. Jedina je razlika što se u njemu funkcija *pg.draw.polygon* poziva dvaput: jednom za unutrašnjost poligona, a drugi put za rubove.
+
+Dane su i koordinate osmerokuta, ostaje dodati poziv funkciji crtanja unutar dvostruke petlje. I *x* i *y* polaze od vrijednosti 0 i povećavaju se za 48 (48 "visina" i "širina" osmerokuta).
+    
+.. activecode:: PyGame_loops_octagons
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\7b_Loops_polygons\octagons.py
+    
+    def draw_framed_polygon(vertices, color, frame_color, x0, y0):
+        displaced_vertices = []
+        for x, y in vertices:
+            displaced_vertices.append((x+x0, y+y0))
+        pg.draw.polygon(canvas, color, displaced_vertices)
+        pg.draw.polygon(canvas, frame_color, displaced_vertices, 2)
+    
+    octagon = [(14, 0), (34, 0), (48, 14), (48, 34), (34, 48), (14, 48), (0, 34), (0, 14)]
+    # dovršite program
+    
+    
+.. questionnote::
+
+    **Zadatak - strelice**
+
+    Za crtanje dane slike dovršite sljedeći program (sliku možete vidjeti klikom na gumb "Play task").
+
+Bijele strelice usmjerene su s lijeve strane, a crne strelice desno. Kako crne i bijele strelice potpuno prekrivaju sliku zajedno, primijetite da je dovoljno crtati samo crne strelice (na bijeloj pozadini).
+
+.. activecode:: PyGame_loops_arrows
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\7b_Loops_polygons\arrows.py
+   
+    arrow = [(0, 10), (40, 10), (40, 0), (60, 20), (40, 40), (40, 30), (0, 30)]
+    arrow_length, arrow_height = 60, 40
+    canvas.fill(pg.Color("white"))
+    ??? # dovršite program
+
+
+
+.. questionnote::
+
+    **Zadatak - stado žirafa**
+
+    Date su koordinate vrhova poligona koji predstavlja žirafu. Dovršite program crtanjem nekoliko žirafa (pomoću funkcije *draw_polygon*). Napravite popis položaja žirafa po želji.
+
+.. activecode:: PyGame_loops_herd
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src\PyGame\1_Drawing\7b_Loops_polygons\giraffe_herd.py

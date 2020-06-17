@@ -1,0 +1,209 @@
+Python programi
+===============
+
+Kao što smo vidjeli u poglavlju o Karelu, programi se sastoje od naredbi. Pogledajmo neke od osnovnih Pythonovih naredbi koje ćemo koristiti za pisanje prvih programa.
+
+Dodavanje vrijdnosti varijabli
+-------------------------------
+
+Varijabla je imenovani prostor u memoriji računala, u koji možemo pohraniti bilo koje vrste (broj, tekst, logička vrijednost ili nešto treće). Posredni rezultati često se stavljaju u varijable prilikom izračuna. Kada pokrenemo školjku Pythona, možemo dodijeliti vrijednost varijabli s jednom naredbom, a zatim upotrijebiti vrijednost te varijable u sljedećim naredbama. Na primjer:
+
+.. code::
+
+    >>> base = 6*8
+    >>> base
+    48
+    >>> base * 1.5
+    72.0
+    >>> base * 1.6
+    76.80000000000001
+
+.. infonote::
+
+    **Naredba dodjeljivanja vrijednosti**
+
+    Naredba dodjeljivanja vrijednosti se piše tako što napišemo ime varijable, zatim znak jednakosti (``=``), a onda izraz čiju vrijednost dodjeljujemo varijabli. Cijele i realne brojeve također smatramo za izraze (to su najjednostavniji mogući izrazi).
+    
+.. infonote::
+
+    **Imena varijabli**
+    
+    Prema pravilima pisanja programa, imena varijabli (kao i druga imena u programima koje pišemo) mogu se sastojati od malih i velikih slova, donje crte i brojeva, s tim da ne mogu počinjati s brojevima.
+    
+    Python razlikuje velika i mala slova. *N* i *n* su različita imena i ako ih oboje koristimo, oni bi predstavljali dvije različite varijable.
+    
+    Imena varijabla mogu biti dugačko koliko nam je potrebno.
+    
+    Tijekom pisanja programa (ili pojedinačnih naredbi), pokušavamo dati varijablama smislena imena kako bi naredbe i programi bili što jasniji.
+
+U Pythonu je uobičajen stil da se velika slova ne upotrebljavaju (iako su dopuštene), a kada se ime sastoji od više riječi, te se riječi odvajaju donjom crtom, na primjer, *cijena_jednog_komada*. Brojevi se koriste u imenima kad ima smisla (što nije često).
+
+**Imena varijabli - provjerite svoje razumijevanje:**
+
+.. dragndrop:: console__basics_quiz_variable_names
+    :feedback: Probajte ponovno!
+    :match_1: 2_date ||| netočno, sadrži iligalni znak
+    :match_2: pet_no_2 ||| ispravno ime
+    :match_3: state_at_23:59 ||| netočno, započinje s ilegalnim znakom
+
+    Usporedite predložena imena varijabli s odgovorima.
+
+
+.. mchoice:: console__basics_quiz_name
+   :multiple_answers:
+   :answer_a: vArIjaBlA
+   :answer_b: а1
+   :answer_c: 2D_grafika
+   :answer_d: _3D_grafika
+   :answer_e: ljubimac-broj-2
+   :correct: a, b, d
+
+   Koje od navedenog može biti naziv varijable?
+
+
+Ispisivanje vrijednosti iz programa
+-----------------------------------
+
+U interaktivnom radu dovoljno je unijeti izraz da vidimo njegovu vrijednost, ali to ne možemo koristiti u programima. Za ispis nečega iz programa, koristimo funkciju *print()*. Za sada ćemo koristiti samo najjednostavniji oblik ove funkcije.
+
+Izraz čiju vrijednost želimo ispisati stavlja se između zagrada, na primjer:
+
+.. code::
+
+    >>> print(2 + 2)
+    4
+    >>> 
+
+Jednim pozivom funkcije *print()* možemo ispisati više vrijednosti. Izrazi čije vrijednosti želimo ispisati navedeni su između zagrada i odvojeni zarezima, na primjer: 
+
+.. code::
+
+    >>> a = 10
+    >>> b = 20
+    >>> circumference  = 2*a + 2*b
+    >>> area = a*b
+    >>> print(circumference, area)
+    60 200
+    >>> 
+
+
+.. infonote::
+
+    S funkcijama smo se već susretali u poglavljima o Karelu, prepoznajemo ih po zagradama iza imena. Podsjetimo se, podatke koje navodimo između zagrada nazivamo **parametri** ili **argumenti** funkcije. O funkcijama ćemo uskoro pričati opširnije.
+    
+
+Pokretanje programa
+-------------------
+
+**Pokretanje programa u pregledniku**
+
+Da bismo vam olakšali početak učenja, koristeći **ActiveCode** tehnologiju projekta `Runestone Interactive <http://runestoneinteractive.org/>`__ , omogućili vam pokretanje programa Python na web stranicama ovog tečaja. Na primjer, ispod se nalaze naredbe koje smo prethodno unosili interaktivno, ali ovaj put napisane kao program. Program možete pokrenuti klikom na gumb "Run".
+
+.. activecode:: console__program_first
+
+    a = 10
+    b = 20
+    circumference  = 2*a + 2*b
+    area = a*b
+    print(circumference, area)
+    
+**Pokretanje programa iz IDLE okruženja**
+
+Preporučujemo da, osim pisanja programa na ovim web stranicama, programe povremeno pokrećete i u  *IDLE* okruženju. Navikavanje na okruženje *IDLE* važno je da postanete samostalni u programiranju.
+
+Kada pokrenete program *IDLE* na vašem računalu, otvorite integrirani editor teksta (File / New File menu) i u njemu upišite predhodni (ili neki drugi) program.
+
+Kada završite program, spremite ga (menu File / Save), a zatim ga pokrenete (menu Run / Run Module).
+
+.. image:: ../../_images/Console/console_run_from_idle.png
+  :width: 350px
+  :align: center
+
+Rezultat ćete vidjeti u prozoru interaktivne školjke.
+
+
+**Pokretanje programa iz online okruženja**
+
+Drugi način da pokrenete svoj Python program je korištenje jednog od online okruženja za programiranje. Jedno takvo okruženje je https://repl.it/.
+
+.. image:: ../../_images/Console/console_repl.it_start.png
+  :width: 500px
+  :align: center
+
+Kliknite na gumb ``+ new repl``, odaberite jezik Python i kliknite ``Create repl``. Vaš preglednik otvorit će stranicu na kojoj možete napisati program i pokrenuti ga.
+
+.. image:: ../../_images/Console/console_repl.it_run.png
+  :width: 500px
+  :align: center
+
+
+Programske greške
+-----------------
+
+Ponekad će se desiti da neku naredbu u programu ne napišete točno po pravilima pisanja naredbi na jeziku Python. U takvom slučaju Python interpreter ne može razumjeti naredbu i dobijete poruku o pogrešci. Svako okruženje za izvršavanje programa prijavljuje pogrešku na nešto drugačiji način, ali svako od njih kaže u kojoj liniji programa je došlo do pogreške i o kojoj vrsti pogreške se radi.
+
+Pojava pogrešaka vas ne treba brinuti, jer je to uobičajena stvar i događa se i iskusnim programerima. Pažljivo pogledajte poruku, potrudite se razumjeti što je pogrešno, zatim to ispravite i pokrenite program ponovno. Razumjevanje poruka o pogreškama je sastavni dio programiranja i može se uvježbavati kao i druge vještine.
+
+Kako biste lakše razumjeli poruke o pogreškama koje ćete dobivati (i kako biste postali manje zabrinuti zbog pogrešaka), preporučujemo vam da sada pokušate namjerno napraviti neke male pogreške koje bi vam se ionako mogle dogoditi pri pisanju programa.
+
+Kad točno znate što ste pogriješili i pogledate poruku, bit će vam lakše razumjeti istu poruku kad je vidite nakon nenamjerne pogreške.
+
+Isprobajte neke pogreške ovdje:
+
+.. activecode:: console__program_make_err
+
+    # dodajte naredbe
+    
+
+Pripremili smo i nekoliko programa s namjerno napravljenim greškama, koje onda objašnjavamo. Programi su kratki da bi pogreške bile uočljivije, ali u duljim programima je otklanjanje pogrešaka gotovo isto. Budući da poruka o pogrešci sadrži broj programske linije u kojem se pogreška dogodila, u duljim programima prvo morate pronaći spomenutu programsku liniju i pogledati taj (a možda i prethodni) redak.
+
+Pokrenite svaki od sljedećih programa, a zatim pogledajte poruku o pogrešci i objašnjenje.
+
+.. activecode:: console__program_err1
+
+    prit(2+2)
+    
+Poruka nam javlja da je riječ o pogrešci tipa *NameError*. To znači da ime u spomenutoj liniji nije poznato Python interpeteru (nije definirano). Primjećujemo da ime funkcije *print* nije točno napisano (a funkcija *prit* ne postoji). Ubacivanjem slova *n* greška se ispravlja i program radi.
+
+.. activecode:: console__program_err2
+
+    result = 2 + 2
+    print(resultt)
+    
+Pogreška je istog tipa, samo se ovaj put odnosi na ime *resultt*. Brisanjem suvišnog slova *t*, program postaje ispravan.
+
+.. activecode:: console__program_err3
+
+    a = 3
+    b = 2
+    print(a b)
+    
+Pogreška je tipa *SyntaxError*, što znači da se ne poštuju pravila pisanja na Pythonu. U ovom slučaju između *a* i *b* nedostaje znak zarez (``,``).
+
+.. activecode:: console__program_err4
+
+    a = 3
+    b = 2
+    print a, b
+
+Još jedna pogreška u sintaksi. Opet nisu poštovana pravila pisanja, a ovog puta nedostaju zagrade.
+
+.. activecode:: console__program_err5
+
+    a = 3
+    b = 0
+    print(a / b)
+
+Pogreška je tipa *ZeroDivisionError*. Ova se pogreška razlikuje od prethodne jer je izjava napisana pravilno i uspješno je protumačena. Međutim, izvršavanje ove naredbe rezultiralo je nultom podjelom, što nije dopuštena operacija. Program treba biti napisan na način da ne pokušava podjeliti nulu. Ispravljanje u ovom slučaju ovisi o tome što želimo da naš program učini u ovoj situaciji. Jedna je mogućnost provjeravanja da djelitelj nije nula prije dijeljenja.
+
+~~~~
+
+Provjerite razumijete li ova tri tipa pogrešaka odgovaranjem na pitanje.
+
+.. dragndrop:: console__program_quiz_errors
+    :feedback: Probajte ponovno!
+    :match_1: SyntaxError|||print(3*(2+2)
+    :match_2: NameError|||а=3</br>print(a / b)
+    :match_3: ZeroDivisionError|||b=3//6</br>print(3 // b)
+
+    Uparite tip pogreške s programom.

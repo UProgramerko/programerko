@@ -1,0 +1,139 @@
+Prikazivanje gotovih slika
+----------------------------
+
+Crtanje osnovnih oblika može biti zabavno, a ponekad i izazovno. Ipak, bilo bi još zabavnije kad bismo naš crtež mogli kombinirati s gotovim slikama ili fotografijama. U PyGame okruženju to je vrlo jednostavno. Pogledajmo sljedeći primjer:
+
+.. image:: ../../_images/tree.png
+   :width: 50px
+
+.. image:: ../../_images/apple_small.png
+   :width: 50px
+
+.. image:: ../../_images/basket.png
+   :width: 50px
+
+
+.. activecode:: PyGame__images_trees_and_apples1
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :includesrc: src\PyGame\1_Drawing\9_UsingImages\trees_and_apples1.py
+
+U ovom programu imamo dvije nove funkcije PyGame:
+
+- Funkcija :code:`pg.image.load` učitava sliku s diska. U ovu funkciju prosljeđujemo naziv datoteke koja sadrži sliku (put do datoteke može biti uključen) i kao rezultat vraća sliku u formatu prikladnom za program. Taj bi rezultat trebali spremiti u neku varijablu (u primjeru je varijabla *tree_image*);
+
+- Funkcija :code:`blit` prikazuje sliku u određenom prozoru. Argumenti ove funkcije su varijabla koja sadrži sliku (rezultat funkcije *pg.image.load*) i položaj :math:`(x, y)` u prozoru gdje želimo da se slika pojavi. Na položaju koji smo postavili pojavit će se gornji lijevi kut slike. U primjeru smo postavili položaj :math:`(0, 0)`, pa se gornji lijevi kut slike pojavljuje u gornjem lijevom kutu prozora.
+
+Pokušajte upisati različite vrijednosti koordinata umjesto :math:`(0, 0)` da biste bolje razumjeli kako funkcionira funkcija *blit*. Možemo primijetiti da je prikazivanje gotovih slika slično prikazu pokretnih crteža pomoću sidra.
+
+Također možete pokušati prikazati jednu sliku na više mjesta na zaslonu, kao što smo to radili s osnovnim oblicima. Samo pozovite funkciju *blit* više puta, s različitim vrijednostima za mjesto prikaza.
+
+Kada se slika prikazuje na više mjesta, slike se mogu preklapati. Stoga se mora voditi računa o redoslijedu prikazivanja. U našem slučaju prvo bismo trebali pokazati stablo koje zamišljamo kao daljnje, a zatim i drvo koje zamišljamo kao bliže. Inače se konačna scena može činiti pogrešnom, kao što slijedi sljedeća slika.
+
+.. image:: ../../_images/PyGame/trees_and_apples_bad.png
+   :width: 600px
+   :align: center 
+      
+Predmeti koje opažamo kao dalje nalaze se obično u gornjem dijelu slike, što znači da imaju manju :math:`y` koordinatu, iako to možda nije uvijek točno. U ovom i sličnim primjerima dovoljno će se držati ovog jednostavnog pravila: **bolje je prvo prikazati predmete s manjom** :math:`y` **koordinatom**.
+
+Zadaci za vježbu
+''''''''''''''''
+
+.. questionnote::
+
+    **Zadatak - drveće**
+
+    U sljedećem programu ispravite redoslijed položaja stabala na listi, a zatim dodajte naredbu kako biste nacrtali stablo na položaju (*x*, *y*) u petlji.
+
+.. activecode:: PyGame__images_trees3
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\9_UsingImages\trees_and_apples3.py
+    
+    tree_image = pg.image.load("tree.png")  # slika drveta
+    canvas.fill(pg.Color("darkgreen"))   # obojimo pozadinu ekrana u tamno zeleno
+    tree_pos = [(240, 290), (400, 200), (550, 170), (120, 150), (200, 70)]
+    
+    for x, y in tree_pos:
+        pass # dovršite program
+
+
+
+.. questionnote::
+
+    **Zadatak - Jabuke**
+
+    Dovršite započeti program tako da crta drvo s jabukama (kao u primjeru).
+
+.. activecode:: PyGame__images_trees2
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\9_UsingImages\trees_and_apples2.py
+    
+    tree_image = pg.image.load("tree.png")  # slika drveta
+    apple_image = pg.image.load("apple_small.png")  # slika jabuke
+    apple_positions = ((43,191), (61, 158), (124, 145), (134, 175), (160, 180))
+
+    # dovršite: obojte pozadinu u tamno zeleno, nacrtajte drvo i na njemu jabuke
+   
+
+Pokušajte promijeniti program tako da prikazuje drvo s jabukama pomaknuto 100 piksela desno i 50 piksela niže.
+    
+.. questionnote::
+
+    **Zadatak - Šah-mat**
+
+    Napišite program koji crta šahovsku poziciju, kao u primjeru. Nazivi datoteka za praznu šahovnicu, bijeli kralj, bijeli top i crnog kralja su redom "chess_table.png", "white_king.png", "white_rook.png", "black_king.png".
+    
+.. image:: ../../_images/chess_table.png
+   :width: 50px
+
+.. image:: ../../_images/white_king.png
+   :width: 50px
+    
+.. image:: ../../_images/white_rook.png
+   :width: 50px
+   
+.. image:: ../../_images/black_king.png
+   :width: 50px
+
+.. activecode:: PyGame__images_chess_mate
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\9_UsingImages\chess_mate.py
+    
+
+
+.. questionnote::
+
+    **Zadatak - Voćnjak**
+    
+    U sljedećem zadatku započeto je crtanje voćnjaka. Ako pokrenemo program, primijetit ćemo neke nedostatke. Jedan je problem što se jabuke nalaze samo na prvom stablu i trebaju biti smještene na svakom stablu, poredane na isti način. Uz to, drugo stablo na lijevoj strani (ispravno) prekriva krajnje lijevo stablo, ali ne preklapa svoje jabuke. Trebamo prikazati stablo koje smo pokazali ranije zajedno s njegovim jabukama prije nego što prijeđemo na sljedeće stablo.
+    
+Ispravite program tako da prikazuje sliku dobivenu klikom na tipku "Play task".
+
+.. activecode:: PyGame__images_trees_and_apples4
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\9_UsingImages\trees_and_apples4.py
+   
+    tree_image = pg.image.load("tree.png")  # slika drveta
+    apple_image = pg.image.load("apple_small.png")  # slika jabuke
+    apple_positions = ((43,191), (61, 158), (124, 145), (134, 175), (160, 180))
+
+    for tree_x, tree_y in ((0, 0), (200, 70), (120, 150), (240, 290), (550, 170), (400, 200)):
+        canvas.blit(tree_image, (tree_x, tree_y))
+        
+    for apple_x, apple_y in apple_positions:
+        canvas.blit(apple_image, (apple_x, apple_y))
+
+

@@ -1,0 +1,121 @@
+Crtanje zadanih crteža - dodatni primjeri
+-----------------------------------------
+
+Pretpostavljamo da ste već stekli neku vještinu u čitanju koordinata i pozivanju funkcija za crtanje osnovnih oblika. Stoga će se u sljedećim zadacima naći neki novi izazov. 
+
+Mnogi crteži imaju određenu pravilnost, poput simetrije ili dijela crteža koji se ponavlja. Ako želite sami napraviti takav crtež, da bi izgledao dobro, ne možete slobodno odabrati sve točke. Umjesto toga, treba odabrati neke točke, a neke izračunati. 
+
+Kako bismo se približili stvaranju slika koje sami dizajniramo, način specificiranja crteža malo je izmijenjen. Crteži su još uvijek određeni primjerom programa koji crta sliku (postoji izreka da jedna slika vrijedi 1000 riječi). Ono što je novo jest da neće biti moguće pročitati jednu ili obje koordinate na nekim dijelovima slike, već ćete trebati izračunati te koordinate na temelju poznatih koordinata.
+
+Osim što vam treba malo izračuna, crteži u sljedećim zadacima također imaju više detalja, pa vam treba malo više vremena za izradu.
+
+Ograda
+''''''
+
+U ovom zadatku očitanje :math:`x` koordinata je ograničena na prvi red ograde i prvi razmak. Sve ostale potrebne koordinate mogu se izračunati.
+
+.. activecode:: PyGame__drawing_fence
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :playtask:
+   :includexsrc: src\PyGame\1_Drawing\4_ByGrid_Additional\fence_assist.py
+   
+.. reveal:: PyGame__drawing_fence_reveal
+   :showtitle: Prikaži rješenje
+   :hidetitle: Sakrij rješenje
+
+   Kompletan program je dostupan, možete isprobati i ovdje.
+	       
+   .. activecode:: PyGame__drawing_fence_solution
+      :nocodelens:
+      :enablecopy:
+      :modaloutput:
+      :includesrc: src\PyGame\1_Drawing\4_ByGrid_Additional\fence.py
+
+Zgrada
+''''''
+
+Svi prozori zgrade iste su veličine, razmaci između katova su jednaki, a lijeva i desna strana zgrade su simetrične (osim što simetrični prozori nisu nužno iste boje). Pomoću ovih podataka izračunajte koordinate koje ne možete pročitati.
+
+.. activecode:: PyGame__drawing_building
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :playtask:
+   :includexsrc: src\PyGame\1_Drawing\4_ByGrid_Additional\building_assist.py
+   
+.. commented out 
+
+    .. reveal:: PyGame__drawing_building_reveal
+       :showtitle: Prikaži rješenje
+       :hidetitle: Sakrij rješenje
+
+       The complete program is provided, you can try it here as well.
+               
+       .. activecode:: PyGame__drawing_building_solution
+          :nocodelens:
+          :enablecopy:
+          :modaloutput:
+          :includesrc: src\PyGame\1_Drawing\4_ByGrid_Additional\building.py
+
+Stickman
+''''''''
+
+U ovom primjeru, koordinate točaka na desnoj nozi ne mogu se pročitati, ali simetrične su s lijevom nogom. Budući da je širina slike poznata (vidi početak programa), koordinate dviju nepoznatih točaka s desne strane mogu se izračunati pomoću poznatih simetričnih točaka s lijeve strane.
+
+**Pomoć:** Neka je :math:`A` točka na lijevoj strani slike, a :math:`B` točka na desnoj strani slike, simetrična prema točki :math:`A`. Dvije točke tada imaju istu koordinatu :math:`y`, a zbroj :math:`x` koordinata točaka :math:`A` a :math:`B` je jednaka širini slike.
+
+.. activecode:: PyGame__drawing_stickman
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :playtask:
+   :includexsrc: src\PyGame\1_Drawing\4_ByGrid_Additional\stickman_assist.py
+   
+.. commented out 
+
+    .. reveal:: PyGame__drawing_stickman_reveal
+       :showtitle: Prikaži rješenje
+       :hidetitle: Sakrij rješenje
+
+       Kompletan program je dostupan, možete isprobati i ovdje.
+               
+       .. activecode:: PyGame__drawing_stickman_solution
+          :nocodelens:
+          :enablecopy:
+          :modaloutput:
+          :includesrc: src\PyGame\1_Drawing\4_ByGrid_Additional\stickman.py
+
+Mačka
+'''''
+
+Uši ove mačke mogu se prikazati kao ispunjeni trokut. Kako su uši pričvršćene na glavu, dva vrha svakog trokuta mogu se odabrati s više slobode (dovoljno ih je smjestiti negdje unutar kruga glave). Pored dva trokuta koji predstavljaju uši, imamo i:
+
+- dva kruga (glava i vrh njuške)
+- šest elipsi (oči, zjenice i djelovi njuške)
+- šest linija (brkovi)
+
+:math:`x` koordinate na desnoj strani slike ne mogu se očitati, ali se mogu izračunati simetrijom (i poznatom širinom slike - vidi početak programa). 
+
+**Napomena:** Postupak za određivanje parametara elipse na desnoj strani malo se razlikuje od postupka koji se koristi za krugove ili segmente linija. Imajte na umu da je gornji **lijevi** vrh pravokutnika opisanog oko tražene elipse u stvari slika gornjeg **desnog** vrha opisanog oko poznate elipse. To znači da kada odredimo parametre *(x, y, w, h)* elipse na lijevoj strani, parametri njezine simetrične elipse s desne strane su *(širina - x - w, y, w, h)*, gdje je *širina* širina prozora, *x*, *y* su koordinate gornjeg lijevog vrha pravokutnika oko lijeve elipse, a *w* and *h* su širina i visina (obje) elipse.
+
+.. activecode:: PyGame__drawing_cat
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :playtask:
+   :includexsrc: src\PyGame\1_Drawing\4_ByGrid_Additional\cat_assist.py
+
+.. reveal:: PyGame__drawing_cat_reveal
+   :showtitle: Prikaži rješenj
+   :hidetitle: Sakrij rješenje
+
+   Kompletan program je dostupan, možete isprobati i ovdje.
+	       
+   .. activecode:: PyGame__drawing_cat_solution
+      :nocodelens:
+      :enablecopy:
+      :modaloutput:
+      :includesrc: src\PyGame\1_Drawing\4_ByGrid_Additional\cat.py
+

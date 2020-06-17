@@ -1,0 +1,164 @@
+Promijena veličine crteža
+-------------------------
+
+Kada smo govorili o premještanju crteža, spomenuli smo da je bolje izvršiti sve proračune u programu, jer je tako lakše premjestiti crtež, odnosno nacrtati ga na nekoliko mjesta, kad je to potrebno. Situacija je slična kada isti crtež želimo nacrtati u različitoj veličini, moguće na nekoliko mjesta (svako može biti u različitoj veličini). Umjesto izračunavanja svih koordinata ispočetka, možda će biti dovoljno promijeniti jedan pojedinačni broj u našem programu da biste dobili crtež druge veličine.
+
+Da biste naučili kako lako napraviti crteže koji se mogu mijenjati, prvo pogledajmo što treba promijeniti u programu za crtanje kako bi crtež dobio drugu veličinu. Na primjer, ako smo nacrtali oblak pomoću ovih naredbi:
+
+.. code::
+
+    def cloud(x, y, shade):
+        # crtamo oblak od tri kruga
+        gray = (shade, shade, shade)
+        pg.draw.circle(canvas, gray, (x,      y), 50)
+        pg.draw.circle(canvas, gray, (x - 50, y), 30)
+        pg.draw.circle(canvas, gray, (x + 50, y), 30)
+
+    cloud(200, 200, 180)
+
+i sada želimo da oblak bude dvostruko manji, a njegova sredina je još uvijek u točki (200, 200), tada bismo promijenili gornju funkciju u:
+
+.. code::
+
+    def cloud(x, y, shade):
+        # crtamo oblak od tri kruga
+        gray = (shade, shade, shade)
+        pg.draw.circle(canvas, gray, (x,      y), 25)
+        pg.draw.circle(canvas, gray, (x - 25, y), 15)
+        pg.draw.circle(canvas, gray, (x + 25, y), 15)
+    
+Polumjeri sva tri kruga treba prerezati na polovinu prethodne veličine (25 piksela umjesto 50, a 15 umjesto 30), ali to nije dovoljno. Da su centri malih krugova ostali tamo gdje su bili, dobili bismo tri odvojena kruga (pokušajte). Da bi crtež i dalje izgledao kao oblak, krugove trebamo i približiti. Konkretnije, udaljenost središta manjih krugova od središta velikog kruga također bi trebala biti dvostruko manja nego prije, to jest 25, umjesto 50 piksela.
+
+Općenito, ne želimo uvijek oblak koji je dvostruko manji, već da oblaci mogu biti različitih veličina. Pored toga, ne želimo stvoriti zasebnu funkciju za svaku veličinu oblaka, već imati jednu funkciju koja može crtati oblak određene veličine. Najugodnije bi bilo da možemo veličinu oblaka zadati samo jednim brojem i da promijenom tog jednog broja mijenjamo veličinu oblaka. Da bismo to postigli, moramo sve veličine koje se mijenjaju s promjenom veličine oblaka (što je udaljenost između središta krugova i radijusa tih krugova) pomoću jedne odabrane veličine. Na primjer, za tu odabranu veličinu možemo uzeti polumjer srednjeg kruga, koji ćemo označiti s :math:`r`. Udaljenosti središta manjih krugova od središta većeg kruga točno su :math:`r`, a polumjer manjih krugova jednak je :math:`{3 \over 5} r` bez obzira na veličinu oblaka. Kad koristimo sve ove odnose koje smo primijetili, funkcija izgleda ovako:
+
+.. code::
+
+    def cloud(x, y, r, shade):
+        # crtamo oblak od tri kruga
+        gray = (shade, shade, shade)
+        r_small = round(3 * r / 5)
+        pg.draw.circle(canvas, gray, (x,     y), r)
+        pg.draw.circle(canvas, gray, (x - r, y), r_small)
+        pg.draw.circle(canvas, gray, (x + r, y), r_small)
+
+Ova funkcija ima jedan parametar više - osim položaja i nijanse sive, ovoj funkciji postavljamo i veličinu oblaka. Sada možemo napraviti ovakve crteže:
+
+.. activecode:: PyGame__drawing_clouds_scalable
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src\PyGame\1_Drawing\6_Scalable\clouds_scalable.py
+
+Sada nabrojimo korake za opći postupak prepravljanja bilo kojeg pomičnog crteža kako bi mu se mogla mijenjati i veličina:
+
+- Na crtežu moramo odrediti jednu duljinu koja će se postaviti izravno. Ovu odabranu duljinu možemo nazvati **osnovnom duljinom** ili **jedninicom mjere**. U primjeru oblaka, osnovna duljina je polumjer srednjeg kruga.
+- Svi polumjeri krugova od kojih se crtež sastoji izražavamo proporcionalno osnovnoj duljini. To znači ako je naša osnovna duljina označena sa :math:`a`, sve ostale duljine u programu bit će višestruke od :math:`a`, na primjer :math:`2a` ili :math:`5a`. Broj :math:`a` iz omjera potrebne duljine i odabrane osnovne duljine u početnom crtežu (taj omjer ostaje isti kad se promijeni veličina crteža). U primjeru s oblakom, polumjer malog kruga je uvijek 35 odabrane osnovne duljine :math:`r`. Ako se na crtežu pojave pravokutnici ili elipse, visine i širine tih pravokutnika i elipsa također trebaju biti izražene proporcionalno osnovnoj duljini, na isti način kao i polumjeri krugova.
+- Koordinate svih točaka određujemo u odnosu na glavnu točku dodavanjem ili oduzimanjem određenog broja osnovnih duljina koordinatama glavne točke. Potrebni broj osnovnih duljina ponovno se određuje iz odnosa u početnom crtežu. U primjeru s oblakom, da bismo dobili :math:`x` koordinatu centra lijevog kruga, oduzimamo **jednu** osnovnu duljinu od :math:`x` koordinate glavne točke (centra srednjeg kruga).To radimo jer je omjer razlike :math:`x` koordinata i osnovne duljine jednak jednini. Isti se postupak u principu primjenjuje na :math:`y` iako je u ovom slučaju posebno jednostavan. Budući da su :math:`y` koordinate središta kružnica jednake, omjer razlike :math:`y` koordinata i osnovne duljine je nula, tako da :math:`y` koordinata sidra treba dodati nula osnovne osnovne duljine da biste dobili :math:`y` koordinatnu sredinu kružnice manji krug.
+
+Da bismo bolje razumjeli postupak mijenjanja veličine crteža, primijenit ćemo ga i na primjeru medvjedića.
+
+Medvjed - veličina
+''''''''''''''''''
+
+Slijedi sljedeći program koji pokazuje glavu medvjeda kako bi se mogao lako pomicati:
+
+.. activecode:: PyGame__drawing_bear_movable
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src\PyGame\1_Drawing\5_Movable\teddy-bear_movable1a.py
+
+Da bismo promijenili veličinu crteža, uvodimo osnovnu duljinu, na primjer :math:`a = 5`. Sada sve radijuse možemo izraziti koristeći :math:`a` ovako:
+
+.. code::
+
+    framed_circle(canvas, pg.Color("yellow"), (cx - 60,  cy - 70),  9*a) # lijevo uho
+    framed_circle(canvas, pg.Color("yellow"), (cx + 60,  cy - 70),  9*a) # desno uho
+    framed_circle(canvas, pg.Color("yellow"), (cx,       cy)     , 20*a) # glava
+    framed_circle(canvas, pg.Color("yellow"), (cx,       cy + 50), 10*a) # njuška
+    framed_circle(canvas, pg.Color("black"),  (cx - 50,  cy - 30),  3*a) # lijevo oko
+    framed_circle(canvas, pg.Color("black"),  (cx + 50,  cy - 30),  3*a) # desno oko
+    framed_circle(canvas, pg.Color("black"),  (cx,       cy + 20),  3*a) # vrh njuške
+    
+Bilo koji broj može se odabrati kao osnovna duljina, a odabirom duljine baze od 5 piksela ne moramo koristiti realne brojeve - svi su polumjeri cijeli brojevi od :math:`a` i lako ih možemo izračunati napamet. Na primjer, polumjer od 45 piksela izražavamo kao :math:`45 = 9 \cdot 5 = 9 \cdot a`, i tako dalje.
+
+Sada je potrebno da koordinate centara svih ostalih krugova izrazimo počevši od glavne točke :math:`(cx, cy)` pomicajući se za potreban broj dužina :math:`a` u smjeru :math:`x` i :math:`y` osi. Uzmite kao primjer desno uho medvjeda.
+
+:math:`x` koordinata centra desnog uha je :math:`cx + 60 = cx + 12 a`, dok je :math:`y` kordinata :math:`cy - 70 = cy - 14 a`. Kada to učinimo za sve centre krugova, dolazimo do sljedećeg oblika programa:
+
+.. activecode:: PyGame__drawing_bear_tmp2
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src\PyGame\1_Drawing\6_Scalable\teddy-bear_scalable1a.py
+    
+Sada možemo ne samo pomicati ili kopirati medvjeda po ekranu, već ga prikazati u različitim veličinama. Kao potvrdu da mijenjanje veličine zaista radi, možete poziv funkcije
+
+.. code::
+
+    draw_teddy(width // 2, height // 2, 6)
+    
+koji crta medvjeda sa glavnom točkom u centrui prozora, da zamijenite sa sljedećih pet:
+
+.. code::
+
+    draw_teddy(85, 100, 4)
+    draw_teddy(235, 100, 3)
+    draw_teddy(50, 250, 2)
+    draw_teddy(150, 250, 2)
+    draw_teddy(250, 250, 2)
+
+Iskopirajte ili prepišite ovih pet linija koda u program i isprobajte! Razmislite koliko bi posla bilo da se ovih pet medvjeda prikažu bez računanja u programu.
+
+Sada pokušajte dovršiti jedan započeti primjer.
+
+Zadatak - veličina kuće
+'''''''''''''''''''''''
+
+Počet ćemo od programa koji crta četiri kućice na zadanim mjestima na ekranu::
+
+.. activecode:: PyGame__drawing_house_detailed1
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src\PyGame\1_Drawing\5_Movable\house2D_detailed_movable.py
+
+Dovršite prepravku programa u polju ispod, tako da se kućice mogu jednostavno povećavati i smanjivati. Na primjer, možete uzeti 10 piksela za osnovnu veličinu, jer je u tom slučaju izražavanje svih duljina pomoću osnovne duljine vrlo lako. Kada potvrdite da program nakon prepravke prikazuje istu sliku kao i polazni program kao i gornji startni program, zamijenite zadane pozive funkcije *house* sa sljedeća 4, i provijerite radi li promjena veličine kuće ispravno (trebali biste dobiti sliku kao i kada kliknete na gumbu "Prikaži primjer"):
+
+.. code::
+
+    house(150,  90,  8, pg.Color(220, 220, 220))
+    house(250, 130,  9, pg.Color("white"))
+    house(350, 160, 10, (255,255,150))
+    house( 50, 150, 10, pg.Color("khaki"))
+
+.. activecode:: PyGame__drawing_house_scalable1
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask: 
+    :includexsrc: src\PyGame\1_Drawing\6_Scalable\house2D_detailed_scalable1.py
+   
+    canvas.fill(pg.Color("darkgreen")) # obojite pozadinu u tamno zelenu
+
+    def house(x, y, a, wall_color):
+        pg.draw.polygon(canvas, pg.Color("red"), [(x, y), (x + ???*a, y - ???*a), (x+14*a, y)]) # krov
+        pg.draw.rect(canvas, wall_color,       (x,       y,      14*a, 10*a)) # zidovi
+        pg.draw.rect(canvas, pg.Color("brown"), (x + ???, y + ???, 3*a,  3*a)) # lijevi prozor
+        pg.draw.rect(canvas, pg.Color("brown"), (x + ???, y + ???, ???,  ???)) # dasni prozor
+        pg.draw.rect(canvas, pg.Color("brown"), (x + ???, y + ???, ???,  ???)) # vrata
+        
+    house(150,  90, 10, (220, 220, 220))
+    house(220, 130, 10, pg.Color("white"))
+    house(350, 160, 10, (255, 255, 150))
+    house( 50, 150, 10, pg.Color("khaki"))
+
+Nakon što promijenite funkciju *house*, pokušajte s različitim rasporedima, bojama i veličinama kuća, poput one u nastavku ili neke druge koju odaberete sami:
+
+.. code::
+
+    house(278, 110, 1, (211, 207, 169))
+    house(231, 119, 2, (217, 211, 164))
+    house(174, 130, 3, (228, 221, 152))
+    house(112, 142, 4, (231, 222, 150))
+    house( 18, 160, 6, (240, 230, 140))

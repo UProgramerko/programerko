@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Kretanje crteža &#8212; Textual Programming in Python</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/activecode.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/codemirror.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/clickable.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pytutor.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/modal-basic.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/datafile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/dragndrop.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fitb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/matrixeq.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/parsons.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/lib/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/poll.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/showEval.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabbedstuff.css" />
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/video.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/karel.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/notes.css" />
+    <link rel="stylesheet" href="../_static/user-highlights.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/flatly.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/petlja.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/runestonebase.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/jquery.highlight.js"></script>
+    <script type="text/javascript" src="../_static/bookfuncs.js"></script>
+    <script type="text/javascript" src="../_static/codemirror.js"></script>
+    <script type="text/javascript" src="../_static/xml.js"></script>
+    <script type="text/javascript" src="../_static/css.js"></script>
+    <script type="text/javascript" src="../_static/python.js"></script>
+    <script type="text/javascript" src="../_static/htmlmixed.js"></script>
+    <script type="text/javascript" src="../_static/javascript.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/CLDRPluralRuleParser.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.messagestore.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.fallbacks.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.language.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.parser.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.emitter.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.emitter.bidi.js"></script>
+    <script type="text/javascript" src="../_static/activecode-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/skulpt.min.js"></script>
+    <script type="text/javascript" src="../_static/skulpt-stdlib.js"></script>
+    <script type="text/javascript" src="../_static/activecode.js"></script>
+    <script type="text/javascript" src="../_static/clike.js"></script>
+    <script type="text/javascript" src="../_static/timed_activecode.js"></script>
+    <script type="text/javascript" src="../_static/animationbase.js"></script>
+    <script type="text/javascript" src="../_static/mchoice.js"></script>
+    <script type="text/javascript" src="../_static/timedmc.js"></script>
+    <script type="text/javascript" src="../_static/timed.js"></script>
+    <script type="text/javascript" src="../_static/mchoice-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/clickable.js"></script>
+    <script type="text/javascript" src="../_static/timedclickable.js"></script>
+    <script type="text/javascript" src="../_static/d3.v2.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.ba-bbq.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.jsPlumb-1.3.10-all-min.js"></script>
+    <script type="text/javascript" src="../_static/pytutor.js"></script>
+    <script type="text/javascript" src="../_static/codelens.js"></script>
+    <script type="text/javascript" src="../_static/datafile.js"></script>
+    <script type="text/javascript" src="../_static/dragndrop.js"></script>
+    <script type="text/javascript" src="../_static/timeddnd.js"></script>
+    <script type="text/javascript" src="../_static/dragndrop-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/fitb.js"></script>
+    <script type="text/javascript" src="../_static/timedfitb.js"></script>
+    <script type="text/javascript" src="../_static/fitb-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/matrixeq.js"></script>
+    <script type="text/javascript" src="../_static/lib/prettify.js"></script>
+    <script type="text/javascript" src="../_static/lib/hammer.min.js"></script>
+    <script type="text/javascript" src="../_static/parsons.js"></script>
+    <script type="text/javascript" src="../_static/parsons-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/timedparsons.js"></script>
+    <script type="text/javascript" src="../_static/poll.js"></script>
+    <script type="text/javascript" src="../_static/reveal.js"></script>
+    <script type="text/javascript" src="../_static/shortanswer.js"></script>
+    <script type="text/javascript" src="../_static/timed_shortanswer.js"></script>
+    <script type="text/javascript" src="../_static/showEval.js"></script>
+    <script type="text/javascript" src="../_static/tabbedstuff.js"></script>
+    <script type="text/javascript" src="../_static/runestonevideo.js"></script>
+    <script type="text/javascript" src="../_static/karelCorner.js"></script>
+    <script type="text/javascript" src="../_static/karelRobot.js"></script>
+    <script type="text/javascript" src="../_static/karelWorld.js"></script>
+    <script type="text/javascript" src="../_static/karelRobotDrawer.js"></script>
+    <script type="text/javascript" src="../_static/karelUI.js"></script>
+    <script type="text/javascript" src="../_static/karel.js"></script>
+    <script type="text/javascript" src="../_static/karel-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/notes.js"></script>
+    <script type="text/javascript" src="../_static/pygamelib-init.js"></script>
+    <script type="text/javascript" src="../_static/blockly/blockly_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/blocks_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/python_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/msg-sr.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/utilities.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/python_errors.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/ast_node_visitor.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/abstract_interpreter.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/pytifa.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/abstract_interpreter_definitions.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/python_to_blockly.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/imported.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/class.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/comment.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/comprehensions.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/dict.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/if.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/io.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/lists.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/sets.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/loops.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/parking.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/tuple.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/turtles.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/text.js"></script>
+    <script type="text/javascript" src="../_static/blockpy-modal.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-4.0.0-dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script type="text/javascript" src="../_static/waypoints.min.js"></script>
+    <script type="text/javascript" src="../_static/rangy-core.js"></script>
+    <script type="text/javascript" src="../_static/rangy-textrange.js"></script>
+    <script type="text/javascript" src="../_static/rangy-cssclassapplier.js"></script>
+    <script type="text/javascript" src="../_static/user-highlights.js"></script>
+    <script type="text/javascript" src="../_static/jquery.idle-timer.js"></script>
+    <script type="text/javascript" src="../_static/processing-1.4.1.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.hotkey.js"></script>
+    <script type="text/javascript" src="../_static/jquery-migrate-1.2.1.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Animacije po fazama" href="03_PyGame_23_Animation_Stages.html" />
+    <link rel="prev" title="Kako napraviti animaciju" href="03_PyGame_21_Animation_Basics.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+<link rel="shortcut icon" href="../_static/favicon.ico" type="image/ico" />
+
+<script type="text/javascript">
+  eBookConfig = {};
+  eBookConfig.host = 'http://127.0.0.1:8000' ? 'http://127.0.0.1:8000' : 'http://127.0.0.1:8000';
+  eBookConfig.app = eBookConfig.host+'/runestone';
+  eBookConfig.ajaxURL = eBookConfig.app+'/ajax/';
+  eBookConfig.course = 'TxtProgInPython';
+  eBookConfig.logLevel = 0;
+  eBookConfig.loginRequired = false;
+  eBookConfig.build_info = "";
+  eBookConfig.isLoggedIn = false;
+  eBookConfig.useRunestoneServices = false;
+  eBookConfig.python3 = true;
+  eBookConfig.basecourse = 'TxtProgInPython';
+  eBookConfig.runestone_version = '3.1.1';
+  eBookConfig.imagesDir = '../_images/';
+  eBookConfig.staticDir = '../_static/';
+  if(typeof(Sk) != "undefined")
+      Sk.imgPath = eBookConfig.imagesDir;
+</script>
+
+<div id="fb-root"></div>
+
+
+
+  </head><body>
+
+
+<!-- Begin navbar -->
+
+<nav id="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+  <div class="container">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+     <img src="../_static/img/logo.png" style="width:80px; height: 80px;"> 
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top: 10px; margin-left: 25px;">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="../">Textual Programming in Python</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<br/>
+
+
+<div class="container col-md-12" id="continue-reading"></div>
+
+<div class="container col-md-8 col-md-offset-2" id="main-content">
+  
+  <div class="section" id="kretanje-crteza">
+<h1>Kretanje crteža<a class="headerlink" href="#kretanje-crteza" title="Permalink to this headline">¶</a></h1>
+<p>Animacije koje smo do sada vidjeli temelji se na prikazivanju drugačije slike koju smo unaprijed pripremili u svakom kadru. Sada ćemo također premjestiti prikazane slike, tako da se ista slika pojavljuje na različitim mjestima u prozoru, odnosno kreće se.</p>
+<p>Pogledajmo prvo primjer:</p>
+<a class="reference internal image-reference" href="../_images/car.png"><img alt="../_images/car.png" src="../_images/car.png" style="width: 50px;" /></a>
+
+<div data-childcomponent="PyGame__anim_car_oneway" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=PyGame__anim_car_oneway data-lang="python" 
+      data-timelimit=25000    
+    data-audio=''   
+              data-modaloutput="true" data-hidehistory=true
+    data-includesrc="import pygame as pg, pygamebg
+(width, height) = (400, 300)
+canvas = pygamebg.open_window(width, height, &quot;Car&quot;)
+
+car_image = pg.image.load(&quot;car.png&quot;)
+(car_width, car_height) = (car_image.get_width(), car_image.get_height()) # car image size
+
+fps = 50       # number of frames per second
+dt = 1 / fps   # duration of one frame in seconds
+car_v = 100   # car speed (pixels per second)
+(car_x, car_y) = (0, height - car_height) # car position (lower left corner initially)
+
+def new_frame():
+    global car_x               # we will only change x coordinate of the car
+    car_x += car_v * dt        # move car to the right
+    if car_x &gt; width:          # if it went out of the canvas
+        car_x = - car_width    # bring it back to the beginning
+
+    canvas.fill(pg.Color(&quot;skyblue&quot;))         # paint background to sky-blue
+    canvas.blit(car_image, (car_x, car_y))   # displaying car image
+
+pygamebg.frame_loop(fps, new_frame)
+"   data-enablecopy="true">
+
+
+</textarea>
+</div>
+<p>Kao i prije, imamo funkciju <em>new_frame</em> koja prikazuje sliku u svakom okviru. Ono što je novo u ovom primjeru jest da se položaj te slike mijenja iz okvira u okvir.</p>
+<p>Slika je prikazana tako da se njezin gornji lijevi ugao pojavljuje na točki (<em>car_x</em>, <em>car_y</em>). Da bi se automobil pomaknuo udesno, u svakom kadru povećavamo <em>x</em> koordinatu slike. Imajmo samo na umu da kada automobil ide predaleko udesno, vratimo automobil tako da mu se desni kraj poravna s lijevim rubom prozora. Na ovaj se način automobil počinje postupno pojavljivati na lijevoj strani.</p>
+<hr class="docutils" />
+<p>Slično tome, možemo i premještati crteže koje crtamo sami (a ne samo gotove slike). Pri tome možemo pomaknuti sliku ili crtež u bilo kojem smjeru. Evo jednog primjera:</p>
+
+<div data-childcomponent="PyGame__anim_billiards" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=PyGame__anim_billiards data-lang="python" 
+      data-timelimit=25000    
+    data-audio=''   
+              data-modaloutput="true" data-hidehistory=true
+    data-includesrc="import pygame as pg, pygamebg
+(width, height) = (800, 400)
+canvas = pygamebg.open_window(width, height, &quot;billiards&quot;)
+
+(cx, cy) = (width // 2, height // 2) # position of the ball center (initially at canvas center)
+(dx, dy) = (3, 2)  # ball displacement (initially 3 pixels to the right and 2 downwards per frame)
+r = 15             # ball radius
+
+
+def new_frame():
+    global cx, cy, dx, dy  # there variables will be changed
+    # moving the ball
+    cx += dx
+    cy += dy
+    
+    if cx - r &lt; 0 or cx + r &gt; width: # if the ball penetrated trough the left or right edge
+        dx = -dx # change the x-direction (if it was going rightwards, now will go leftwards and vice versa)
+    if cy - r &lt; 0 or cy + r &gt; height: # if the ball penetrated trough the upper of lower edge
+        dy = -dy # change the y-direction (if it was going downwards, now will go upwards and vice versa)
+
+    canvas.fill(pg.Color(&quot;darkgreen&quot;))
+    pg.draw.circle(canvas, pg.Color(&quot;white&quot;), (cx, cy), r)
+
+pygamebg.frame_loop(100, new_frame)
+"   data-enablecopy="true">
+
+
+</textarea>
+</div>
+<p>Obratite pažnju na to kako provjeravamo je li bilijarska kugla dotaknula neki rub ekrana. Krajnja desna točka kugle ima <em>x</em> koordinatu jednaku <span class="math notranslate nohighlight">\(cx+r\)</span>. Ako bi ta vrijednost postala jednaka širini prozora, to bi značilo da kugla dodiruje desni rub prozora, a ako je <span class="math notranslate nohighlight">\(cx + r &gt; width\)</span>, znači da je kugla bar dijelom već prošla desni rub prozora. U tom slučaju naredbom <span class="math notranslate nohighlight">\(dx = -dx\)</span>, postižemo da se od sljedećeg frejma <em>x</em> koordinati kugle dodaje suprotna vrijednost u odnosu na dosadašnju, odnosno da se ubuduće kugla pomiče za 3 piksela u lijevo. To će izgledati kao da se kugla odbila od desnog ruba prozora.</p>
+<p>Primijetite još jedan detalj: umjesto <span class="math notranslate nohighlight">\(cx + r &gt; width\)</span> mogli bismo upotrijebiti i <span class="math notranslate nohighlight">\(cx + r &gt;= width\)</span> i program bi radio gotovo isto. No, kako se kugla <strong>ne pomiče za jedan piksel</strong>, ne bi valjalo da smo koristili uvjet <span class="math notranslate nohighlight">\(cx + r == width\)</span>, jer bi tada lopta mogla preskočiti položaj koji provjeravamo i proći kroz rub prozora.</p>
+<p>Temeljito smo analizirali slučaj desnog ruba prozora, a isto obrazloženje primijenjeno je i na ostale rubove dok se program pisao. Ukupni učinak dviju <em>if</em> naredbi je da se kugla odbije od svaki rub prozora.</p>
+<p>Provjerite razumjete li to odgovaranjem na sljedeća pitanja.</p>
+<div class="section" id="kretanje-crteza-pitanja">
+<h2>Kretanje crteža - pitanja<a class="headerlink" href="#kretanje-crteza-pitanja" title="Permalink to this headline">¶</a></h2>
+
+<div class="course-box course-box-problem course-content">
+<ul data-component="dragndrop" id="pygame__anim_quiz_bounce1">
+    <span data-component="question">Q-69: Povežite provjeru je li kugla iz prethodnog primjera prešla određeni rub s odgovarajućom naredbom *if*.</span>
+	<span data-component=feedback>Pokušaj ponovo!</span>
+
+    <li data-component="draggable" id="pygame__anim_quiz_bounce1_drag1">za lijevi rub </li>
+    <li data-component="dropzone" for="pygame__anim_quiz_bounce1_drag1"> if cx - r < 0</li>
+
+    <li data-component="draggable" id="pygame__anim_quiz_bounce1_drag2">za desni rub </li>
+    <li data-component="dropzone" for="pygame__anim_quiz_bounce1_drag2"> if cx + r > width</li>
+
+    <li data-component="draggable" id="pygame__anim_quiz_bounce1_drag3">za gornji rub </li>
+    <li data-component="dropzone" for="pygame__anim_quiz_bounce1_drag3"> if cy - r < 0</li>
+
+    <li data-component="draggable" id="pygame__anim_quiz_bounce1_drag4">za donji rub </li>
+    <li data-component="dropzone" for="pygame__anim_quiz_bounce1_drag4"> if cy + r > height</li>
+</ul></div>
+            <div class="course-box course-box-question course-content">
+            <ul data-component="multiplechoice" data-multipleanswers="false"  id="pygame__anim_quiz_bounce2">
+            <p>Q-70: Na koju se stranu pomiče slika dodavanjem negativne vrijednosti na njenu <em>x</em> koordinatu?</p>
+
+            <li data-component="answer"  id="pygame__anim_quiz_bounce2_opt_a">desno</li><li data-component="feedback" id="pygame__anim_quiz_bounce2_opt_a">Pokušaj ponovo</li>
+            
+            <li data-component="answer"  id="pygame__anim_quiz_bounce2_opt_b">gore</li><li data-component="feedback" id="pygame__anim_quiz_bounce2_opt_b">Pokušaj ponovo</li>
+            
+            <li data-component="answer" data-correct id="pygame__anim_quiz_bounce2_opt_c">lijevo</li><li data-component="feedback" id="pygame__anim_quiz_bounce2_opt_c">Točno!</li>
+            
+            <li data-component="answer"  id="pygame__anim_quiz_bounce2_opt_d">dolje</li><li data-component="feedback" id="pygame__anim_quiz_bounce2_opt_d">Pokušaj ponovo</li>
+            
+
+            </ul>
+            </div>
+            
+            <div class="course-box course-box-question course-content">
+            <ul data-component="multiplechoice" data-multipleanswers="false"  id="pygame__anim_quiz_bounce3">
+            <p>Q-71: Neka su dimenzije određene slike <em>im_width</em> i <em>im_height</em>, a gornji lijevi kut (<em>x</em>, <em>y</em>). Kako možemo provjeriti je li slika potpuno prešla gornji rub prozora i nijedan dio nije vidljiv?</p>
+
+            <li data-component="answer"  id="pygame__anim_quiz_bounce3_opt_a">if x + im_width < 0:</li><li data-component="feedback" id="pygame__anim_quiz_bounce3_opt_a">Pokušaj ponovo</li>
+            
+            <li data-component="answer" data-correct id="pygame__anim_quiz_bounce3_opt_b">if y + im_height < 0:</li><li data-component="feedback" id="pygame__anim_quiz_bounce3_opt_b">Točno!</li>
+            
+            <li data-component="answer"  id="pygame__anim_quiz_bounce3_opt_c">if x < 0:</li><li data-component="feedback" id="pygame__anim_quiz_bounce3_opt_c">Pokušaj ponovo</li>
+            
+            <li data-component="answer"  id="pygame__anim_quiz_bounce3_opt_d">if y < 0:</li><li data-component="feedback" id="pygame__anim_quiz_bounce3_opt_d">Pokušaj ponovo</li>
+            
+
+            </ul>
+            </div>
+            
+<div class="course-box course-box-problem course-content">
+<ul data-component="dragndrop" id="pygame__anim_quiz_bounce4">
+    <span data-component="question">Q-72: Neka je 'width' širina prozora, 'im_width' širina slike i (x, y) gornji lijevi kut slike. Povežite logičke uvjete s njihovim značenjem.</span>
+	<span data-component=feedback>Pokušaj ponovo!</span>
+
+    <li data-component="draggable" id="pygame__anim_quiz_bounce4_drag1">slika je izašla kroz lijevi rub prozora </li>
+    <li data-component="dropzone" for="pygame__anim_quiz_bounce4_drag1"> x + im_width < 0</li>
+
+    <li data-component="draggable" id="pygame__anim_quiz_bounce4_drag2">slika je počela izlaziti kroz lijevi rub prozora </li>
+    <li data-component="dropzone" for="pygame__anim_quiz_bounce4_drag2"> x < 0</li>
+
+    <li data-component="draggable" id="pygame__anim_quiz_bounce4_drag3">slika je izašla kroz desni rub prozora </li>
+    <li data-component="dropzone" for="pygame__anim_quiz_bounce4_drag3"> x > width</li>
+
+    <li data-component="draggable" id="pygame__anim_quiz_bounce4_drag4">slika je počela izlaziti kroz desni rub prozora </li>
+    <li data-component="dropzone" for="pygame__anim_quiz_bounce4_drag4"> x + im_width > width</li>
+</ul></div>
+            <div class="course-box course-box-question course-content">
+            <ul data-component="multiplechoice" data-multipleanswers="false"  id="pygame__anim_quiz_bounce5">
+            <p>Q-73: Neka je <em>width</em> širina prozora, <em>im_width</em> širina slike, (<em>x</em>, <em>y</em>) gornji lijevi kut slike i <em>dx</em> vrijednost kojom će se <em>x</em> koordinata slike kasnije mijenjati. Koje će naredbe uzrokovati da se slika počne pojavljivati u prozoru kroz desni rub?</p>
+
+            <li data-component="answer" data-correct id="pygame__anim_quiz_bounce5_opt_a">x = width; dx = -10</li><li data-component="feedback" id="pygame__anim_quiz_bounce5_opt_a">Točno!</li>
+            
+            <li data-component="answer"  id="pygame__anim_quiz_bounce5_opt_b">x = width + im_width; dx = -10</li><li data-component="feedback" id="pygame__anim_quiz_bounce5_opt_b">Ne, to je predaleko od desnog ruba.</li>
+            
+            <li data-component="answer"  id="pygame__anim_quiz_bounce5_opt_c">x = width - im_width; dx = -10</li><li data-component="feedback" id="pygame__anim_quiz_bounce5_opt_c">Ne, na taj je način cijela slika već na prozoru.</li>
+            
+            <li data-component="answer"  id="pygame__anim_quiz_bounce5_opt_d">x = width + im_width; dx = 10</li><li data-component="feedback" id="pygame__anim_quiz_bounce5_opt_d">Ne, slika je predaleko i nastavit će biti sve dalje.</li>
+            
+
+            </ul>
+            </div>
+            </div>
+<div class="section" id="zadatak-auto-ide-lijevo-desno">
+<h2>Zadatak - auto ide lijevo-desno<a class="headerlink" href="#zadatak-auto-ide-lijevo-desno" title="Permalink to this headline">¶</a></h2>
+<p>Pokušajte ponovo izraditi prvi program tako da se automobil kreće naizmjenično na jednu i drugu stranu, kao u primjeru (gumb “Play Task”). Program već sadrži naredbe za formiranje n-torki od dvije slike. Slika automobila okrenuta udesno se učitava, dok se slika automobila okrenuta prema drugoj strani dobiva pomoću funkcije <em>pg.transform.flip</em>, koja pretvara zadanu sliku u jednu simetričnu za nju.</p>
+
+<div data-childcomponent="PyGame__anim_car_right_left" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=PyGame__anim_car_right_left data-lang="python" 
+      data-timelimit=25000    
+    data-audio=''   
+           data-playtask="true"   data-modaloutput="true" data-hidehistory=true
+     data-includehsrc="import pygame as pg, pygamebg
+(width, height) = (400, 300)
+canvas = pygamebg.open_window(width, height, &quot;Car&quot;)
+
+car_rightwards_image = pg.image.load(&quot;car.png&quot;) 
+# creating flipped image (symmetric with respect to the vertical axis)
+car_leftwards_image = pg.transform.flip(car_rightwards_image, True, False)
+car_images = (car_rightwards_image, car_leftwards_image)
+
+# car image size
+(car_width, car_height) = (car_leftwards_image.get_width(), car_leftwards_image.get_height()) 
+
+fps = 50       # number of frames per second
+dt = 1 / fps   # duration of one frame in seconds
+car_v = 100   # car speed (pixels per second)
+car_dir = 0  # direction - 0 for right, 1 for left (also index of the corresponding car image in the tuple)
+(car_x, car_y) = (0, height - car_height) # car position (lower left corner initially)
+
+def new_frame():
+    global car_x, car_v, car_dir # will be changing car position, speed and direction
+    car_x += car_v * dt    # moving the car
+    if car_x &gt; width or car_x &lt; -car_width: 
+        # if car has gone out of the canvas to the left or right
+        car_dir = 1 - car_dir
+        car_v = -car_v
+        
+    canvas.fill(pg.Color(&quot;skyblue&quot;))                 # paint background to sky-blue
+    canvas.blit(car_images[car_dir], (car_x, car_y))   # display car image
+
+pygamebg.frame_loop(fps, new_frame)
+"  data-enablecopy="true">
+import pygame as pg, pygamebg
+(width, height) = (400, 300)
+canvas = pygamebg.open_window(width, height, "Car")
+
+car_rightwards_image = pg.image.load("car.png")
+# stvarajući okrenutu sliku (simetričnu u odnosu na okomitu os)
+car_leftwards_image = pg.transform.flip(car_rightwards_image, True, False)
+car_images = (car_rightwards_image, car_leftwards_image)
+fps = 50
+
+def new_frame():
+    pass
+
+pygamebg.frame_loop(fps, new_frame)
+</textarea>
+</div>
+</div>
+</div>
+
+
+  
+      <div class="col-md-12">
+<ul class="pager">
+        <li id="relations-prev" title='Previous chapter - Kako napraviti animaciju' data-toggle="tooltip"><a href="03_PyGame_21_Animation_Basics.html">Previous chapter</a></li>
+    
+        <li id="relations-next" title='Next chapter - Animacije po fazama' data-toggle="tooltip"><a href="03_PyGame_23_Animation_Stages.html">Next chapter</a></li>
+</ul>
+
+<!-- <ul class="pager"> -->
+    <!-- -->
+        <!-- <li id="relations-prev" title='Претходно поглавље - Kako napraviti animaciju' data-toggle="tooltip"><a href="03_PyGame_21_Animation_Basics.html">Претходно поглавље</a></li> -->
+    <!--  -->
+    <!-- -->
+        <!-- <li id="relations-next" title='Следеће поглавље - Animacije po fazama' data-toggle="tooltip"><a href="03_PyGame_23_Animation_Stages.html">Следеће поглавље</a></li> -->
+    <!-- -->
+<!-- </ul> -->
+
+<script type="text/javascript">
+
+  $('#relations-prev').tooltip({'placement':'right', 'selector': '', 'delay': { show: 100, hide: 50}});
+  $('#relations-next').tooltip({'placement':'left', 'selector': '', 'delay': { show: 100, hide: 50}});
+
+</script>
+</div>
+  
+</div>
+<footer class="footer col-md-12">
+    <div class="container text-center">
+        <div class="text-center">
+            <hr>
+            <p class="text-muted">
+                <span class="text-center">&copy; 2019 <a href="https://petlja.org">Petlja.org</a> 
+                  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; vertical-align: text-bottom" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+                  (Created using  <a href="https://pypi.org/project/Sphinx/">Sphinx</a>, <a href="http://runestoneinteractive.org/">RunestoneComponents</a> and <a href="https://github.com/Petlja/PetljaDoc">PetljaDoc</a>)</span>
+            </p>
+        </div>
+    </div>
+</footer>
+
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-32029811-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </body>
+</html>

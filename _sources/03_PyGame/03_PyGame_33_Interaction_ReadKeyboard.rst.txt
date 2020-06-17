@@ -1,0 +1,128 @@
+Očitavanje tipkovnice
+---------------------
+
+Dobivanje informacija o pritiscima tipki na tipkovnici vrlo je slično čitanju tipki miša. Funkcija ``pg.key.get_pressed()`` vraća n-torku čiji se elementi koriste kao logičke vrijednosti, pokazujući za svaku tipku na tipkovnici je li trenutno pritisnuta ili ne.
+
+Budući da tipkovnica ima mnogo više tipki od miša, korištenje indeksa 0, 1, 2 itd. za određene tipke bilo bi nepraktično. Kako ne bismo morali znati koji indeks u n-torki odgovara kojem ključu, knjižnica PyGame sadrži imenovane konstante koje koristimo kao indekse. Na primjer, konstante ``pg.K_LEFT``, ``pg.K_RIGHT``, ``pg.K_UP``, ``pg.K_DOWN`` odgovaraju često korištenim tipkama sa strelicama. Za razmaknicu odgovarajuća konstanta je ``pg.K_SPACE``, dok za slova, na primjer *a*, *b*, *c* odgovarajuće konstante bi bile ``pg.K_a``, ``pg.K_b``, ``pg .K_c`` itd. Potpuni popis tih konstanti možete vidjeti `ovdje <https://www.pygame.org/docs/ref/key.html>`__ .
+ 
+Primjeri i zadaci
+'''''''''''''''''
+
+.. questionnote::
+
+    **Primjer - Svemirski brod:** U ovom primjeru imamo sliku svemirskog broda, koju pomičemo lijevo i desno u skladu s pritisnutim tipkama sa strelicama. Pored toga, možemo pucati s broda pritiskom tipke za razmak.
+    
+Prvo obratite pažnju na istaknuti dio koda sa svjetlijom pozadinom (redovi 23-37). Taj je dio ovdje novi, a detaljnije je komentiran i u samom kodu.
+
+Ostatak programa je samo radi animaciju više objekata, tehnika poznata od ranije.
+
+.. image:: ../../_images/spaceship.png
+   :width: 50px
+
+.. activecode:: PyGame__interact_spaceship_arrow_keys
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src/PyGame/3_Interaction/3c_Keyboard_read/spaceship_arrow_keys.py
+
+Nakon što pročitamo status svih tipki i stavimo ih u n-torku *pritisnut*, možemo jednostavno provjeriti status tipki koje nas interesiraju ako koristimo *if* naredbu.
+
+
+.. questionnote::
+
+    **Zadatak - navigacija:** 
+    
+    Dovršite sljedeći program tako da 4 tipke sa strelicama upravljaju žutim krugom, kao na primjeru. Krug se ne smije pomicati ako nijedna strelica nije pritisnuta, a da se kreće za jedan piksel u smjeru strelica koje su pritisnute (pritisnute suprotne strelice se međusobno poništavaju).
+    
+
+.. activecode:: PyGame__interact_navigtate1
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src/PyGame/3_Interaction/3c_Keyboard_read/navigtate1.py
+
+        pressed = pg.key.get_pressed()
+        if pressed[pg.K_LEFT] and (x > 0):
+            x -= 1
+            
+        # DOVRSITE PROGRAM
+
+
+
+.. questionnote::
+
+    **Zadatak - zmija:** 
+    
+    Dovršite sljedeći program tako da strelice mogu kontrolirati 'zmiju' koja se sastoji od nekoliko kvadratića, kao u primjeru.
+    
+    Varijable *d_row* i *d_col* označavaju smjer kretanja zmije. Dok nije pritisnuta nijedna strelica, vrijednost ovih varijabli se ne mijenja i zmija se nastavlja kretati u istom smjeru. Vaša je zadaća dodati naredbe za očitavanje statusa tipkovnice i izračunavanje novih vrijednosti za *(d_row, d_col)* na temelju strelica kako bi se kretanje nastavilo u odabranom smjeru.
+
+**Pomoć:** ako se glava zmije nalazila na polju *(row, col)*, u novom frameu će se nalaziti na polju *(row + d_row, col + d_col)*. Provjerite jeste li razumjeli kako biste trebali dodijeliti vrijednosti varijablama *d_red*, *d_kol* za svaki smjer:
+
+.. mchoice:: pygame__interact_quiz_direction
+   :answer_a: Gore
+   :answer_b: Dolje
+   :answer_c: Lijevo
+   :answer_d: Desno
+   :correct: c
+   :feedback_a: Ne, vrijednosti za gore su (d_row, d_col) = (-1, 0)
+   :feedback_b: Ne, vrijednosti za dolje su (d_row, d_col) = (1, 0)
+   :feedback_c: Correct
+   :feedback_d: Ne, vrijednosti za desno su (d_row, d_col) = (0, 1)
+
+   Ako su varijablama (d_row, d_col) dodijeljene vrijednosti (0, -1), u kojem se smjeru nastavlja kretanje?
+
+.. activecode:: PyGame__interact_snake
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src/PyGame/3_Interaction/3c_Keyboard_read/snake.py
+    
+        # OVDJE IZRACUNAJTE POMICANJE (d_row, d_col)
+        # NA OSNOVU PRITISNUTIH TIPKI
+
+
+Pitanja
+'''''''
+
+Dok odgovarate na pitanja, vratite se prema programu "zmija" i potražite dijelove na koje trebate odgovoriti.
+
+.. fillintheblank:: pygame__interact_quiz_snake_tablesize
+
+    Koliko redova ima ploča?
+
+    - :40: Točno!
+      :[0-9]+: Pogledajte početak programa pažljivije.
+      :.*: Odgovor treba napisati brojevima.
+
+.. mchoice:: pygame__interact_quiz_snake_rowcol_to_xy
+   :answer_a: x = row*a + a, y = col*a + a
+   :answer_b: x = col*a + a, y = row*a + a
+   :answer_c: x = row*a, y = col*a
+   :answer_d: x = col*a, y = row*a
+   :correct: d
+   :feedback_a: Pokušaj ponovo
+   :feedback_b: Pokušaj ponovo
+   :feedback_c: Pokušaj ponovo
+   :feedback_d: Točno
+
+   Koje su koordinate gornjeg lijevog kuta kvadrata *(row, col)*?
+
+.. mchoice:: pygame__interact_quiz_snake_head
+   :multiple_answers:
+   :answer_a: Lista zmija se u svakom frameu produžava za novi element koji predstavlja novi položaj glave zmije.
+   :answer_b: Lista zmija tokom rada programa stalno ima isti broj elemenata.
+   :answer_c: Iz liste zmija se u svakom frameu izbacuje jedan element, koji predstavlja kraj repa zmije.
+   :correct: b
+   :feedback_a: U programu nema takve naredbe
+   :feedback_b: Točno
+   :feedback_c: U programu nema takve naredbe
+
+   Koje su rečenice točne?
+    
+
+.. commented out
+
+    chase_and_avoid.py

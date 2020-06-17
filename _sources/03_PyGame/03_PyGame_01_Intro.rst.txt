@@ -1,0 +1,56 @@
+PyGame biblioteka
+=================
+
+Pretpostavljamo da ste s jezikom Python već upoznati i da znate za izraze (konstante, varijable, operatore), naredbe (``if``, ``if-else``, ``if-elif-else``, ``for``), funkcije (one ugrađene poput ``min`` ili ``abs``, i one koji definirate sami pomoću ključne riječi ``def``), stringovi (``"Hello"`` ili ``'Hello'``), liste (poput ``[1, 2, 3]``), n-torke (like ``(3, 4)``) i slično.
+
+Sada ćemo nastaviti vježbati pisanje Python programa koristeći grafičku biblioteku PyGame. Odabrali smo ovu biblioteku jer nudi mogućnost stvaranja zanimljivih rezultata s relativno malo programiranja, koji uključuju crtanje, animiranje i interakciju s korisnikom. Stoga je cilj uvođenja PyGame biblioteke da nastavite vježbati svoje programiranje na zabavan način. Čitatelji koji postanu više zainteresirani za programiranje, dobit će brojne mogućnosti za izmjenu zadanih programa i inspiraciju za razne vlastite projekte.
+
+O PyGame biblioteci 
+-------------------
+
+Biblioteka `PyGame <http://pygame.org>`__ razvija se od početka 2000-ih. Sami autori rekli su da ovo nije najbolja biblioteka za programiranje igara (čak ni druga, niti treća po kvaliteti), ali glavna joj je prednost što je jednostavnija za upotrebu od ostalih biblioteka i pogodna je za učenje programiranja putem zanimljiv svijet računalne grafike i računalnih igara.
+
+
+Internetska uporaba
+-------------------
+
+Da bismo vam pomogli da započnete, osigurali smo vam okruženje u kojem možete pisati i testirati jednostavne programe PyGame. Pripremili smo i pregršt primjera i zadataka u kojima, kao i u prethodnim poglavljima, općenito trebate dovršiti ili izmijeniti započete programe kako biste ih potpuno iskoristili. Za upotrebu ovog okruženja ne trebate instalirati ništa dodatno na računalo. Međutim, ako želite napraviti ozbiljnije programiranje (na primjer, želite napraviti vlastitu igru), preporučujemo vam da instalirate biblioteku na računalo i koristite je iz Python razvojnog okruženja (poput IDLE), neovisno od web preglednik i ovog priručnika. Između ostalih prednosti, programiranje u stvarnom razvojnom okruženju je ugodnije i učinkovitije, lakše ga je testirati, ispraviti pogrešku itd.
+
+Instalacija
+-----------
+
+Da biste pokrenuli programe napisane pomoću PyGame-a u okruženju za razvoj aplikacija, prvo morate instalirati ovu biblioteku. Preduvjet je, naravno, da na vašem računalu imate instaliran Python (po mogućnosti verzija 3.6 ili novija). Ako to do sada niste radili, posjetite web stranicu `<https://www.python.org>`__ i preuzmite najnoviju verziju Pythona i njegovo radno okruženje (obično se nalazi u odjeljku Preuzimanja, pododjeljak posvećen operativnom sustavu koji koristite).
+
+Kad se Python instalira na vaše računalo, možemo ići do instalacije PyGame biblioteke. To je stvarno vrlo jednostavno. Samo upišite ``pip3 install pygame`` u command prompt (cmd). Najlakši način za pokretanje command prompt je tako da držite tipku ``windows`` i tipku ``r``, a zatim upišete ``cmd`` u prozor koji se pojavio. Ako dobijete poruku da naredba ``pip3`` ne postoji, onda pokušajte ``py -3 -m pip install pygame``. 
+
+Kad dovršite instalaciju, najbolje je odmah testirati je li sve dobro prošlo:
+
+* pokrenuti Python razvojno okruženje IDLE koje je instalirano kao windows apkikacija
+
+* u razvojnom okruženju IDLE otvoriti novi projekat (opcija File/New)
+
+* upišite program prikazan dolje u uređivaču (možete ga jednostavno kopirati i zalijepiti u IDLE editor)
+
+* spremanje programa u datoteku prije pokretanja (opcija File/Save as...)
+
+* pokretanje programa (opcija Run/Run Module u meniju, ili tipku F5)
+
+
+Nakon pokretanja programa trebao bi se pojaviti prozor u kojem se crta kvadrat i prikazuje tri sekunde.
+
+.. activecode:: PyGame__check_install
+   :nocodelens:
+   :modaloutput: 
+   :enablecopy:
+
+   import pygame
+   pygame.init()
+   prozor = pygame.display.set_mode((200, 200))
+   prozor.fill(pygame.Color("white"))
+   pygame.draw.rect(prozor, pygame.Color("black"), (20, 20, 160, 160), 5)
+   pygame.display.update()
+   pygame.time.wait(3000)
+   pygame.quit()
+
+Na računalu možete pokrenuti i druge primjere iz ovog vodiča, što vam preporučujemo da učinite ponekad.
+

@@ -1,0 +1,551 @@
+Upravljanje Karelom
+===================
+
+Da biste vidjeli kako izgleda programiranje, upoznat ćemo vas s Karelom. Karel je animirani robot koji se kreće po tabeli labirinta slijedeći naše upute u obliku programa. Kroz upravljanje Karelom usvojit ćemo logiku koja je vrlo važna za pisanje bilo kojeg programa, a uz to se možemo i zabaviti.
+
+.. infonote::
+
+    Ideja o učenju programiranja robotom potječe još iz 1970-ih, kada je Richard E. Pattis, kao student na Sveučilištu Stanford, stvorio prvo takvo okruženje s programskim jezikom posebno dizajniranim za tu svrhu. Jezik je, poput robota, dobio ime Karel, po Karelu Čapeku, češkom piscu koji je prvi počeo koristiti riječ robot. Patisova knjiga Robot Karel: (Karel The Robot: A Gentle Introduction to the Art of Programming) objavljena je 1981. godine i brzo je postala najprodavanija uvodna knjiga u tečajevima programiranja.
+    
+Za upravljanje Karelom možemo koristiti ove funkcije:
+
+- ``move()`` - pomakni se jedno polje unaprijed,
+- ``turn_left()`` - okreni se 90 stupnjeva u lijevo (u suprotnom smjeru od kazaljke na satu),
+- ``turn_right()`` - okreni se 90 stupnjeva u desno (u smjeru kazaljke na satu),
+- ``pick_ball()`` - pokupi lopticu s polja na kojem se nalaziš,
+- ``drop_ball()`` - spusti lopticu na polje na kojem se nalaziš.
+
+Ovih pet funkcija koristimo kao naredbe upućene Karelu. Karel razumije još pet nešto drukčijih funkcija, koje ćemo vidjeti uskoro. Pored ovih naredbi upućenih direktno Karelu, možemo koristiti i sve naredbe programskog jezika Python, koji ćemo usput upoznavati.
+
+Pogledajmo primjere kako se gore spomenute naredbe mogu koristiti za vođenje Karela kroz njegov svijet:
+
+Primjeri
+--------
+
+Pomakni se jedno polje unaprijed i uzmi lopticu
+'''''''''''''''''''''''''''''''''''''''''''''''
+
+.. questionnote::
+
+    Napišite program kako biste pomaknuti Karela na polje (2, 1) i pokupili lopticu.
+
+Ovaj se program sastoji od samo dvije naredbe. Prva govori Karelu da se pomakne jedno polje naprijed, a druga da pokupi lopticu. 
+   
+.. karel:: Karel_intro_two_squares_one_ball
+   :blockly:
+
+   {
+        setup:function() {
+            var world = new World(2, 1);
+            world.setRobotStartAvenue(1);
+            world.setRobotStartStreet(1);
+            world.setRobotStartDirection("E");
+            world.putBall(2, 1);
+
+        var robot = new Robot();
+
+        var code = ["from karel import *",
+                    "move()",
+                    "pick_ball()"];
+            return {robot:robot, world:world, code:code};
+        },
+    
+        isSuccess: function(robot, world) {
+           return robot.getBalls() === 1;
+        },
+   }
+
+**Priključivanje** **biblioteke** *karel*
+'''''''''''''''''''''''''''''''''''''''''
+
+.. infonote::
+
+    Naredbe pomoću kojih upravljamo Karelom nalaze se u biblioteci *karel*. Stoga bismo na početku svakog programa trebali reći računalu (točnije programu koji izvršava naš program) da prvo priključi definicije ovih funkcija za upravljanje Karelom. To se postiže prvom linijom programa: ``from karel import *``. Svaki program koji se bavi Karelom, trebao bi započeti ovim putem.
+   
+    Imajte na umu da se biblioteka *karel* za sada može koristi samo u ovom okruženju. Ostale programe koje budete pisali možete pokretati i na druge načine, ali na to ćemo vas podsjetiti kada za to bude vrijeme.
+
+Na jednom polju može biti više od jedne loptice, a naš zadatak može biti da kažemo Karelu da ih uzme nekoliko ili sve.
+
+Pomakni se jedno polje naprijed i uzmi tri loptice
+''''''''''''''''''''''''''''''''''''''''''''''''''
+
+.. questionnote::
+
+    Napišite program na osnovu kojeg će se Karel pomaknuti na polje (2, 1) i pokupiti tri od pet loptica koje se tamo nalaze.
+    
+U ovom programu nakon naredbe ``naprijed()``, naredbu ``pokupi()`` treba napisati tri puta, budući da trebamo da Karel pokupi tri loptice. Obratite pažnju na broj koji se pojavljuje na loptici. On pokazuje koliko loptica ima na tom polju. Osim toga, broj lijevo od Karelove glave (koji ste možda primjetili i u prethodnom primjeru) govori koliko loptica Karel ima kod sebe.
+   
+.. karel:: Karel_intro_two_squares_five_balls
+   :blockly:
+
+   {
+        setup:function() {
+            var world = new World(2, 1);
+            world.setRobotStartAvenue(1);
+            world.setRobotStartStreet(1);
+            world.setRobotStartDirection("E");
+            world.putBalls(2, 1, 5);
+
+        var robot = new Robot();
+
+        var code = ["from karel import *",
+                    "move()",
+                    "pick_ball()",
+                    "pick_ball()",
+                    "pick_ball()"];
+            return {robot:robot, world:world, code:code};
+        },
+    
+        isSuccess: function(robot, world) {
+           return robot.getBalls() === 3;
+        },
+   }
+   
+
+Sljedeći je zadatak sličan, ali nešto teži.
+   
+Dođi do loptice i pokupi ju
+'''''''''''''''''''''''''''
+
+.. questionnote::
+
+   Napišite program na osnovu kojega će Karel doći na polje (4, 1) i pokupiti lopticu.
+
+Zadatak se bitno ne razlikuje od prethodnog. Potrebno je dovesti Karela do ciljanog polja i reći mu da pokupi lopticu. Razlika je u tome što je sada put do ciljanog polja duži, pa tako i naš program:
+
+.. karel:: Karel_intro_take_ball_on_square_4_1
+   :blockly:
+
+   {
+        setup:function() {
+            var world = new World(5,5);
+            world.setRobotStartAvenue(1);
+            world.setRobotStartStreet(1);
+            world.setRobotStartDirection("E");
+            world.putBall(4, 1);
+            world.addEWWall(1, 1, 2);
+            world.addNSWall(2, 2, 2);
+            world.addEWWall(2, 3, 3);
+            world.addNSWall(3, 1, 2);
+            world.addNSWall(3, 4, 1);
+            world.addNSWall(1, 5, 1);
+            world.addEWWall(4, 1, 1);
+            
+        var robot = new Robot();
+
+        var code = ["from karel import *",
+                    "move()       # idi na (2, 1)",
+                    "move()       # idi na (3, 1)",
+                    "turn_left()  # okreni se na sjever (^)",
+                    "move()       # idi na (3, 2)",
+                    "move()       # idi na (3, 3)",
+                    "turn_right() # okreni se na istok (>)",
+                    "move()       # idi na (4, 3)",
+                    "move()       # idi na (5, 3)",
+                    "turn_right() # okreni se na jug  (v)",
+                    "move()       # idi na (5, 2)",
+                    "move()       # idi na (5, 1)",
+                    "turn_right() # okreni se na zapad (<)",
+                    "move()       # idi na (4, 1)",
+                    "pick_ball()  # pokupi lopticu na (4, 1)"];
+            return {robot:robot, world:world, code:code};
+        },
+    
+        isSuccess: function(robot, world) {
+           return robot.getBalls() === 1;
+        },
+   }
+
+Čitajući ovaj program, postaje teško slijediti koja naredba dovodi Karela na polje. To nije slučaj samo s početnicima, to je stvarno teško, jer svaka naredba ``naprijed ()`` izgleda isto. Da bismo pomogli sebi (i drugima), nakon svake naredbe dodali smo znak # i neki tekst koji nam pomaže da pratimo "do kuda smo stigli".
+
+**Komentari**
+'''''''''''''
+
+.. infonote::
+
+    Dio bilo kojeg Python programa od znaka ``#`` do kraja retka naziva se ``komentar``. Komentari ne utječu na izvršavanje programa, program radi istu stvar sa njima ili bez njih. Komentari su namijenjeni samo osobama koje čitaju i pišu programe, da bi bolje razumjeli te programe i lakše se u njima snalazili.
+    
+    Kada razmišljamo o pisanju komentara u našim programima, trebami ih pisati i zbog sebe i zbog drugih ljudi koji će čitati naš program. S druge strane, komentari koje drugi ljudi pišu u svojim programima pomoći će nam da razumijemo njihove programe.
+    
+    Ne postoje precizna pravila za pisanje komentara. U svojim komentarima zapišite ono što vjerujete da pomaže drugima (i vama samima) da bolje razumiju vaš program.
+   
+Pokupi sve loptice
+''''''''''''''''''
+
+U ovom primjeru, loptice su na različitim poljima i moramo dovesti Karela do svake od tih loptica.
+
+.. questionnote::
+
+   Napišite program koji će reći Karelu da pokupi sve četiri loptice.
+
+Putanju možemo birati na više načina, ali što kraću putanju izaberemo, kraći će biti i program. Možemo na primjer prvo pokupiti lopticu na polju (5, 2), zatim dvije loptice na polju (5, 5) i na kraju lopticu na polju (4, 4).
+
+.. karel:: Karel_intro_collect_three_balls
+   :blockly:
+
+   {
+        setup:function() {
+            var world = new World(5,5);
+            world.setRobotStartAvenue(1);
+            world.setRobotStartStreet(1);
+            world.setRobotStartDirection("E");
+            world.putBall(5, 2);
+            world.putBalls(5, 5, 2);
+            world.putBall(4, 4);
+            world.addEWWall(1, 1, 2);
+            world.addNSWall(2, 2, 2);
+            world.addEWWall(2, 3, 3);
+            world.addNSWall(3, 1, 2);
+            world.addNSWall(3, 4, 1);
+            world.addNSWall(1, 5, 1);
+            world.addEWWall(4, 1, 1);
+            
+        var robot = new Robot();
+
+        var code = ["from karel import *",
+                    "move(); move(); turn_left()  # idi do polja (3, 1) i okreni se na sjever",
+                    "move(); move(); turn_right() # idi do polja (3, 3) i okreni se na istok",
+                    "move(); move(); turn_right() # idi do polja (5, 3) i okreni se na jug",
+                    "move(); pick_ball()          # dodji na polje (5, 2) i pokupi lopticu",
+                    "turn_left(); turn_left()     # okreni se na sjever",
+                    "move(); move(); move()       # dođi na polje (5, 5)",
+                    "pick_ball(); pick_ball()     # pokupi dvije loptice",
+                    "turn_left(); move();         # idi do polja (4, 5)",
+                    "turn_left(); move();         # idi do polja (4, 4)",
+                    "pick_ball()                  # pokupi poslijednju lopticu na polju (4, 4)"];
+            return {robot:robot, world:world, code:code};
+        },
+    
+        isSuccess: function(robot, world) {
+           return robot.getBalls() === 4;
+        },
+   }
+
+**Grupiranje naredbi**
+''''''''''''''''''''''
+
+Budući da je ovaj program još duži od prethodnog, da bismo se lakše orijentirali u programu i pratili do kuda smo doveli Karela, grupirali smo po nekoliko naredbi koje čine jednu etapu putovanja u jedan red programa. Na kraju svakog reda je komentar koji objašnjava grupu naredbi u tom redu.
+
+Primjetite da je pri ovakvom pisanju programa potrebno između naredbi pisati znak ``;`` (iza posljednje naredbe u redu, ovaj znak se ne piše).
+
+Naredbe se mogu grupirati i drugačije, na primjer tako što se grupa naredbi (napisanih jedna ispod druge) razdvoji praznim redom od slijedeće grupe. Ovakav način grupiranja je puno češće u upotrebi, jer naredbe obično nisu tako kratke kao ove za upravljanje Karelom. Evo kako bi to izgledalo:
+
+.. code::
+
+    from karel import *
+    
+    # idi do polja (3, 1) i okreni se na sjever"
+    move()
+    move()
+    turn_left()
+    
+    # idi do polja (3, 3) i okreni se na istok
+    move()
+    move()
+    turn_right()
+    
+    # idi do polja (5, 3) i okreni se na jug
+    move()
+    move()
+    turn_right()
+    
+    # dodji na polje (5, 2) i pokupi lopticu
+    move()
+    pick_ball()
+    
+    # okreni se na sjever
+    turn_left()
+    turn_left()
+    
+    # dodji na polje (5, 5)
+    move()
+    move()
+    move()
+    
+    # pokupi dvije loptice
+    pick_ball()
+    pick_ball()
+    
+    # idi na polje (4, 4)
+    turn_left()
+    move()
+    turn_left()
+    move()
+    
+    # pokupi poslijednju lopticu na polju (4, 4)
+    pick_ball()
+    
+~~~~
+
+Karel može i ostavljati loptice na pojedina polja. Evo kako to može napraviti.
+
+Premjesti lopticu
+'''''''''''''''''
+
+.. questionnote::
+
+   Napišite program na osnovu kojega će se Karel premjestiti lopticu na polje (2, 2) (primjetite da Karel na početku **nije** okrenut kako treba).
+   
+
+.. karel:: Karel_intro_move_ball_in_2x2
+   :blockly:
+
+   {
+        setup:function() {
+            var world = new World(2, 2);
+            world.setRobotStartAvenue(1);
+            world.setRobotStartStreet(1);
+            world.setRobotStartDirection("S");
+            world.putBall(2, 1);
+            world.addEWWall(2, 1, 1);
+
+        var robot = new Robot();
+
+        var code = ["from karel import *",
+                    "turn_left(); move(); pick_ball();  # pokupi lopticu na (2, 1)",
+                    "turn_right(); turn_right(); move() # vrati se na (1, 1)",
+                    "turn_right(); move()               # idi na (1, 2)",
+                    "turn_right(); move()               # idi na (2, 2)",
+                    "drop_ball()                        # ostavi lopticu na (2, 2)"];
+            return {robot:robot, world:world, code:code};
+        },
+    
+        isSuccess: function(robot, world) {
+           return world.getBalls(2, 2) === 1;
+        },
+   }
+
+**Greške pri izvršenju**
+''''''''''''''''''''''''
+
+.. infonote::
+
+    Imajte na umu da **Karel ne može u svakom trenutku izvršiti svaku naredbu koju mu zadamo**. Točnije, Karel ne može ići unaprijed ako je ispred njega zid, ne može da pokupi lopticu tamo gdje je nema, i ne može ostaviti lopticu ako je nema kod sebe.
+    
+    Probajte obrisati prvu naredbu ``lijevo()`` u predhodnom programu, pa pokrenite program da biste vidjeli što će se dogoditi.
+    
+    Kada program koji izvršava naš program dođe do naredbe koja se ne može izvršiti, izvršenje našeg programa se prekida i primamo poruku o pogrešci. Takve su poruke normalne i vidjet ćemo ih kad god Karel nije u stanju učiniti ono što smo mu rekli ili kada je naša izjava nejasna (točnije, kad nije napisana pravilno). U takvim bismo situacijama trebali pokušati shvatiti u čemu je problem, popraviti program i ponovo ga pokrenuti.
+    
+Below are some tasks for independent work. With each task, a solution is offered, which you can see by clicking on the "solution" button. You can copy the displayed solution to the area for your work and try it by running the program. Note that your solution may differ from ours and still be quite ok.
+
+Zadaci za vježbu
+------------------
+
+Dođi do polja (3, 3)
+'''''''''''''''''''''
+
+.. questionnote::
+
+   U ovom zadatku nema loptica, potrebno je samo dovesti Karela do polja (3, 3).
+   
+.. karel:: Karel_intro_task_go_to_3_3
+   :blockly:
+
+   {
+        setup:function() {
+            var world = new World(3, 3);
+            world.setRobotStartAvenue(1);
+            world.setRobotStartStreet(1);
+            world.setRobotStartDirection("N");
+            world.addNSWall(1, 1, 2);
+            world.addNSWall(2, 2, 2);
+
+        var robot = new Robot();
+
+        var code = ["from karel import *",
+                    "# dovrši program"];
+            return {robot:robot, world:world, code:code};
+        },
+    
+        isSuccess: function(robot, world) {
+           return robot.getStreet() === 3 &&
+           robot.getAvenue() === 3;
+        },
+   }
+   
+.. reveal:: Karel_intro_task_go_to_3_3_reveal
+   :showtitle: Rješenje
+   :hidetitle: Sakrij rješenje
+
+   .. activecode:: Karel_intro_task_go_to_3_3_solution
+      :passivecode: true
+      
+      from karel import *
+      move(); move()               # to square (1, 3)
+      turn_right(); move()         # to square (2, 3)
+      turn_right(); move(); move() # to square (2, 1)
+      turn_left(); move()          # to square (3, 1)
+      turn_left(); move(); move()  # to square (3, 3)
+
+Pokupi loptice
+''''''''''''''
+
+.. questionnote::
+
+   Napišite program na temelju kojeg će Karel pokupiti loptice. 
+   
+.. karel:: Karel_intro_task_collect_balls_in_2x2
+   :blockly:
+
+   {
+        setup:function() {
+            var world = new World(2, 2);
+            world.setRobotStartAvenue(1);
+            world.setRobotStartStreet(1);
+            world.setRobotStartDirection("E");
+            world.putBall(2, 1);
+            world.putBall(2, 2);
+            world.putBall(1, 2);
+            world.addEWWall(2, 1, 1);
+
+        var robot = new Robot();
+
+        var code = ["from karel import *",
+                    "# dovrši program",
+                    "pick_ball()"];
+            return {robot:robot, world:world, code:code};
+        },
+    
+        isSuccess: function(robot, world) {
+           return robot.getBalls() === 3;
+        },
+   }
+   
+.. reveal:: Karel_intro_task_collect_balls_in_2x2_reveal
+   :showtitle: Rješenje
+   :hidetitle: Sakrij rješenje
+  
+   .. activecode:: Karel_intro_task_collect_balls_in_2x2_solution
+      :passivecode: true
+       
+      from karel import *
+      move(); pick_ball()                 # take the ball at square (2, 1)
+      turn_right(); turn_right(); move()  # go back to square (1, 1)
+      turn_right(); move(); pick_ball()   # pick the ball at square (1, 2)
+      turn_right(); move(); pick_ball()   # pick the ball at square (2, 2)
+
+Cik-cak
+'''''''
+
+.. questionnote::
+
+  Karel bi trebao doći do polja (5, 1).
+
+.. karel:: Karel_intro_task_stairs_fixed
+   :blockly:
+
+   {
+      setup:function() {
+
+         var Y = 3;
+         var X = 2 * Y - 1;
+         var world = new World(X, Y);
+         world.setRobotStartAvenue(1);
+         world.setRobotStartStreet(1);
+         world.setRobotStartDirection("E");
+
+         // Vertical walls
+         for (let y = 1; y < Y; y++) world.addNSWall(y, y, 1); // low left
+         for (let y = 1; y < Y; y++) world.addNSWall(X - 1 - y, y, 1); // low right
+         for (let y = 3; y <= Y; y++) world.addNSWall(y - 2, y, 1); // high left
+         for (let y = 2; y <= Y; y++) world.addNSWall(X + 1 - y, y, 1); // high right
+         
+         // Horizontal walls
+         for (let y = 1; y < Y - 1; y++) world.addEWWall(y + 1, y, 1); // low left
+         for (let y = 2; y < Y; y++) world.addEWWall(y - 1, y, 1); // high left
+         for (let y = 1; y < Y - 1; y++) world.addEWWall(X - 1 - y, y, 1); // low right
+         for (let y = 1; y < Y; y++) world.addEWWall(X + 1 - y, y, 1); // high right
+
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "# dovrši program ",
+                     ""];
+    
+         return {robot:robot, world:world, code:code};
+      },
+    
+      isSuccess: function(robot, world) {
+         return robot.getAvenue() == world.getAvenues() &&
+            robot.getStreet() == 1;
+      },
+   }
+
+.. reveal:: Karel_intro_task_stairs_fixed_reveal
+   :showtitle: Rješenje
+   :hidetitle: Sakrij rješenje
+
+   .. activecode:: Karel_intro_task_stairs_fixed_solution
+      :passivecode: true
+      
+      from karel import *
+      turn_left(); move()     # to (1, 2)
+      turn_right(); move()    # to (2, 2)
+      turn_left(); move()     # to (2, 3)
+      turn_right(); move()    # to (3, 3)
+      turn_right(); move()    # to (3, 2)
+      turn_left(); move()     # to (4, 2)
+      turn_right(); move()    # to (4, 1)
+      turn_left(); move()     # to (5, 1)
+
+
+Unaprijed, pa lijevo, pa opet
+'''''''''''''''''''''''''''''
+
+.. questionnote::
+
+  Karel bi trebao doći do polja (2, 3).
+   
+
+.. karel:: Karel_intro_task_spiral_left_fixed
+   :blockly:
+
+   {
+      setup:function() {
+
+         var N = 4;
+         var world = new World(N, N);
+         world.setRobotStartAvenue(1);
+         world.setRobotStartStreet(1);
+         world.setRobotStartDirection("E");
+         
+         var i = 1;
+         for (let d = N - 1; d > 0; d -= 2) { world.addEWWall(i, i, d); i++; }
+         i = 2;
+         for (let d = N - 2; d > 0; d -= 2) { world.addEWWall(i, N+1-i, d); i++; }
+         i = 2;
+         for (let d = N - 2; d > 0; d -= 2) { world.addNSWall(N+1-i, i, d); i++; }
+         i = 1;
+         for (let d = N - 3; d > 0; d -= 2) { world.addNSWall(i, i+2, d); i++; }
+   
+         var robot = new Robot();
+      
+         var code = ["from karel import *",
+                     "# Add missing commands",
+                     ""];
+      
+         return {robot:robot, world:world, code:code};
+      },
+ 
+      isSuccess: function(robot, world) {
+         var N = world.getAvenues();
+         return robot.getStreet() === Math.floor((N+2)/2) &&
+           robot.getAvenue() === Math.floor((N+1)/2);
+      },
+   }
+
+.. reveal:: Karel_intro_task_spiral_left_fixed_reveal
+   :showtitle: Rješenje
+   :hidetitle: Sakrij rješenje
+
+   .. activecode:: Karel_intro_task_spiral_left_fixed_solution
+      :passivecode: true
+      
+      from karel import *
+      move(); move(); move(); turn_left() # to (4, 1)
+      move(); move(); move(); turn_left() # to (4, 4)
+      move(); move(); move(); turn_left() # to (1, 4)
+      move(); move(); turn_left()         # to (1, 2)
+      move(); move(); turn_left()         # to (3, 2)
+      move(); turn_left()                 # to (3, 3)
+      move();                             # to (2, 3)

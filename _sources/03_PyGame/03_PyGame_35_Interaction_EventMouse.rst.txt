@@ -1,0 +1,233 @@
+Događaji miša
+-------------
+
+U primjeru „prekidač“ pokazali smo kako u programu možemo reagirati kad korisnik pritisne tipku miša. Iako se korisniku klik čini kao jedna radnja, vidjeli smo da je za računalo to niz događaja koji započinje događajem tipa *pg.MOUSEBUTTONDOWN*.
+
+U slijedećim primjerima i zadacima upotrijebit ćemo tri vrste događaja upotrebom miša:
+
+- Pritiskom bilo koje tipke miša (kao u primjeru s prekidačem), u tom slučaju *event.type* ima vrijednost *pg.MOUSEBUTTONDOWN*
+- Podizanje gumba miša, u tom slučaju *event.type* ima vrijednost *pg.MOUSEBUTTONUP*
+- Pomicanjem miša i u tom slučaju *event.type* ima vrijednost *pg.MOUSEMOTION*. U stvari, prilikom pomicanja miša generira se više takvih događaja (svaki od njih opisuje mali pokret miša u vrlo kratkom vremenskom intervalu, tako da svaki takav događaj obično opisuje pokret od samo nekoliko piksela).
+
+Objekti događaja čiji je tip *pg.MOUSEBUTTONDOWN* također sadrže neke dodatne informacije, kao što su:
+
+- *event.pos* - položaj miša u trenutku registracije događaja (već se koristi u primjeru prekidača)
+- *event.button* - označava koja je tipka miša pritisnuta (1 - lijevo, 2 - sredina, 3 - desno, 4 - scroll prema gore, 5 - scroll prema dolje)
+
+Neki dodatni podaci o događajima sadržani u *pg.MOUSEMOTION* objektima događaja su:
+
+- event.pos - položaj miša nakon događaja kretanja miša
+- event.rel - uređeni par koji opisuje koliko se položaj miša promijenio od prethodnog događaja pokreta miša
+- event.buttons - popis logičkih vrijednosti s tri elementa koji određuju za svako od tri tipke miša (0 - lijevo, 1 - srednje, 2 - desno) je li bilo pritisnuto tijekom pokreta miša.
+
+Obrada klika - vježbe
+'''''''''''''''''''''
+
+Možda niste primijetili da se u programu "prekidač" iz prethodne lekcije svjetlo može uključiti i isključiti klikom na bilo koji gumb miša. To je zato što se za svaku tipku miša generira ista vrsta događaja i nismo provjerili koji je gumb pritisnut kada se događaj dogodio.
+
+.. questionnote::
+
+    **Zadatak - lijeva tipka kao prekidač:** 
+    
+    Kopirajte ovdje program "prekidač", a zatim ga modificirajte tako da se svjetlo može uključiti i isključiti samo lijevom tipkom miša.
+
+**Pomoć:** Koristite podatak *event.button*.
+
+.. activecode:: PyGame__interact_switch_left_button
+    :nocodelens:
+    :enablecopy:
+    :playtask:
+    :modaloutput:
+    :includehsrc: src/PyGame/3_Interaction/3d_Mouse_events/Switch_left_button.py
+
+
+
+
+.. questionnote::
+
+    **Zadatak - tri prekidača:** 
+    
+    Upotrijebite dijelove programa "prekidač" i stvorite program koji simulira rad tri prekidača, kao što je prikazano u primjeru.
+
+.. image:: ../../_images/Shema3_Off.png
+   :width: 50px
+.. image:: ../../_images/Shema3_On.png
+   :width: 50px
+.. image:: ../../_images/SwitchOff.png
+   :width: 50px
+.. image:: ../../_images/SwitchOn.png
+   :width: 50px
+.. image:: ../../_images/BulbOff.png
+   :width: 50px
+.. image:: ../../_images/BulbOn.png
+   :width: 50px
+
+.. activecode:: PyGame__interact_switches
+    :nocodelens:
+    :enablecopy:
+    :playtask:
+    :modaloutput:
+    :includehsrc: src/PyGame/3_Interaction/3d_Mouse_events/Switches.py
+
+    import pygame as pg, pygamebg
+    (width, height) = (800, 500)
+    canvas = pygamebg.open_window(width, height, "Switches")
+
+    schema_images = (pg.image.load('Shema3_Off.png'), pg.image.load('Shema3_On.png'))
+    switch_images = (pg.image.load('SwitchOff.png'), pg.image.load('SwitchOn.png'))
+    bulb_images = (pg.image.load('BulbOff.png'), pg.image.load('BulbOn.png'))
+
+    switch_on = [False, False, False]
+    switch_pos = [(100, 200), (300, 150), (300, 250)]
+    bulb_pos = (500, 100)
+    
+    # dovrsite program
+
+Ostali događaji miša
+''''''''''''''''''''
+
+Kao što je spomenuto na početku ove lekcije, program također može reagirati na događaje otpuštanja gumba miša i pokreta miša. Da biste to učinili, potrebno je usporediti vrijednost *event.type* s konstantama *pg.MOUSEBUTTONUP* i *pg.MOUSEMOTION*. Slijede zadaci u kojima možete to i isprobati.
+
+.. questionnote::
+
+    **Zadatak - crtanje linija:** 
+    
+    Dovršite program tako da se pomoću njega mogu crtati ravne linije, kao u primjeru.
+
+.. activecode:: PyGame__interact_mouse_lines1
+    :nocodelens:
+    :enablecopy:
+    :playtask:
+    :modaloutput:
+    :includehsrc: src/PyGame/3_Interaction/3d_Mouse_events/mouse_lines1.py
+
+    import pygame as pg, pygamebg
+    (width, height) = (400, 400)
+    canvas = pygamebg.open_window(400, 400, "Lines with mouse")
+
+    mosue_pos = (0, 0)
+    line_start = mosue_pos
+    line_is_being_drawn = False
+    previous_lines = []
+
+    def new_frame():
+        canvas.fill(pg.Color("white")) # obojite prozor u bijelo
+        if line_is_being_drawn:
+            pg.draw.line(canvas, pg.Color('black'), line_start, mosue_pos)
+
+        for a, b in previous_lines:
+            pg.draw.line(canvas, pg.Color('black'), a, b)
+
+
+    def handle_event(event):
+        global line_is_being_drawn, line_start, mosue_pos
+
+        
+        # ovdje dodajte naredbe koje rade sljedece:
+        
+        # ako je vrsta događaja "spustanje tipka miša":
+        #     uključen je način crtanja linija
+        #     započinjemo liniju na trenutnom položaju miša
+        # u suprotnom, ako je vrsta događaja "tipka miša ide gore":
+        #     rezim crtanja linije se iskljucuje
+        #     novi je red od memoriranog početka linije do trenutnog položaja miša
+        #     dodajte novu liniju na listu prethodnih linija
+        # u suprotnom ako je vrsta događaja "pomicanje miša":
+        #     u varijabli mouse_pos zapamtite trenutni položaj miša
+
+    pygamebg.frame_loop(30, new_frame, handle_event)
+
+
+
+
+
+
+.. questionnote::
+
+    **Zadatak - crtanje linija sa brisanjem:**
+
+    Kopirajte program dolje za crtanje linija, a zatim dodajte mogućnost za brisanje svih linija desnim klikom.
+
+**Pomoć:** Za razlikovanje između lijeve i desne tipke miša u programu, ponovo treba koristiti podatak *event.button*. Kod u funkciji *handle_event* treba izgledati otprilike ovako:
+
+.. activecode:: PyGame__interact_mouse_lines2_part
+    :passivecode: true
+
+        if the event type is "mouse button going down":
+            if button 1 (left button) is pressed
+                the line drawing mode is switched on
+                the new line is from the memorized start of the line to the current position of the mouse
+            if button 3 (right button) is pressed
+                empty the list of previous lines
+        otherwise, if the event type is "releasing mouse button":
+            if button 1 (left button) is pressed
+                the line drawing mode is switched off
+                the new line is from the memorized start of the line to the current position of the mouse
+                add a new line to the list of previous lines
+        otherwise, if the event type is "move mouse":
+            remember the current position of the mouse in the mouse_pos variable 
+
+
+.. activecode:: PyGame__interact_mouse_lines2
+    :nocodelens:
+    :enablecopy:
+    :playtask:
+    :modaloutput:
+    :includehsrc: src/PyGame/3_Interaction/3d_Mouse_events/mouse_lines2.py
+
+
+
+
+.. questionnote::
+
+    **Zadatak - povlačenje:** 
+    
+    Sljedeći program prikazuje kako dopustiti korisniku programa da povlači predmete.
+    
+    Isprobajte program (povucite jabuke u košaru) i pokušajte ga razumjeti, a zatim odgovorite na pitanja u nastavku.
+
+.. image:: ../../_images/apple.png
+   :width: 50px
+.. image:: ../../_images/basket.png
+   :width: 50px
+.. image:: ../../_images/drag_scene.png
+   :width: 50px
+
+.. activecode:: PyGame__interact_drag
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includesrc: src/PyGame/3_Interaction/3d_Mouse_events/drag.py
+
+.. mchoice:: pygame__interact_quiz_drag1
+   :answer_a: redni broj jabuke koju crtamo
+   :answer_b: redni broj jabuke koju povlačimo
+   :answer_c: ukupan broj jabuka
+   :answer_d: broj preostalih jabuka na stablu
+   :correct: b
+   :feedback_a: Pokušaj ponovo
+   :feedback_b: Točno
+   :feedback_c: Pokušaj ponovo
+   :feedback_d: Pokušaj ponovo
+
+   Što predstavlja varijabla *i_apple* u programu? 
+
+.. dragndrop:: pygame__interact_quiz_drag2
+    :feedback: Pokušaj ponovo!
+    :match_1: if mouse_is_on_image(event.pos, basket_pos, basket_image):|||whether the apple should be deleted
+    :match_2: if mouse_is_on_image(event.pos, apple_positions[i]|||whether the user "took" the apple
+    :match_3: if len(apple_positions) == 0:|||whether the game is over
+    :match_4: if i_apple >= 0:|||whether a drag is ongoing
+
+    Uparite provjere u programu sa njihovim značenjem.
+
+.. mchoice:: pygame__interact_quiz_drag3
+   :answer_a: čitamo ako je tipka miša tijekom pokreta pritisnuta
+   :answer_b: Povlačenje je zasebna vrsta događaja
+   :answer_c: kad miš obično kreće, redni broj "jabuke koju vučemo" je -1
+   :correct: c
+   :feedback_a: Ovo nije prikladan način, jer se gumb može pritisnuti u prazno (korisnik nije "uzeo" objekt koji se povlači)
+   :feedback_b: Ne, ne postoji takva vrsta događaja
+   :feedback_c: Točno
+
+   Kako u programu razlikujemo povlačenje i obično kretanje miša? 

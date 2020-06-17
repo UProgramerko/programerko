@@ -1,0 +1,143 @@
+Programi s računanjem - vježbe
+==============================
+
+Do sada smo naučili kako da u programe učitavamo brojeve, kako da obavljamo računske operacije nad njima i kako da ispisujemo rezulatate.
+
+Zadaci bez učitavanja podataka
+------------------------------
+
+Primjer
+'''''''
+
+.. questionnote::
+
+    **Primjer - Proslava**
+
+    Jessica i Oscar organiziraju proslavu. Iznajmljeni prostor prima 100 ljudi, Jessica ih je do sada pozvala 43, a Oscar 28.
+    
+    Napišite program koji izračunava koliko je još mjesta ostalo na raspolaganju.
+
+Zadatak se može riješiti na sljedeći način:
+
+.. activecode:: console__computing_party1
+    
+    print(100-43-28)
+
+ili ovako:
+
+.. activecode:: console__computing_party2
+
+    total_places = 100
+    called_by_jessica = 43
+    called_by_oscar = 28
+    places_left = total_places - called_by_jessica - called_by_oscar
+    print(places_left)
+
+
+.. infonote::
+
+    Iako se ovdje ovo može činiti nepotrebnim, rješenje s varijablama vrijedno je trenirati. Programi koji koriste varijable mogu učiniti puno više od onih bez varijabli. Na primjer, ako u program učitavamo vrijednosti, potrebne su varijable. Također, složenija računanja bila bi vrlo nerazumljiva ako ih ne bismo mogli raščlaniti na jednostavnije korake, a za srednje vrijednosti ponovo su nam potrebne varijable.
+    
+    Ranije smo spomenuli da se trebamo truditi kako bi varijablama davali jednostavnija imena. Računalu to nije bitno (on radi jednako dobro s bilo kakvim imenima), ali kada izračunavamo nešto što nam je važno, korištenjem varijabli s jednostavnijim imenima će nam pomoći da taj program razumijemo i poslije dužeg vremena. Također, takav program će lakše razumijeti i drugi ljudi koji ga budu čitali.
+    
+
+Zadaci za vježbu 
+''''''''''''''''
+
+.. questionnote::
+
+    **Zadatak - kupovina za sav novac**
+    
+    Koliko predmeta od 76 kuna možete kupiti za 500 kuna? Koliko će novaca ostati ako se kupi najveći mogući broj predmeta?
+
+Kraća (i manje jasna) verzija rješenja je
+
+    .. activecode:: console__computing_divmod_sol1
+        :passivecode: true
+        
+        print(500 // 76, 500 % 76)
+
+Napišite jasnije rješenje koristeći varijable.
+
+.. activecode:: console__computing_divmod
+
+
+
+
+
+.. questionnote::
+
+    **Zadatak - Datum**
+
+    Ako je danas 15. u mjesecu, mjesec ima 31 dan, koliko je dana do 11. sljedećeg mjeseca ( u isto vrijeme)?
+
+Vaš je zadatak napisati rješenje u kojem su početne i izračunate vrijednosti dodijeljene varijablama. Klikom na gumb "kratko rješenje" možete vidjeti kratko rješenje kao pomoć
+
+.. reveal:: console__computing_divmod_reveal
+    :showtitle: Kratko rješenje
+    :hidetitle: Sakrij kratko rješenje
+
+    .. activecode:: console__computing_buying3_simple_sol1
+        :passivecode: true
+        
+        print(11+31-15)
+
+.. activecode:: console__computing_date
+
+
+
+.. questionnote::
+
+    **Zadatak - Kupovina 3 komada**
+
+    Ben ima 20 kuna i želi kupiti 3 svjetla za bicikl za 1.58 kuna. Koliko novaca će mu ostati?
+    
+Napišite program koji koristi varijable za početne i izračunate vrijednosti.
+
+.. activecode:: console__computing_buying3_simple
+
+
+            
+Zadaci s učitavanjem podataka
+-----------------------------
+
+Primjer
+'''''''
+
+.. questionnote::
+
+    **Primjer - Farbanje** 
+    
+    Filip se priprema ofarbati strop u jednoj sobi. Da bi znao koliko boje treba kupiti, mora znati dimenzije prostorije i koliko četvornih metara prekriva jedan kilogram boje. Napišite program koji učitava duljinu prostorije, širinu prostorije, područje koje prekriva jedan kilogram boje i ispisuje potrebni broj kilograma boje.
+    
+Rješenje:
+
+.. activecode:: console__computing_painting
+
+    length = float(input("Unesite dužinu prostorije: "))
+    width = float(input("Unesite širinu prostorije: "))
+    area_per_kg = float(input("Unesite površinu koju pokriva 1 kg boje: "))
+    needed_kg = length * width / area_per_kg
+    print("Potrebo je", needed_kg, "kg boje")
+
+
+Zadaci za vježbu
+''''''''''''''''
+
+.. questionnote::
+
+    **Zadatak - Zečevi** 
+    
+    Populacija zečeva na jednom otoku svake se godine udvostručuje. Napišite program koji učitava trenutni broj zečeva na otoku i broj godina te ispisuje koliko bi zečeva bilo na otoku u određenom broju godina ako bi se nastavili razmožavati istim tempom. 
+
+.. activecode:: console__computing_rabbits
+
+
+
+.. questionnote::
+
+    **Zadatak - Kupnja automobila**
+
+    John kupuje automobil na rate. Napišite program koji redom učitava ugovorenu cijenu, iznos jedne rate i broj rata, a ispisuje koliko će John ukupno platiti preko cijene navedene u ugovoru. 
+        
+.. activecode:: console__computing_buying_car

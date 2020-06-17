@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Crtanje pravokutnika, elipsa i krugova &#8212; Textual Programming in Python</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/activecode.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/codemirror.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/clickable.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pytutor.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/modal-basic.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/datafile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/dragndrop.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fitb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/matrixeq.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/parsons.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/lib/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/poll.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/showEval.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabbedstuff.css" />
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/video.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/karel.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/notes.css" />
+    <link rel="stylesheet" href="../_static/user-highlights.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/flatly.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/petlja.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/runestonebase.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/jquery.highlight.js"></script>
+    <script type="text/javascript" src="../_static/bookfuncs.js"></script>
+    <script type="text/javascript" src="../_static/codemirror.js"></script>
+    <script type="text/javascript" src="../_static/xml.js"></script>
+    <script type="text/javascript" src="../_static/css.js"></script>
+    <script type="text/javascript" src="../_static/python.js"></script>
+    <script type="text/javascript" src="../_static/htmlmixed.js"></script>
+    <script type="text/javascript" src="../_static/javascript.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/CLDRPluralRuleParser.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.messagestore.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.fallbacks.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.language.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.parser.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.emitter.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.emitter.bidi.js"></script>
+    <script type="text/javascript" src="../_static/activecode-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/skulpt.min.js"></script>
+    <script type="text/javascript" src="../_static/skulpt-stdlib.js"></script>
+    <script type="text/javascript" src="../_static/activecode.js"></script>
+    <script type="text/javascript" src="../_static/clike.js"></script>
+    <script type="text/javascript" src="../_static/timed_activecode.js"></script>
+    <script type="text/javascript" src="../_static/animationbase.js"></script>
+    <script type="text/javascript" src="../_static/mchoice.js"></script>
+    <script type="text/javascript" src="../_static/timedmc.js"></script>
+    <script type="text/javascript" src="../_static/timed.js"></script>
+    <script type="text/javascript" src="../_static/mchoice-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/clickable.js"></script>
+    <script type="text/javascript" src="../_static/timedclickable.js"></script>
+    <script type="text/javascript" src="../_static/d3.v2.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.ba-bbq.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.jsPlumb-1.3.10-all-min.js"></script>
+    <script type="text/javascript" src="../_static/pytutor.js"></script>
+    <script type="text/javascript" src="../_static/codelens.js"></script>
+    <script type="text/javascript" src="../_static/datafile.js"></script>
+    <script type="text/javascript" src="../_static/dragndrop.js"></script>
+    <script type="text/javascript" src="../_static/timeddnd.js"></script>
+    <script type="text/javascript" src="../_static/dragndrop-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/fitb.js"></script>
+    <script type="text/javascript" src="../_static/timedfitb.js"></script>
+    <script type="text/javascript" src="../_static/fitb-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/matrixeq.js"></script>
+    <script type="text/javascript" src="../_static/lib/prettify.js"></script>
+    <script type="text/javascript" src="../_static/lib/hammer.min.js"></script>
+    <script type="text/javascript" src="../_static/parsons.js"></script>
+    <script type="text/javascript" src="../_static/parsons-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/timedparsons.js"></script>
+    <script type="text/javascript" src="../_static/poll.js"></script>
+    <script type="text/javascript" src="../_static/reveal.js"></script>
+    <script type="text/javascript" src="../_static/shortanswer.js"></script>
+    <script type="text/javascript" src="../_static/timed_shortanswer.js"></script>
+    <script type="text/javascript" src="../_static/showEval.js"></script>
+    <script type="text/javascript" src="../_static/tabbedstuff.js"></script>
+    <script type="text/javascript" src="../_static/runestonevideo.js"></script>
+    <script type="text/javascript" src="../_static/karelCorner.js"></script>
+    <script type="text/javascript" src="../_static/karelRobot.js"></script>
+    <script type="text/javascript" src="../_static/karelWorld.js"></script>
+    <script type="text/javascript" src="../_static/karelRobotDrawer.js"></script>
+    <script type="text/javascript" src="../_static/karelUI.js"></script>
+    <script type="text/javascript" src="../_static/karel.js"></script>
+    <script type="text/javascript" src="../_static/karel-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/notes.js"></script>
+    <script type="text/javascript" src="../_static/pygamelib-init.js"></script>
+    <script type="text/javascript" src="../_static/blockly/blockly_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/blocks_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/python_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/msg-sr.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/utilities.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/python_errors.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/ast_node_visitor.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/abstract_interpreter.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/pytifa.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/abstract_interpreter_definitions.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/python_to_blockly.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/imported.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/class.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/comment.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/comprehensions.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/dict.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/if.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/io.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/lists.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/sets.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/loops.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/parking.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/tuple.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/turtles.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/text.js"></script>
+    <script type="text/javascript" src="../_static/blockpy-modal.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-4.0.0-dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script type="text/javascript" src="../_static/waypoints.min.js"></script>
+    <script type="text/javascript" src="../_static/rangy-core.js"></script>
+    <script type="text/javascript" src="../_static/rangy-textrange.js"></script>
+    <script type="text/javascript" src="../_static/rangy-cssclassapplier.js"></script>
+    <script type="text/javascript" src="../_static/user-highlights.js"></script>
+    <script type="text/javascript" src="../_static/jquery.idle-timer.js"></script>
+    <script type="text/javascript" src="../_static/processing-1.4.1.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.hotkey.js"></script>
+    <script type="text/javascript" src="../_static/jquery-migrate-1.2.1.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Crtanje ravnih linija i poligona" href="03_PyGame_11b_Drawing_LinePolygon.html" />
+    <link rel="prev" title="Crtanje" href="03_PyGame_10_Drawing.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+<link rel="shortcut icon" href="../_static/favicon.ico" type="image/ico" />
+
+<script type="text/javascript">
+  eBookConfig = {};
+  eBookConfig.host = 'http://127.0.0.1:8000' ? 'http://127.0.0.1:8000' : 'http://127.0.0.1:8000';
+  eBookConfig.app = eBookConfig.host+'/runestone';
+  eBookConfig.ajaxURL = eBookConfig.app+'/ajax/';
+  eBookConfig.course = 'TxtProgInPython';
+  eBookConfig.logLevel = 0;
+  eBookConfig.loginRequired = false;
+  eBookConfig.build_info = "";
+  eBookConfig.isLoggedIn = false;
+  eBookConfig.useRunestoneServices = false;
+  eBookConfig.python3 = true;
+  eBookConfig.basecourse = 'TxtProgInPython';
+  eBookConfig.runestone_version = '3.1.1';
+  eBookConfig.imagesDir = '../_images/';
+  eBookConfig.staticDir = '../_static/';
+  if(typeof(Sk) != "undefined")
+      Sk.imgPath = eBookConfig.imagesDir;
+</script>
+
+<div id="fb-root"></div>
+
+
+
+  </head><body>
+
+
+<!-- Begin navbar -->
+
+<nav id="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+  <div class="container">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+     <img src="../_static/img/logo.png" style="width:80px; height: 80px;"> 
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top: 10px; margin-left: 25px;">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="../">Textual Programming in Python</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<br/>
+
+
+<div class="container col-md-12" id="continue-reading"></div>
+
+<div class="container col-md-8 col-md-offset-2" id="main-content">
+  
+  <div class="section" id="crtanje-pravokutnika-elipsa-i-krugova">
+<h1>Crtanje pravokutnika, elipsa i krugova<a class="headerlink" href="#crtanje-pravokutnika-elipsa-i-krugova" title="Permalink to this headline">¶</a></h1>
+<p>Sve funkcije crtanja u biblioteci PyGame počinju s <code class="docutils literal notranslate"><span class="pre">pg.draw</span></code>. Ovisno o tome koji oblik želimo nacrtati, pozivamo različite funkcije. U objašnjenjima koja slijede značenje parametara je:</p>
+<ul class="simple">
+<li><p>Parametar <em>prozor</em> je područje u kojem crtamo. Programi će u ovom vodiču već imati formiranu varijablu (točnije objekt) <em>prozor</em>, dobivenu kao rezultat poziva funkcije <code class="docutils literal notranslate"><span class="pre">pygamebg.open_window</span></code>.</p></li>
+<li><p>Parametar <em>boja</em> je boja koju koristimo za crtanje. Kao što je ranije rečeno, boja se može odrediti imenom (na primjer <code class="code docutils literal notranslate"><span class="pre">pg.Color(&quot;black&quot;)</span></code>), ili kao n-torka ili lista dužine 3 (na primjer <code class="code docutils literal notranslate"><span class="pre">[255,</span> <span class="pre">0,</span> <span class="pre">0]</span></code> za crvenu).</p></li>
+<li><p>Parametar <em>pravokutinik</em> je n-torka ili lista dužine četiri <span class="math notranslate nohighlight">\((x, y, w, h)\)</span> ili <span class="math notranslate nohighlight">\([x, y, w, h]\)</span>, koja opisuje pravokutnik, kao što je objašnjeno ranije (koordinate gornje lijeve verte, širina i visina pravokutnika).</p></li>
+<li><p>Parametar <em>centar</em> predstavlja neku točku. Kao što smo ranije spomenuli, točka se može navesti kao n-torka (ili lista) od 2 elementa, koji predstavljaju koordinate točke u prozoru u koji crtamo.</p></li>
+<li><p>Parametar <em>debljina</em> je debljina linija koje koristimo za crtanje. U funkcijama koje ovdje objašnjavamo ovaj parametar nije obvezan i može se izostaviti.</p></li>
+</ul>
+<p>Sada ćemo vidjeti detaljnije opise funkcija za crtanje pravokutnika, elipsa i krugova. Nakon svakog opisa funkcije dat je kratki primjer jednog ili dvije linije koda. Svaki od ovih primjera možete pokrenuti tako da ga kopirate u program ispod (koji za sada ne sadrži ništa). Slike koje slijede primjere dobivaju se na isti način.</p>
+
+<div data-childcomponent="pygame__drawing_primirives_def" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=pygame__drawing_primirives_def data-lang="python" 
+      data-timelimit=25000    
+    data-audio=''   
+              data-modaloutput="true" data-hidehistory=true
+       >
+import pygame as pg, pygamebg
+canvas = pygamebg.open_window(200, 200, "Pygame")
+
+canvas.fill(pg.Color("gray"))
+
+pygamebg.wait_loop()
+</textarea>
+</div>
+<div class="section" id="crtanje-pravokutnika">
+<h2>Crtanje pravokutnika<a class="headerlink" href="#crtanje-pravokutnika" title="Permalink to this headline">¶</a></h2>
+<p>Za crtanje pravokutnika koristimo funkciju <code class="docutils literal notranslate"><span class="pre">pg.draw.rect</span></code>, koja ima dva oblika:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pg</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">prozor</span><span class="p">,</span> <span class="n">boja</span><span class="p">,</span> <span class="n">pravokutnik</span><span class="p">,</span> <span class="n">debljina</span><span class="p">)</span>
+<span class="n">pg</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">prozor</span><span class="p">,</span> <span class="n">boja</span><span class="p">,</span> <span class="n">pravokutnik</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Koristimo obrazac bez parametra <em>debljine</em> kada želimo da i unutrašnjost pravokutnika bude ispunjena naznačenom bojom.</p>
+<p>Na primjer, prvom od sljedeće dve naredbe zadajemo:</p>
+<ul class="simple">
+<li><p>nacrtati pravokutnik (funkcija <em>rect</em>)</p></li>
+<li><p>obojite je crnom bojom (parametar (0, 0, 0) navodi crnu boju)</p></li>
+<li><p>Gornji lijevi vrh pravokutnika ima koordinate (40, 80)</p></li>
+<li><p>širina pravokutnika je 50, a visina 30 piksela</p></li>
+<li><p>samo se crta okvir pravokutnika, a linije trebaju biti debljine 3 piksela</p></li>
+</ul>
+<p>Značenje druge naredbe je:</p>
+<ul class="simple">
+<li><p>nacrtati pravokutnik (funkcija <em>rect</em>)</p></li>
+<li><p>obojite je crnom bojom (parametar pg.Color(“black”) također određuje crnu boju)</p></li>
+<li><p>Gornji lijevi vrh pravokutnika ima koordinate (140, 80)</p></li>
+<li><p>pravokutnik treba biti 20 piksela širok i visok, tako da će zapravo biti kvadrat</p></li>
+<li><p>Kvadrat će bit i ispunjen bojom jer ne postoji parametar debljine</p></li>
+</ul>
+
+<div data-childcomponent="pygame__drawing_rectangles_def" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=pygame__drawing_rectangles_def data-lang="python" 
+      data-timelimit=25000  data-codelens="true"  
+    data-audio=''   
+             data-passivecode="true"  data-hidehistory=true
+       >
+pg.draw.rect(canvas, (0, 0, 0), (40, 80, 50, 30), 3)
+pg.draw.rect(canvas, pg.Color("black"), (140, 80, 20, 20))
+</textarea>
+</div>
+<a class="reference internal image-reference" href="../_images/drawing_rectangles.png"><img alt="../_images/drawing_rectangles.png" class="align-center" src="../_images/drawing_rectangles.png" style="width: 200px;" /></a>
+</div>
+<div class="section" id="crtanje-elipse">
+<h2>Crtanje elipse<a class="headerlink" href="#crtanje-elipse" title="Permalink to this headline">¶</a></h2>
+<p>Za crtanje elipse se koristi funkcija <code class="docutils literal notranslate"><span class="pre">pg.draw.ellipse</span></code>, sa ili bez parametra debljine:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pg</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">ellipse</span><span class="p">(</span><span class="n">prozor</span><span class="p">,</span> <span class="n">boja</span><span class="p">,</span> <span class="n">pravokutnik</span><span class="p">,</span> <span class="n">debljina</span><span class="p">)</span>
+<span class="n">pg</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">ellipse</span><span class="p">(</span><span class="n">prozor</span><span class="p">,</span> <span class="n">boja</span><span class="p">,</span> <span class="n">pravokutnik</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Parametar <em>pravokutnik</em> predstavlja pravokutnik u koji je upisana elipsa, a ostali parametri imaju isto značenje kao i prije. Ako nam zatreba, možemo izračunati sredinu i glavne i manje polu-osi elipse pomoću n-torke <span class="math notranslate nohighlight">\((x, y, w, h)\)</span> ili liste <span class="math notranslate nohighlight">\([x, y, w, h]\)</span> koji definira pravokutnik. Koordinate središta pravokutnika, koje je ujedno i središte elipse, su <span class="math notranslate nohighlight">\((x + w/2, y + h/2)\)</span>, a glavne i manje poluosi elipse su <span class="math notranslate nohighlight">\(w/2\)</span> and <span class="math notranslate nohighlight">\(h/2\)</span>. Tako, na primjer, naredba</p>
+
+<div data-childcomponent="pygame__drawing_ellipse_def" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=pygame__drawing_ellipse_def data-lang="python" 
+      data-timelimit=25000  data-codelens="true"  
+    data-audio=''   
+             data-passivecode="true"  data-hidehistory=true
+       >
+pg.draw.ellipse(canvas, pg.Color("yellow"), (100, 160, 60, 40))
+</textarea>
+</div>
+<p>crta žuto ispunjenu elipsu. Središte elipse je središte određenog pravokutnika, koji je u točki (130, 180). Vodoravna poluos elipse duga je 30 piksela, a okomita 20.</p>
+<a class="reference internal image-reference" href="../_images/drawing_ellipse.png"><img alt="../_images/drawing_ellipse.png" class="align-center" src="../_images/drawing_ellipse.png" style="width: 200px;" /></a>
+</div>
+<div class="section" id="crtanje-kruga">
+<h2>Crtanje kruga<a class="headerlink" href="#crtanje-kruga" title="Permalink to this headline">¶</a></h2>
+<p>Za crtanje kruga koristimo funkciju <code class="docutils literal notranslate"><span class="pre">pg.draw.circle</span></code>, sa ili bez parametra debljine:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pg</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">prozor</span><span class="p">,</span> <span class="n">boja</span><span class="p">,</span> <span class="n">centar</span><span class="p">,</span> <span class="n">radijus</span><span class="p">,</span> <span class="n">debljina</span><span class="p">)</span>
+<span class="n">pg</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">prozor</span><span class="p">,</span> <span class="n">boja</span><span class="p">,</span> <span class="n">centar</span><span class="p">,</span> <span class="n">radijus</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Parametar <em>centar</em> je točka koja predstavlja središte kruga, a parametar <em>radijus</em> je broj koji predstavlja polumjer kruga u pikselima. Na primjer, sljedeća naredba crta krug crvene boje, debljine 3 piksela, radijusa 50 piksela, čije je središte u točki (100, 100 ):</p>
+
+<div data-childcomponent="pygame__drawing_circle_def" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=pygame__drawing_circle_def data-lang="python" 
+      data-timelimit=25000  data-codelens="true"  
+    data-audio=''   
+             data-passivecode="true"  data-hidehistory=true
+       >
+pg.draw.circle(canvas, pg.Color("red"), (100, 100), 50, 3)
+</textarea>
+</div>
+<a class="reference internal image-reference" href="../_images/drawing_circle.png"><img alt="../_images/drawing_circle.png" class="align-center" src="../_images/drawing_circle.png" style="width: 200px;" /></a>
+<p>Ako je zadnji parametar (debljina linije jednaka 3 pikslea) izostavljen, unutrašnjost kruga također bi bila crvena.</p>
+</div>
+<div class="section" id="crtanje-pravokutnika-elipsa-i-krugova-pitanja">
+<h2>Crtanje pravokutnika, elipsa i krugova - pitanja<a class="headerlink" href="#crtanje-pravokutnika-elipsa-i-krugova-pitanja" title="Permalink to this headline">¶</a></h2>
+<p>Provjerite koliko razumijete i zapamtili ove funkcije crtanja:</p>
+
+            <div class="course-box course-box-question course-content">
+            <ul data-component="multiplechoice" data-multipleanswers="true"  id="pygame__drawing_quiz_circle_arglist">
+            <p>Q-42: Što trebate navesti prilikom crtanja kruga?</p>
+
+            <li data-component="answer"  id="pygame__drawing_quiz_circle_arglist_opt_a">Koordinate gornjeg lijevog vrha</li><li data-component="feedback" id="pygame__drawing_quiz_circle_arglist_opt_a">Koordinate gornje lijeve vrhove navode se pri crtanju elipse ili pravokutnika</li>
+            
+            <li data-component="answer" data-correct id="pygame__drawing_quiz_circle_arglist_opt_b">Radijus</li><li data-component="feedback" id="pygame__drawing_quiz_circle_arglist_opt_b">Točno</li>
+            
+            <li data-component="answer" data-correct id="pygame__drawing_quiz_circle_arglist_opt_c">Koordinate centra</li><li data-component="feedback" id="pygame__drawing_quiz_circle_arglist_opt_c">Točno</li>
+            
+            <li data-component="answer"  id="pygame__drawing_quiz_circle_arglist_opt_d">Širina i visina</li><li data-component="feedback" id="pygame__drawing_quiz_circle_arglist_opt_d">Širina i visina su određene pri crtanju elipse ili pravokutnika</li>
+            
+            <li data-component="answer" data-correct id="pygame__drawing_quiz_circle_arglist_opt_e">Boja</li><li data-component="feedback" id="pygame__drawing_quiz_circle_arglist_opt_e">Točno</li>
+            
+
+            </ul>
+            </div>
+            
+            <div class="course-box course-box-question course-content">
+            <ul data-component="multiplechoice" data-multipleanswers="false"  id="pygame__drawing_quiz_circle_right_args">
+            <p>Q-43: Da biste nacrtali krug centriran u točki <span class="math notranslate nohighlight">\((100, 100)\)</span>, čiji je radijus <span class="math notranslate nohighlight">\(30\)</span> piksela, debljine <span class="math notranslate nohighlight">\(5\)</span> piksela, koji poziv funkcije trebate obaviti?</p>
+
+            <li data-component="answer"  id="pygame__drawing_quiz_circle_right_args_opt_a">pg.draw.circle(prozor, boja, 100, 100, 30, 5)</li><li data-component="feedback" id="pygame__drawing_quiz_circle_right_args_opt_a">Pokušaj ponovo</li>
+            
+            <li data-component="answer" data-correct id="pygame__drawing_quiz_circle_right_args_opt_b">pg.draw.circle(prozor, boja, (100, 100), 30, 5)</li><li data-component="feedback" id="pygame__drawing_quiz_circle_right_args_opt_b">Točno</li>
+            
+            <li data-component="answer"  id="pygame__drawing_quiz_circle_right_args_opt_c">pg.draw.circle(prozor, boja, (100, 100, 30, 5))</li><li data-component="feedback" id="pygame__drawing_quiz_circle_right_args_opt_c">Pokušaj ponovo</li>
+            
+            <li data-component="answer"  id="pygame__drawing_quiz_circle_right_args_opt_d">pg.draw.circle(prozor, boja, (100, 100), (30, 5))</li><li data-component="feedback" id="pygame__drawing_quiz_circle_right_args_opt_d">Pokušaj ponovo</li>
+            
+
+            </ul>
+            </div>
+            
+            <div class="course-box course-box-question course-content">
+            <ul data-component="multiplechoice" data-multipleanswers="false"  id="pygame__drawing_quiz_circle_opt_arg">
+            <p>Q-44: Razlika između <cite>pg.draw.circle(prozor, boja, (cx, cy), r)</cite> i <cite>pg.draw.circle(prozor, boja, (cx, cy), r, 1)</cite> je ta:</p>
+
+            <li data-component="answer"  id="pygame__drawing_quiz_circle_opt_arg_opt_a">potonji crta elipsu čije su polu-glavne i polu-manje osi jednake r i 1.</li><li data-component="feedback" id="pygame__drawing_quiz_circle_opt_arg_opt_a">Pokušaj ponovo</li>
+            
+            <li data-component="answer"  id="pygame__drawing_quiz_circle_opt_arg_opt_b">potonji ispunjava unutrašnjost kruga bojom.</li><li data-component="feedback" id="pygame__drawing_quiz_circle_opt_arg_opt_b">Pokušaj ponovo</li>
+            
+            <li data-component="answer" data-correct id="pygame__drawing_quiz_circle_opt_arg_opt_c">prvi crta disk (ispunjeni krug), a drugi kružnu liniju.</li><li data-component="feedback" id="pygame__drawing_quiz_circle_opt_arg_opt_c">Točno</li>
+            
+            <li data-component="answer"  id="pygame__drawing_quiz_circle_opt_arg_opt_d">prvi crta kružnu liniju, a drugi disk (ispunjeni krug).</li><li data-component="feedback" id="pygame__drawing_quiz_circle_opt_arg_opt_d">Pokušaj ponovo</li>
+            
+
+            </ul>
+            </div>
+            
+            <div class="course-box course-box-question course-content">
+            <ul data-component="multiplechoice" data-multipleanswers="false"  id="pygame__drawing_quiz_rect_args_1">
+            <p>Q-45: Što se NE zadaje pri crtanju pravokutnika?</p>
+
+            <li data-component="answer"  id="pygame__drawing_quiz_rect_args_1_opt_a">Koordinate gornjeg lijevog vrha</li><li data-component="feedback" id="pygame__drawing_quiz_rect_args_1_opt_a">Pokušaj ponovo</li>
+            
+            <li data-component="answer"  id="pygame__drawing_quiz_rect_args_1_opt_b">Debljina</li><li data-component="feedback" id="pygame__drawing_quiz_rect_args_1_opt_b">Pokušaj ponovo</li>
+            
+            <li data-component="answer"  id="pygame__drawing_quiz_rect_args_1_opt_c">Širina</li><li data-component="feedback" id="pygame__drawing_quiz_rect_args_1_opt_c">Pokušaj ponovo</li>
+            
+            <li data-component="answer"  id="pygame__drawing_quiz_rect_args_1_opt_d">Visina</li><li data-component="feedback" id="pygame__drawing_quiz_rect_args_1_opt_d">Pokušaj ponovo</li>
+            
+            <li data-component="answer" data-correct id="pygame__drawing_quiz_rect_args_1_opt_e">Koordinate centra</li><li data-component="feedback" id="pygame__drawing_quiz_rect_args_1_opt_e">Točno</li>
+            
+
+            </ul>
+            </div>
+            
+            <div class="course-box course-box-question course-content">
+            <ul data-component="multiplechoice" data-multipleanswers="false"  id="pygame__drawing_quiz_rect_args_2">
+            <p>Q-46: Nacrtati pravokutnik čiji je gornji lijevi vrh u točki
+:math: <cite>(100, 100)</cite>, <span class="math notranslate nohighlight">\(30\)</span> širine i <span class="math notranslate nohighlight">\(50\)</span>
+piksela visine, koju funkciju je potrebno pozvati?</p>
+
+            <li data-component="answer"  id="pygame__drawing_quiz_rect_args_2_opt_a">pg.draw.rect(prozor, boja, 100, 100, 30, 50)</li><li data-component="feedback" id="pygame__drawing_quiz_rect_args_2_opt_a">Pokušaj ponovo</li>
+            
+            <li data-component="answer"  id="pygame__drawing_quiz_rect_args_2_opt_b">pg.draw.rect(prozor, boja, (100, 100), (30, 50))</li><li data-component="feedback" id="pygame__drawing_quiz_rect_args_2_opt_b">Pokušaj ponovo</li>
+            
+            <li data-component="answer"  id="pygame__drawing_quiz_rect_args_2_opt_c">pg.draw.rect(prozor, boja, (100, 100), 30, 50)</li><li data-component="feedback" id="pygame__drawing_quiz_rect_args_2_opt_c">Pokušaj ponovo</li>
+            
+            <li data-component="answer" data-correct id="pygame__drawing_quiz_rect_args_2_opt_d">pg.draw.rect(prozor, boja, (100, 100, 30, 50))</li><li data-component="feedback" id="pygame__drawing_quiz_rect_args_2_opt_d">Točno</li>
+            
+
+            </ul>
+            </div>
+            
+            <div class="course-box course-box-question course-content">
+            <ul data-component="multiplechoice" data-multipleanswers="false"  id="pygame__drawing_quiz_rect_args_3">
+            <p>Q-47: Nacrtati pravokutnik čiji je gornji lijevi vrh u točki
+<span class="math notranslate nohighlight">\((80, 80)\)</span>, a donja desna u točki
+<span class="math notranslate nohighlight">\((130, 160)\)</span>, potrebno je izvršiti poziv funkcije:</p>
+
+            <li data-component="answer" data-correct id="pygame__drawing_quiz_rect_args_3_opt_a">pg.draw.rect(prozor, boja, (80, 80, 50, 80))</li><li data-component="feedback" id="pygame__drawing_quiz_rect_args_3_opt_a">Točno</li>
+            
+            <li data-component="answer"  id="pygame__drawing_quiz_rect_args_3_opt_b">pg.draw.rect(prozor, boja, (80, 80), (130, 160))</li><li data-component="feedback" id="pygame__drawing_quiz_rect_args_3_opt_b">Pokušaj ponovo</li>
+            
+            <li data-component="answer"  id="pygame__drawing_quiz_rect_args_3_opt_c">pg.draw.rect(prozor, boja, (80, 80, 130, 160))</li><li data-component="feedback" id="pygame__drawing_quiz_rect_args_3_opt_c">Pokušaj ponovo</li>
+            
+            <li data-component="answer"  id="pygame__drawing_quiz_rect_args_3_opt_d">pg.draw.rect(prozor, boja, (80, 80), (50, 80))</li><li data-component="feedback" id="pygame__drawing_quiz_rect_args_3_opt_d">Pokušaj ponovo</li>
+            
+
+            </ul>
+            </div>
+            </div>
+<div class="section" id="crtanje-po-uputama">
+<h2>Crtanje po uputama<a class="headerlink" href="#crtanje-po-uputama" title="Permalink to this headline">¶</a></h2>
+<p>U sljedećim zadacima možete vidjeti što bi vaš program trebao crtati pritiskom na gumb “Prikaži primjer”. Da bismo vam pružili potrebne podatke za pisanje izjava koje su vam potrebne, date su i detaljne upute s opisima parametara.</p>
+<p>Imajte na umu da prije crtanja pozadinu trebate obojiti odgovarajućom bojom, za koju koristite naredbu <code class="docutils literal notranslate"><span class="pre">canvas.fill(pg.Color(...))</span></code> (umjesto točaka navedite boju).</p>
+
+    <div class="course-box course-box-special">
+        <div class="course-content">
+            <h4 class="carbox-title">
+                <img class="corner-image float-right" src="../_static/img/question-mark.png" />
+            </h4>
+            <p>
+<p><strong>Zadataka - meta:</strong></p>
+<p>Nacrtajte na bijeloj pozdaini metu pomoću tri ispunjena kruga. Središta sva tri kruga trebaju biti u središtu prozora, a svi krugovi trebaju biti ispunjeni bojom. Prvo nacrtajte crveni krug polumjera 100, zatim plavi krug radijusa 75, a zatim zeleni krug polumjera 50 piksela.</p>
+
+    </p></div></div>
+<p>Što mislite, mogu li se ovi krugovi crtati drugačijim redoslijedom? Ako niste sigurni što bi se dogodilo ako se redoslijed promijeni, pokušajte.</p>
+
+<div data-childcomponent="PyGame__drawing_target" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=PyGame__drawing_target data-lang="python" 
+      data-timelimit=25000    
+    data-audio=''   
+           data-playtask="true"   data-modaloutput="true" data-hidehistory=true
+      data-includexsrc="# -*- acsection: general-init -*-
+import pygame as pg, pygamebg
+(width, height) = (200, 200)
+canvas = pygamebg.open_window(width, height, &quot;Three circles&quot;)
+# -*- acsection: main -*-
+
+canvas.fill(pg.Color(&quot;white&quot;)) # paint background
+(cx, cy) = (width // 2, height // 2) # the center of the circles is in the middle of the window
+pg.draw.circle(canvas, pg.Color(&quot;red&quot;), (cx, cy), 100)   # red circle
+pg.draw.circle(canvas, pg.Color(&quot;blue&quot;), (cx, cy), 75)   # blue circle
+pg.draw.circle(canvas, pg.Color(&quot;green&quot;), (cx, cy), 50)  # green circle
+
+# -*- acsection: after-main -*-
+pygamebg.wait_loop()
+" data-enablecopy="true">
+
+
+</textarea>
+</div>
+
+    <div class="course-box course-box-special">
+        <div class="course-content">
+            <h4 class="carbox-title">
+                <img class="corner-image float-right" src="../_static/img/question-mark.png" />
+            </h4>
+            <p>
+<p><strong>Zadatak - patka:</strong></p>
+<p>Na zelenoj pozadini nacrtajte patku kao lik iz crtanih filmova. Crtež se sastoji od sljedećih dijelova:</p>
+<ul class="simple">
+<li><p>Glava: žuto ispunjena elipsa, upisana u pravokutnik dimenzija 320 x 300 piksela, s gornjim lijevim vrhom u točki (40, 50)</p></li>
+<li><p>Granica glave: crna elipsa koja uokviruje prethodnu elipsu linijom širine 1</p></li>
+<li><p>Lijevo oko: crna elipsa ispunjena crnom bojom, upisana u pravokutnik dimenzija 40 x 40 piksela s gornjom lijevom vrhom u točki (130, 130)</p></li>
+<li><p>Desno oko: crna elipsa ispunjena crnom bojom, upisana u pravokutnik dimenzija 40 x 40 piksela s gornjom lijevom vrhom u točki (280, 120)</p></li>
+<li><p>Usta (kljun): crvena ispunjena elipsa, upisana u pravokutnik dimenzija 120 x 140 piksela, s gornjim lijevim vrhom u točki (200, 170)</p></li>
+<li><p>Granica usta: crna elipsa koja uokviruje prethodnu elipsu linijom debljine 1</p></li>
+</ul>
+
+    </p></div></div>
+<p>Ovdje imamo više slobode s redoslijedom crtanja, ali još uvijek trebamo slijediti neki red. Pokušajte objasniti koji se dijelovi slike trebaju crtati točno ovim redoslijedom, a koji ne.</p>
+<p>Imajte na umu da su oči upisane u pravokutnike koji su zapravo kvadratići. Kako (zahvaljujući tome) iste oči možemo nacrtati na drugačiji način?</p>
+
+<div data-childcomponent="PyGame__drawing_duckling" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=PyGame__drawing_duckling data-lang="python" 
+      data-timelimit=25000    
+    data-audio=''   
+           data-playtask="true"   data-modaloutput="true" data-hidehistory=true
+      data-includexsrc="# -*- acsection: general-init -*-
+import pygame as pg, pygamebg
+canvas = pygamebg.open_window(400, 400, &quot;Duckling&quot;)
+# -*- acsection: main -*-
+
+# paint background
+canvas.fill(pg.Color(&quot;green&quot;))
+
+# draw head
+pg.draw.ellipse(canvas, pg.Color(&quot;yellow&quot;), (40, 50, 320, 300))
+pg.draw.ellipse(canvas, pg.Color(&quot;black&quot;), (40, 50, 320, 300), 1)
+# draw eyes
+pg.draw.ellipse(canvas, pg.Color(&quot;black&quot;), (130, 130, 40, 40))
+pg.draw.ellipse(canvas, pg.Color(&quot;black&quot;), (280, 120, 40, 40))
+# draw mouth (beak)
+pg.draw.ellipse(canvas, pg.Color(&quot;red&quot;), (200, 170, 120, 140))
+pg.draw.ellipse(canvas, pg.Color(&quot;black&quot;), (200, 170, 120, 140), 1)
+
+# -*- acsection: after-main -*-
+pygamebg.wait_loop()
+" data-enablecopy="true">
+
+
+</textarea>
+</div>
+</div>
+</div>
+
+
+  
+      <div class="col-md-12">
+<ul class="pager">
+        <li id="relations-prev" title='Previous chapter - Crtanje' data-toggle="tooltip"><a href="03_PyGame_10_Drawing.html">Previous chapter</a></li>
+    
+        <li id="relations-next" title='Next chapter - Crtanje ravnih linija i poligona' data-toggle="tooltip"><a href="03_PyGame_11b_Drawing_LinePolygon.html">Next chapter</a></li>
+</ul>
+
+<!-- <ul class="pager"> -->
+    <!-- -->
+        <!-- <li id="relations-prev" title='Претходно поглавље - Crtanje' data-toggle="tooltip"><a href="03_PyGame_10_Drawing.html">Претходно поглавље</a></li> -->
+    <!--  -->
+    <!-- -->
+        <!-- <li id="relations-next" title='Следеће поглавље - Crtanje ravnih linija i poligona' data-toggle="tooltip"><a href="03_PyGame_11b_Drawing_LinePolygon.html">Следеће поглавље</a></li> -->
+    <!-- -->
+<!-- </ul> -->
+
+<script type="text/javascript">
+
+  $('#relations-prev').tooltip({'placement':'right', 'selector': '', 'delay': { show: 100, hide: 50}});
+  $('#relations-next').tooltip({'placement':'left', 'selector': '', 'delay': { show: 100, hide: 50}});
+
+</script>
+</div>
+  
+</div>
+<footer class="footer col-md-12">
+    <div class="container text-center">
+        <div class="text-center">
+            <hr>
+            <p class="text-muted">
+                <span class="text-center">&copy; 2019 <a href="https://petlja.org">Petlja.org</a> 
+                  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; vertical-align: text-bottom" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+                  (Created using  <a href="https://pypi.org/project/Sphinx/">Sphinx</a>, <a href="http://runestoneinteractive.org/">RunestoneComponents</a> and <a href="https://github.com/Petlja/PetljaDoc">PetljaDoc</a>)</span>
+            </p>
+        </div>
+    </div>
+</footer>
+
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-32029811-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </body>
+</html>

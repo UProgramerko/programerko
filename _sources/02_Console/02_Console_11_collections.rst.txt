@@ -1,0 +1,309 @@
+Zbirke podataka
+===============
+
+U prethodnoj lekciji smo koristili n-torke za izvršavanje nekih naredbi (računanje i ispis) preko svake vrijednosti iz n-torke koristeći *for* petlju.
+
+N-torke su također vrsta podataka u Pythonu, poput brojeva, nizova ili logičkih vrijednosti. Tipovi *int* (cijeli broj), *float* (ralni broj), *str* (string) i *bool* (logička vrijednost) su **osnovni tipovi**. Razlika između n-torki i osnovnih tipova je u tome što se vrijednost n-torki sastoji od više vrijednosti jednostavnijeg tipa.
+
+Svaka vrijednost koja se sastoji od više vrijednosti jednostavnijeg tipa nazvat će se **kolekcijom**. Podatke od kojih se kolekcija sastoji zovemo **elementi kolekcije**.
+
+Jedine kolekcije koje smo do sada upozali su n-torke, koje ćemo sada upoznati detaljnije. U nastavku lekcije ćemo vidjeti još neke vrste kolekcija.
+
+
+N-torke i njeni elementi
+------------------------
+
+Pakiranje i raspakiranje n-torki
+''''''''''''''''''''''''''''''''
+
+Cijelu n-torku možemo smjestiti u varijablu, kao što to radimo s vrijednostima jednostavnijeg tipa. U sljedećem primjeru, varijabla *temperature* sadrži cijelu n-torku kao svoju vrijednost.
+
+.. activecode:: console__collections_tuple1
+    
+    temperatures = (25, 24, 25, 23, 25, 25)
+    for t in temperatures:
+        print(t)
+        
+Ova vrsta dodjeljivanja vrijednosti (kao u prvom redu programa) poznata je kao pakiranje n-torke. Moguća je i obrnuta dodjela: kada znamo koliko n-torka ima elemenata, možemo elemente n-torke dodijeliti odgovarajućem broju varijabli:
+
+.. activecode:: console__collections_tuple2
+    
+    full_name = ("Arthur", "Conan", "Doyle")  
+    first_name, middle_name, last_name = full_name
+    print(first_name)
+    print(middle_name)
+    print(last_name)
+    
+Naredbe kao što su ``first_name, middle_name, last_name = full name`` nazivaju se raspakiravanjem n-torki.
+
+
+Isti učinak postiže se povezanom naredbom
+
+.. code::
+    
+    first_name, middle_name, last_name = "Arthur", "Conan", "Doyle"
+    
+U ovoj naredbi se n-torke i ne pojavljauju, pa ovdje govorimo o višestrukom dodjeljivnju vrijednosti.
+
+Elementi i indeksi n-torke
+''''''''''''''''''''''''''
+
+Elemente n-torke možemo dobiti i tako što napišemo ime n-torke, a iza njega u uglatim zagradama redni broj elementa koji želimo. Ovdje treba zapamtiti da brojanje elemenata bilo koje kolekcije počinje od nule. Na primjer:
+
+.. activecode:: console__collections_index
+
+    basic_colors = ("Crvena", "Zelena", "Plava")
+    print(basic_colors[0])
+    print(basic_colors[1])
+    print(basic_colors[2])
+
+Redni broj elementa također se naziva **indeks** elemenata. Ako n-torka ima *n* elemenata, možemo koristiti brojeve 0, 1, 2, ... *n-1* kao indekse. U gornjem primjeru je *n* = 3, pa su dozvoljeni indeksi 0, 1, i 2. Pokušajte upotrebiti neki indeks izvan ovih granica uzrokuju pogrešku (možete isprobati ovo)..
+
+Dužina n-torke
+''''''''''''''
+
+Broj elemenata n-torke možemo dobiti pomoću funkcije *len*.
+
+.. activecode:: console__collections_len1
+    
+    basic_colors = ("Crvena", "Zelena", "Plava")
+    n = len(basic_colors)
+    print(n)
+    
+ili kraće:
+
+.. activecode:: console__collections_len2
+    
+    print(len(("Crvena", "Zelena", "Plava")))
+    
+Obratite pažnju na dvostruke zagrade (jedan za funkciju, a druge za n-torke).
+
+Kroz ove primjere smo vidjeli da elementi n-torke mogu biti brojevi ili stringovi. U stvari, elementi n-torke mogu biti bilo kojeg tipa, osnovnog ili složenijeg.
+
+Na primjer, moguće je stvoriti n-torku od n-torki:
+
+.. activecode:: console__collections_len3
+    
+    t = ((11, 12, 13), (21, 22, 23))
+    print(len(t))
+
+
+.. commented out
+
+    t2 = ((1, 2, 3), ) # zadnji zarez je bitan
+    print(len(t2))
+    
+N-torka *t* sadrži dvije jednostavnije n-torke, zato je broj njenih elemenata 2.
+
+U Pythonu je dozvoljeno da elementi n-torke budu različitog tipa i kasnije ćemo vidjeti i takve primjere.
+
+
+Opseg
+-----
+
+Opseg (engl. range) je još jedna vrsta kolekcije. Za razliku od n-torke, elementi ove kolekcije su uvijek cijeli brojevi.
+
+Opseg se može zadati na više načina.
+
+
+Opseg s jednim argumentom
+'''''''''''''''''''''''''
+
+Najjednostavniji oblik određivanja opsega je *range(n)*, pri čemu je *n* pozitivan cijeli broj. Opseg *range(n)* sadrži cijelobrojne vrijednosti od 0 do *n*, ne uključujući *n*. Na primjer, *range(5)* sadrži vrijednost 0, 1, 2, 3, 4.
+
+.. activecode:: console__collections_range_n_i
+    
+    for i in range(5):
+        print(i)
+        
+Vidimo da u *for* naredbi, možemo koristiti opseg na isti način kao i n-torku. U stvari, na mjestu n-torke ili opsega može stajati bilo koja kolekcija.
+
+Budući da opseg *range(n)* sadrži ukupno *n* vrijednosti, ovako zadani opseg se često koristi kada neku naredbu treba samo ponoviti *n* puta na isti način:
+
+.. activecode:: console__collections_range_n
+    
+    for i in range(5):
+        print("Bok!")
+
+Naredba *print* je izvršena za svaku vrijednost *i* iz sekvence 0, 1, 2, 3, 4, ali u ovom primjeru se te vrijednosti ne koriste u tijelu petlje. Tako smo postigli da se naredba *print* izvrši 5 puta na potpuno isti način, to jest da se ponovi 5 puta.
+
+Druga česta upotreba ovakvog opsega je da pomoću njega prođemo kroz sve elemente n-torke. Ovakav način prolaženja kroz vrijednosti n-torke je pogodan kada osim tih vrijednosti u petlji trebaju i njihovi redni brojevi (ovakav način prolaženja kroz kolekciju je češći u drugim programskim jezicima nego u Pythonu).
+
+
+.. activecode:: console__collections_for_range_len
+    
+    colors = ["Crvena", "Zelena", "Plava", "Žuta", "Magenta"]
+    n = len(colors)
+    for i in range(n):
+        print('Boja br.', i, 'je', colors[i])
+    
+
+Opseg s dva argumenta
+'''''''''''''''''''''
+
+Kad nam je potreban niz uzastopnih cijelih brojeva koji ne počinju nulom, opseg zadajemo kao *range(a, b)*, gdje su *a* i *b* cijeli brojevi, takvi da je :math:`a<b`. Tada se niz sastoji od cijelih brojeva od *a* do *b*, ne uključujući *b*. Na primjer, opseg *range(1, 6)* daje niz brojeva 1, 2, 3, 4, 5:
+
+.. activecode:: console__collections_range_a_b
+    
+    for i in range(1, 6):
+        print(i)
+
+Opseg s tri argumenata
+''''''''''''''''''''''
+
+Treći oblik zadavanja opsega ima tri argumenta:
+
+.. activecode:: console__collections_range_a_b_c
+    
+    for i in range(2, 12, 2):
+        print(i)
+
+Vrijednost opsegazadanog s *range(a, b, c)* idu od *a* do *b* (ne uključujući *b*) s korakom *c*, tj. vrijednosti se mijenjaju za *c*. Korak *c* može biti negativan:
+
+.. activecode:: console__collections_range_a_b_cneg
+    
+    for i in range(12, 2, -2):
+        print(i)
+
+
+Opseg možemo pretvoriti u n-torku (obrnuto nije moguće, niti je potrebno):
+
+.. activecode:: console__collections_range_to_tuple
+    
+    a = tuple(range(2, 12, 2))
+    print(len(a))
+
+String kao kolekcija
+--------------------
+
+Stringove smo do sada koristili kao osnovni tip, ali stringovi se mogu koristiti i kao kolekcije pojedinačnih karaktera. Možemo prolaziti kroz karaktere stringa pomoću petlje i da dohvatimo pojedine karatere koristeći indekse:
+
+
+.. activecode:: console__collections_str_as_collection
+    
+    s = 'tekst'
+    print(s[1], s[2])
+    for c in s:
+        print(c)
+
+Funkcije nad kolekcijama
+------------------------
+
+U Pythonu postoje mnoge funkcije koje kao argument prihvaćaju kolekciju. Jedna od njih je funkcija *len*, koju smo već upoznali. Još neke često korištene funkcije koje se primjenjuju nad kolekcijama su:
+
+- *min*, funkcija koja daje najmanji element kolekcije
+- *max*, funkcija koja daje najveći element kolekcije
+- *sum*, funkcija koja daje zbroj elemenata kolekcije
+
+.. activecode:: console__collections_aggregation
+    
+    print('N-torka:')
+    t = (2, 8, 4, 15, 3)
+    print('len(t) =', len(t))
+    print('min(t) =', min(t))
+    print('max(t) =', max(t))
+    print('sum(t) =', sum(t))
+
+    print('Opseg:')
+    r = range(1, 10, 2)
+    print('len(r) =', len(r))
+    print('min(r) =', min(r))
+    print('max(r) =', max(r))
+    print('sum(r) =', sum(r))
+
+    print('String:')
+    s = 'Python'
+    print('len(s) =', len(s))
+    print('min(s) =', min(s))
+    print('max(s) =', max(s))
+    # elementi kolekcije s nisu brojevi, pa bi izvršenje sljedeće naredbe izazvalo gresku
+    # print('sum(s) =', sum(s)) 
+
+Vrijednosti funkcija *len*, *sum*, *min*, *max* za opseg možemo odrediti i iz parametara opsega. Također, funkcije *min* i *max* se obično ne primjenjuju na stringove (one vraćaju redom karakter sa najmanjim i najvećim kodom). Ovdje samo ističemo da sve spomenute funkcije prihvaćaju razne vrste kolekcija kao svoj argument (uključujući i opseg i string).
+
+Pitanja
+'''''''
+
+.. mchoice:: console__collections_quiz_tuple_unpack
+   :answer_a: dolazi do pogreške u programu
+   :answer_b: 2
+   :answer_c: 20
+   :answer_d: 3
+   :feedback_a: Pokušaj ponovo
+   :correct: c
+   :feedback_b: Pokušaj ponovo
+   :feedback_c: Točno
+   :feedback_d: Pokušaj ponovo
+
+   Što ispisuje sljedeći program?
+   
+   .. code::
+   
+       t = (32, 41, 20, 17)
+       a, b, c, d = t
+       print(c)
+
+.. mchoice:: console__collections_quiz_tuple_index
+   :answer_a: 1
+   :answer_b: 2
+   :answer_c: a dolazi do pogreške u programu
+   :answer_d: 3
+   :correct: b
+   :feedback_a: Pokušaj ponovo
+   :feedback_b: Točno
+   :feedback_c: Pokušaj ponovo
+   :feedback_d: Pokušaj ponovo
+
+   Što ispisuje sljedeći program?
+   
+   .. code::
+   
+       a = (1, 2, 3)
+       print(a[1])
+
+
+.. mchoice:: console__collections_quiz_range1
+   :answer_a: range(4)
+   :answer_b: range(1, 4)
+   :answer_c: range(3)
+   :answer_d: range(1, 3)
+   :correct: b
+   :feedback_a: Pokušaj ponovo
+   :feedback_b: Točno
+   :feedback_c: Pokušaj ponovo
+   :feedback_d: Pokušaj ponovo
+
+   Koji opseg sadrži samo vrijednost 1, 2, 3?
+
+.. mchoice:: console__collections_quiz_range2
+   :answer_a: 5
+   :answer_b: 6
+   :answer_c: 9
+   :answer_d: 10
+   :correct: a
+   :feedback_a: Točno
+   :feedback_b: Pokušaj ponovo
+   :feedback_c: Pokušaj ponovo
+   :feedback_d: Pokušaj ponovo
+
+   Koliko vrijednosti sadrži opseg range(1, 10, 2)?
+
+.. dragndrop:: console__collections_quiz_range_len
+    :feedback: Pokušaj ponovo!
+    :match_1: 5|||range(5)
+    :match_2: 0|||range(3, 3)
+    :match_3: 3|||range(1, 4)
+    :match_4: 1|||range(3, 6, 3)
+
+    Uparite opseg s brojem elemenata.
+
+
+.. dragndrop:: console__collections_quiz_range_values
+    :feedback: Pokušaj ponovo!
+    :match_1: 3, 4, 5|||range(3, 6)
+    :match_2: 0, 1, 2|||range(3)
+    :match_3: 3, 1|||range(3, -1, -2)
+    :match_4: 3, 2, 1, 0, -1|||range(3, -2, -1)
+    :match_5: 3|||range(3, 6, 3)
+
+    Uparite opseg s vrijednostima.

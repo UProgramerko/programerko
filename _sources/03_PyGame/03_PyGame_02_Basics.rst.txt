@@ -1,0 +1,312 @@
+Pisanje PyGame programa
+=======================
+
+Osnovna struktura PyGame programa
+---------------------------------
+
+Kako bi programi za koje pišemo koristili biblioteku (modul) PyGame, prvo što trebamo učiniti je uvoziti modul PyGame na početku programa. To nam omogućava korištenje svih funkcija i konstanti definiranih u modulu PyGame.
+
+Svaki program koji koristi biblioteku PyGame, po priključivanju modula a prije pozivanja drugih funkcija treba izvršiti nekoliko koraka da bi inicijalizirao biblioteku, zadao dimenzije prozora u kojem će program crtati i postavio naslov tog prozora. Isto tako, na kraju programa ima nekoliko koraka koji govore programu da treba čekati dok korisnik ne klikne na dugme za zatvaranje prozora, a zatim da zatvori prozor i isključi biblioteku PyGame.
+
+Ovi koraci na početku i kraju rada isti su ili vrlo slični u svakom programu. Da bismo početnicima olakšali korištenje PyGame biblioteke, također ćemo koristiti malu dodatnu biblioteku pod nazivom *PyGameBg*. Zahvaljujući ovoj biblioteci, umjesto da nabrojimo sve potrebne korake, dovoljno je uvesti modul *pygamebg* u naš program (kao i pygame), a zatim pozvati samo jednu funkciju iz modula *pygamebg* na početku i jednu na kraju programa. To čini programe kraćim i jednostavnijim, omogućavajući nam da se usredotočimo na dio programa koji je specifičan za zadati zadatak.
+
+Također možete pokrenuti programe koji koriste *PyGameBg* biblioteku u vašem lokalnom razvojnom okruženju (npr. *IDLE*). Sve što trebate učiniti je instalirati *PyGameBg* biblioteku na isti način na koji ste instalirali PyGame biblioteku, tj. upisivanjem ``pip3 install pygamebg`` u “cmd”. Kad instalirate ovu biblioteku, možete kopirati odabrani program u svoj urednik i spremiti ga na svoje računalo. Potom možete po želji izmijeniti program, spremiti različite verzije programa i isprobati ih pokretanjem programa.
+
+Evo kako izgleda program PyGame koji crta jedanu kosu liniju i čeka da korisnik zatvori prozor. 
+
+.. activecode:: pygame__basics_first_example
+    :nocodelens:
+    :modaloutput: 
+
+    import pygame as pg
+    import pygamebg
+    canvas = pygamebg.open_window(400, 400, "Pygame")
+
+    canvas.fill(pg.Color("white"))
+    pg.draw.line(canvas, pg.Color("black"), (100, 100), (300, 300), 5)
+
+    pygamebg.wait_loop()
+
+Krenimo s naredbama ovog programa kako bismo detaljnije objasnili što rade. 
+
+Prvo imamo grupu naredbi koje će se morati pojaviti na početku svakog programa:
+
+- naredbom ``import pygame as pg`` priključujemo modul *pygame* u naš program. Ovdje koristimo malo drugačiji oblik naredbe *import* od onog koji smo prije koristili. Također, modulu *pygame* dajemo skraćeno ime, *pg*, i od tada koristimo taj skraćeni naziv u programu kao naziv modula. Mogli smo staviti i samo ``import pygame`` bez promjene u funkcionalnosti, ali tada bismo morali pisati *pygame.Color*, *pygame.draw.line*, itd. umjesto *pg.Color*, *pg.draw.line* i slično.
+- naredbom ``import pygamebg`` priključujemo modul *pygamebg* u naš program. Ova naredba se zajedno sa prethodnom može spojiti u jednu: ``import pygame as pg, pygamebg``, a mi ćemo to često činiti.
+- Naredba ``canvas = pygamebg.open_window(400, 400, "Pygame")`` poziva funkciju ``open_window`` iz modula ``pygamebg``, koju smo dodali u program. U ovoj funkciji se obavljaju sve portebne pripremne radnje koje smo ranije spominjali. Parametri funkcije su širina, visina i naslov prozora koji se pozivanjem ove funkcije otvara. Varijablu *canvas* koju ova funkcija vraća, kasnije koristimo u programu da bismo u tom prozoru crtali.
+
+Slijedi skupina izjava koja se razlikuje u svakom programu i određuje što taj određeni program zapravo radi. Naš prvi program crnu liniju crta na bijeloj pozadini, a to je postignuto kroz ovaj dio programa:
+
+- naredba ``canvas.fill(pg.Color("white"))`` oboja prozor u bijelo. Crtanje često počinje ovom naredbom (možemo koristiti drugu boju)
+- naredba ``pg.draw.line(canvas, pg.Color("black"), (100, 100), (300, 300), 5)`` crta liniju.
+
+Naredbe poput ove uskoro će biti detaljno objašnjene, ali ako se osjećate nestrpljivo, možete pokušati izmijeniti vrijednosti parametara u programu ili dodati nove, slične naredbe i sami otkriti kako rade ove funkcije crtanja.
+
+Na kraju programa imamo poziv još jedne funkcije iz modula *pygamebg*: ``pygamebg.wait_loop()``. U ovoj funkciji se nalaze naredbe koje omogućavaju da se crtež pojavi na prozoru i da prozor ostane otvoren dok korisnik ne klikne na tipku za zatvaranje. Nakon zatvaranja prozora, funkcija deaktivira sve korištene dijelove PyGame biblioteke (isključuje ih). 
+
+Svi će naši PyGame programi završiti pozivom funkcije ``pygamebg.wait_loop()`` ili nekom sličnom funkcijom. Nakon izvršenja ove funkcije, program se može nastaviti izvoditi bez biblioteke *PyGame* u tekstnom prozoru, ako je potrebno.
+
+
+Kordinatni sustav
+-----------------
+
+Koordinate su za nas vrlo važan pojam, a susrest ćemo se s njima otprilike u svakom programu PyGame. Položaj svih objekata (točaka, segmenata linija, krugova, teksta, uvezenih slika itd.) U prozoru određuje se njihovim koordinatama u koordinatnom sustavu prozora. 
+
+Koordinatni sustav prozora je sličan, ali se ipak malo razlikuje od onog koji se koristi u matematici. Položaj točke određuje se i uređenim parom njegovih koordinata i u ovom slučaju (kordinatom x, tj. apscisom i koordinatom y, tj. ordinatom). Mjerna jedinica je jedan piksel. 
+
+U računalnoj grafici, koordinatni sustava nalazi se u gornjem lijevom kutu prozora. Koordinata :math:`x` povećava se kada se krećemo udesno (kao u matematici), ali koordinata :math:`y` smanjuje se kada se krećemo prema gore, tj. povećava se kada se krećemo prema dolje, što je drugačije od uobičajenog koordinatnog sustava u matematici. Neka je zadana točka :math:`A(5, 3)`. Ako bismo pomaknuli ovu točku od 1 piksela prema gore i zadržali njenu :math:`x` koordinatu, nove koordinate točke `A` bile bi :math:`A(5, 2)`. Ako pomaknemo točku :math:`A` 2 piksela prema dole, nove bi koordinate bile :math:`A(5, 4)`. Dakle, **prva koordinata točke određuje koliko je točka udaljena od lijevog ruba prozora**, a **druga koordinata koliko je točka od gornjeg ruba prozora**.
+
+
+.. image:: ../../_images/PyGame/coordinate_system.png
+   :width: 400px   
+   :align: center 
+      
+U programskom jeziku Pythona, par koordinata točaka može biti predstavljen ili dvokčlanom n-torkom ``(3, 5)``, ili dvočlanom listom ``[3, 5]``. U prethodnom su primjeru dvije krajnje točke linijskog segmenta davale dve dvočlane n-torke (``(100, 100)`` and ``(300, 300)``).
+
+.. activecode:: pygame__basics_coordinates
+   :passivecode: true
+   
+   pg.draw.line(canvas, pg.Color("black"), (100, 100), (300, 300), 5)
+
+Često trebate odrediti pravokutnik čije su strane paralelne s koordinatnim osima. Takav se pravokutnik specificira pomoću n-torke ili liste koje sadrže četiri broja: :code:`(x, y, w, h)` ili :code:`[x, y, w, h]`. Pri tome :math:`x` i :math:`y` predstavljaju koordinate gornjeg lijevog kuta pravokutnika, a :math:`w` i :math:`h` predstavljaju širinu i visinu pravokutnika u pikselima. Na primjer, pravokutnik na sljedećoj slici može se navesti kao :code:`pygame.Rect(2, 1, 4, 3)`, ili jednostavno kao :code:`(2, 1, 4, 3)` ill :code:`[2, 1, 4, 3]`.
+
+.. image:: ../../_images/PyGame/rect_coordinates.png
+   :width: 400px   
+   :align: center 
+
+Sljedeći program može vam pomoći razumjeti koordinate. Pokrenite program klikom na gumb "Prikaži primjer", a zatim pomaknite miš i promatrajte kako se koordinate mijenjaju. Prozor po kojem se miš kreće je u veličini 300 puta 300 piksela. Vrijednosti *x* i *y* koordinata pojavljuju se i u naslovnoj traci prozora i pored pokazivača miša. Zapis koji se pojavi pored pokazivača je u obliku naredenog para, kao što će biti u programima kad odredimo jednu točku.
+
+.. activecode:: pygame__basics_learn_coordinates
+   :nocodelens:
+   :modaloutput:
+   :playtask:
+   :includehsrc: src/PyGame/1_Drawing/1_BasicExamples/learn_coordinates.py
+
+Testirajte svoje znanje o koordinatama kroz sljedećih nekoliko pitanja.
+                 
+.. image:: ../../_images/PyGame/pygame_quiz_coordinates.png
+    :width: 300px
+    :align: center
+   
+.. dragndrop:: pygame__basics_quiz_coordinates_circles
+    :feedback: Pokušaj ponovo!
+    :match_1: crvena|||(30, 40)
+    :match_2: zelena|||(50, 280)
+    :match_3: plava|||(230, 20)
+    :match_4: crna|||(150, 170)
+
+    Povežite boju kružića s koordinatama njegovog centra (dimenzije prozora su 300 puta 300 piksela).
+
+.. fillintheblank:: pygame__basics_quiz_coordinates_vindow_center
+
+    Ako je prozor širine 200 piksela i visine 300 piksela, koje su koordinate njegove središnje točke (rezultat napišite kao uređeni par)?
+
+    - :\(100,[ ]*150\): Točno!
+      :\(100,[ ]*[0-9]+\): Izračunajte y koordinatu pažljivije.
+      :\([0-9]+,[ ]*150\): Izračunajte x koordinatu pažljivije.
+      :\([0-9]+,[ ]*[0-9]+\): Izračunajte oba dvije koordinate pažljivije.
+      :.*: Rezultat napišite kao uređeni par.
+   
+.. mchoice:: pygame__basics_quiz_coordinates_dir
+   :multiple_answers:
+   :answer_a: Koordinata x raste s lijeva na desno.
+   :answer_b: Koordinata y smanjuje se od vrha do dna zaslona.
+   :answer_c: Točke na gornjem rubu zaslona imaju y koordinatu jednaku 0.
+   :answer_d: Točke na desnom rubu zaslona imaju x koordinatu jednaku 0.
+   :answer_e: Točka u donjem desnom kutu zaslona ima najveće obje koordinate.
+   :correct: a, c, e
+   :feedback_a: Točno.
+   :feedback_b: Koordinata y se povećava od vrha do dna zaslona.
+   :feedback_c: Točno.
+   :feedback_d: Točke na desnom rubu zaslona imaju najveću x koordinatu.
+   :feedback_e: Točno.
+
+   Označite točne tvrdnje.
+   
+.. dragndrop:: pygame__basics_quiz_coordinates_corners
+    :feedback: Pokušaj ponovo!
+    :match_1: gore-lijevo|||(0, 0)
+    :match_2: gore-desno|||(w, 0)
+    :match_3: dolje-lijevo|||(0, h)
+    :match_4: dolje-desno|||(w, h)
+
+    Ako je širina prozora `w`, a visina` h ', uparite uglove zaslona s njihovim koordinatama.
+
+
+Određivanje boja
+----------------
+
+Naravno, pri crtanju se mogu koristiti različite boje. Boju možemo odrediti prema njenom nazivu (na engleskom), koji kao parametar prosljeđujemo funkciji ``pg.Color``. Možete koristiti boje prosljeđivanjem odgovarajućeg niza (stringa): ``'black'`` za crnu, ``'white'`` za bijelu, ``'gray'`` za sivu, ``'blue'`` za plavu, ``'green'`` za zelenu, ``'orange'`` za narančastu, ``'yellow'`` za žutu, i slično. Podsjetimo se, nizovi se navode između jednostrukih ili dvostrukih navodnika (npr. 'blue' i "blue" mogu se koristiti naizmjenično). Na primjer, ako pozovete funkciju ``py.draw.line(canvas, pg.Color('blue'), (0, 0), (200, 200), 3)`` segment plave linije, širok 3 piksela, čije su krajnje točke koordinate su :math:`(0, 0)` i :math:`(200, 200)` će se pojaviti u prozoru.
+
+Neka imena boja koja se obično koriste u programima su:
+
+========================   ============
+``pg.Color("black")``      Crna
+``pg.Color("white")``      Bijela
+``pg.Color("red")``        Crvena
+``pg.Color("green")``      Zelena
+``pg.Color("blue")``       Plava
+``pg.Color("cyan")``       Cyan
+``pg.Color("magenta")``    Ljubičasta
+``pg.Color("yellow")``     Žuta
+``pg.Color("orange")``     Narančasta 
+========================   ============
+
+Poigrajte se bojama u sljedećem programu i pokušajte obojiti prozor u neke ili sve ove boje.
+
+.. activecode:: pygame__basics_colors
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+
+   # -*- acsection: general-init -*-
+   import pygame as pg, pygamebg
+   # uključivanje biblioteke PyGame
+   canvas = pygamebg.open_window(400, 400, "Boje - nazivi")
+
+   # -*- acsection: main -*-
+
+   # obojimo pozadinu prozora
+   canvas.fill(pg.Color("???"))
+   
+   # -*- acsection: after-main -*-
+   # završavamo rad biblioteke PyGame
+   pygamebg.wait_loop()
+         
+.. infonote::
+
+    Jedna od pogrešaka koja se često pravi pri pisanju prvih programa PyGame je pisanje ``pg.color`` malim slovima prilikom određivanja boje, umjesto upotrebe velikih slova - ``pg.Color``. To uzrokuje pogrešku s porukom ``AttributeError: '' objekt nema atribut 'color'``.
+    
+    Još jedna česta pogreška je da naziv boje ne navedete pod navodnicima (na primjer, da navedete ``pg.Color (white)``). Tada se uz pogrešku pojavljuje poruka ``NameError: name 'white' is not defined on line 8``.
+  
+Pored ovih boja, možete koristiti i mnoge druge. Ukupni broj boja koji postoje u računalima je ogroman i iznosi oko 16 milijuna. Od njih možemo imenovati samo nešto više od 600 različitih boja (kompletan popis nalazi se u datoteci *colordict.py*, koju lako možete pronaći na Internetu, a ako imate instaliran PyGame, imate ga i na računalu).
+
+Sve ove imenovane boje možemo odrediti brojevima, kao i sve ostale bez imena. Za to se najviše koristi tzv. model *RGB* boja. Naime, u računalnoj grafici svaka se boja dobiva miješanjem određene količine crvene, zelene i plave, po čijim imenima se zove *RGB* model. Na primjer, kombiniranjem crvenog i zelenog svjetla nastaje žuta svjetlost, kombiniranjem crvene i plave svjetlosti nastaje ljubičasta, a kombiniranjem plave i zelene proizvodi cijan. Kombiniranjem svjetla sve tri osnovne boje dobiva se bijelo svjetlo, dok se crno svjetlo dobije kada su sve tri svjetlosti isključene. Siva svjetlost dobiva se miješanjem jednakih količina crvene, zelene i plave svjetlosti.
+
+.. image:: ../../_images/PyGame/RGB.png
+   :align: center
+   :width: 200px
+
+To znači da možemo opisati boju određivanjem tri broja (u ovom slučaju brojevi od 0 do 255), koji predstavljaju količinu crvene, zelene i plave boje u boji koju definiramo. U programskom jeziku Python boja se može prikazati i u obliku trostruke uređene n-torke (npr. ``(123, 80, 56)``), ili tročlane liste (npr. ``[123, 80, 56]``). N-torku ili listu možete navesti direktno kao argument funkcije koji odgovara boji, ili ga možete pohraniti u varijablu i kasnije koristiti ime varijable. Na primjer, dodjeljivanjem ``CYAN = (0, 255, 255)``, definiramo cijan boju specificirajući odgovarajuće količine crvene, zelene i plave svjetlosti sadržane u ovoj boji (budući da je mješavina plave i zelene, nema crvene uopće, a plave i zelene komponente su na maksimumu). Nakon toga ovu boju možemo koristiti i u pozivu funkcija (na primjer, ``canvas.fill(CYAN)``). Imena tih varijabli ne moraju se upotrebljavati velikim slovima, ali to je postala uobičajena praksa u pisanju programa Python. U programima koje ćete vidjeti u nastavku naići ćete na takve definicije.
+
+Boja se također može odrediti sa četiri broja, na primjer ``CYAN = (0, 255, 255, 10)``. Posljednji, četvrti parametar (također u rasponu od 0 do 255) određuje prozirnost boje, tj. cijan boja dana na ovaj način je blago prozirna.
+
+Sad ćemo sažeti RGB vrijednosti nekih uobičajenih boja.
+
+===================        ========= 
+``(255, 0, 0)``            crvena
+``(0, 255, 0)``            zelena
+``(0, 0, 255)``            plava
+``(255, 255, 0)``          žuta
+``(0, 255, 255)``          cijan
+``(255, 0, 255)``          ljubičasta
+``(255, 255, 255)``        bijela
+``(0, 0, 0)``              crna
+``(128, 128, 128)``        siva
+``(255, 128, 0)``          narančasta
+``(255, 128, 128)``        roza
+===================        ========= 
+
+Primijetite da su nijanse sive prepoznatljive po tome što su količine crvene, zelene i plave u njima jednake. Što je manja količina, tamnija je nijansa i obrnuto - veće jednake količine crvene, zelene i plave boje predstavljaju svjetlije nijanse sive (na temelju *RGB* vrijednosti, crno-bijelo se može smatrati najmračnijom i najsvjetlijom nijansom sive).
+
+U sljedećem programu možete pokušati odrediti boje u RGB formatu. Pored bojenja prozora u nekim ili svim navedenim bojama, možete unijeti (bilo koje) druge trostruke vrijednosti između 0 i 255.
+
+.. infonote:: 
+
+    Pri odabiru boja koje želite koristiti u svojim programima, alat za odabir boja može vam pomoći. Na web lokacijama nalazi takav alat (potražite alat za *color picker*), a možete koristiti i onu iz programa *Paint*. Možete to isprobati sada - odaberite boju i kopirajte vrijednosti *R*, *G*, *B* u program.
+
+.. activecode:: pygame__basics_colors_rgb
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+
+   # -*- acsection: general-init -*-
+   import pygame as pg, pygamebg
+
+   # uključivanje rada biblioteke PyGame
+   canvas = pygamebg.open_window(400, 400, "RGB - boje")
+   # -*- acsection: main -*-
+
+   # obojimo pozadinu 
+   canvas.fill([???, ???, ???])
+   
+   # -*- acsection: after-main -*-
+   # isključivanje rada biblioteke PyGame
+   pygamebg.wait_loop()
+
+Uspostavite svoje znanje o bojama odgovaranjem na sljedećih nekoliko pitanja.
+
+.. commented out
+
+    The following task is commented out because in English it doesn't make sense.
+    
+    After translation, you can remove lines starting ".. commented out" above up to this line, and un-indent the question below.
+
+    .. dragndrop:: pygame__basics_quiz_color_names
+        :feedback: Pokušaj ponovo!
+        :match_1: crna|||pg.Color("black")
+        :match_2: plava|||pg.Color("blue")
+        :match_3: crvena|||pg.Color("red")
+        :match_4: zelena|||pg.Color("green")
+
+        Uparite boje.
+
+.. dragndrop:: pygame__basics_quiz_color_values
+    :feedback: Pokušaj ponovo!
+    :match_1: crna|||(0, 0, 0)
+    :match_2: plava|||(0, 0, 255)
+    :match_3: crvena|||(255, 0, 0)
+    :match_4: zelena|||(0, 255, 0)
+
+    Uparite boje.
+
+.. mchoice:: pygame__basics_quiz_color_gray
+   :answer_a: (1, 12, 123)
+   :answer_b: (128, 0, 128)
+   :answer_c: (0, 0, 128)
+   :answer_d: (145, 145, 145)
+   :correct: d
+   :feedback_a: Pokušaj ponovo
+   :feedback_b: Pokušaj ponovo
+   :feedback_c: Pokušaj ponovo
+   :feedback_d: Točno
+
+   Koja je od sljedećih boja nijansa sive?
+
+.. mchoice:: pygame__basics_quiz_color_purple
+   :answer_a: crvena i zelena
+   :answer_b: plava i crvena
+   :answer_c: zelena i plava
+   :answer_d: crvena, zelena i plava
+   :correct: b
+   :feedback_a: Pokušaj ponovo
+   :feedback_b: Točno
+   :feedback_c: Pokušaj ponovo
+   :feedback_d: Pokušaj ponovo
+   
+   Koje se boje miješaju da bi se stvorila ljubičasta (magenta) boja?
+
+.. mchoice:: pygame__basics_quiz_color_approx
+   :answer_a: Plavkasta
+   :answer_b: Crvenkasta
+   :answer_c: Žućkasta
+   :answer_d: Zelenkasta
+   :correct: c
+   :feedback_a: Pokušaj ponovo
+   :feedback_b: Pokušaj ponovo
+   :feedback_c: Točno
+   :feedback_d: Pokušaj ponovo
+
+   Kako bi se boja [240, 230, 18] najbolje mogla zvati?
+
+Dakle, boje su predstavljene s tri, a koordinate točaka s dva broja.
+Provjerite razumjete li to odgovaranjem na sljedeće pitanje.
+   
+.. dragndrop:: pygame__basics_quiz_colors_and_coordinates
+    :feedback: Pokušaj ponovo!
+    :match_1: Crna boja|||[0, 0, 0]
+    :match_2: Gornji lijevi kut ekrana|||[0, 0]
+    :match_3: Ljubičasta boja|||(255, 0, 255)
+    :match_4: Donji desni kut ekrana|||(300, 200)
+
+    uparite boje i koordinate, ako je ekran širine 300 i visine 200 piksela.

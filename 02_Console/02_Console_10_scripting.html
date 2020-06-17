@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Skripte i for petlje &#8212; Textual Programming in Python</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/activecode.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/codemirror.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/clickable.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pytutor.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/modal-basic.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/datafile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/dragndrop.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fitb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/matrixeq.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/parsons.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/lib/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/poll.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/showEval.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabbedstuff.css" />
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/video.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/karel.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/notes.css" />
+    <link rel="stylesheet" href="../_static/user-highlights.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/flatly.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/petlja.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/runestonebase.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/jquery.highlight.js"></script>
+    <script type="text/javascript" src="../_static/bookfuncs.js"></script>
+    <script type="text/javascript" src="../_static/codemirror.js"></script>
+    <script type="text/javascript" src="../_static/xml.js"></script>
+    <script type="text/javascript" src="../_static/css.js"></script>
+    <script type="text/javascript" src="../_static/python.js"></script>
+    <script type="text/javascript" src="../_static/htmlmixed.js"></script>
+    <script type="text/javascript" src="../_static/javascript.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/CLDRPluralRuleParser.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.messagestore.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.fallbacks.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.language.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.parser.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.emitter.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.emitter.bidi.js"></script>
+    <script type="text/javascript" src="../_static/activecode-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/skulpt.min.js"></script>
+    <script type="text/javascript" src="../_static/skulpt-stdlib.js"></script>
+    <script type="text/javascript" src="../_static/activecode.js"></script>
+    <script type="text/javascript" src="../_static/clike.js"></script>
+    <script type="text/javascript" src="../_static/timed_activecode.js"></script>
+    <script type="text/javascript" src="../_static/animationbase.js"></script>
+    <script type="text/javascript" src="../_static/mchoice.js"></script>
+    <script type="text/javascript" src="../_static/timedmc.js"></script>
+    <script type="text/javascript" src="../_static/timed.js"></script>
+    <script type="text/javascript" src="../_static/mchoice-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/clickable.js"></script>
+    <script type="text/javascript" src="../_static/timedclickable.js"></script>
+    <script type="text/javascript" src="../_static/d3.v2.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.ba-bbq.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.jsPlumb-1.3.10-all-min.js"></script>
+    <script type="text/javascript" src="../_static/pytutor.js"></script>
+    <script type="text/javascript" src="../_static/codelens.js"></script>
+    <script type="text/javascript" src="../_static/datafile.js"></script>
+    <script type="text/javascript" src="../_static/dragndrop.js"></script>
+    <script type="text/javascript" src="../_static/timeddnd.js"></script>
+    <script type="text/javascript" src="../_static/dragndrop-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/fitb.js"></script>
+    <script type="text/javascript" src="../_static/timedfitb.js"></script>
+    <script type="text/javascript" src="../_static/fitb-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/matrixeq.js"></script>
+    <script type="text/javascript" src="../_static/lib/prettify.js"></script>
+    <script type="text/javascript" src="../_static/lib/hammer.min.js"></script>
+    <script type="text/javascript" src="../_static/parsons.js"></script>
+    <script type="text/javascript" src="../_static/parsons-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/timedparsons.js"></script>
+    <script type="text/javascript" src="../_static/poll.js"></script>
+    <script type="text/javascript" src="../_static/reveal.js"></script>
+    <script type="text/javascript" src="../_static/shortanswer.js"></script>
+    <script type="text/javascript" src="../_static/timed_shortanswer.js"></script>
+    <script type="text/javascript" src="../_static/showEval.js"></script>
+    <script type="text/javascript" src="../_static/tabbedstuff.js"></script>
+    <script type="text/javascript" src="../_static/runestonevideo.js"></script>
+    <script type="text/javascript" src="../_static/karelCorner.js"></script>
+    <script type="text/javascript" src="../_static/karelRobot.js"></script>
+    <script type="text/javascript" src="../_static/karelWorld.js"></script>
+    <script type="text/javascript" src="../_static/karelRobotDrawer.js"></script>
+    <script type="text/javascript" src="../_static/karelUI.js"></script>
+    <script type="text/javascript" src="../_static/karel.js"></script>
+    <script type="text/javascript" src="../_static/karel-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/notes.js"></script>
+    <script type="text/javascript" src="../_static/pygamelib-init.js"></script>
+    <script type="text/javascript" src="../_static/blockly/blockly_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/blocks_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/python_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/msg-sr.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/utilities.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/python_errors.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/ast_node_visitor.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/abstract_interpreter.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/pytifa.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/abstract_interpreter_definitions.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/python_to_blockly.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/imported.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/class.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/comment.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/comprehensions.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/dict.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/if.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/io.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/lists.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/sets.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/loops.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/parking.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/tuple.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/turtles.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/text.js"></script>
+    <script type="text/javascript" src="../_static/blockpy-modal.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-4.0.0-dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script type="text/javascript" src="../_static/waypoints.min.js"></script>
+    <script type="text/javascript" src="../_static/rangy-core.js"></script>
+    <script type="text/javascript" src="../_static/rangy-textrange.js"></script>
+    <script type="text/javascript" src="../_static/rangy-cssclassapplier.js"></script>
+    <script type="text/javascript" src="../_static/user-highlights.js"></script>
+    <script type="text/javascript" src="../_static/jquery.idle-timer.js"></script>
+    <script type="text/javascript" src="../_static/processing-1.4.1.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.hotkey.js"></script>
+    <script type="text/javascript" src="../_static/jquery-migrate-1.2.1.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Zbirke podataka" href="02_Console_11_collections.html" />
+    <link rel="prev" title="Složena grananja" href="02_Console_09_elif.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+<link rel="shortcut icon" href="../_static/favicon.ico" type="image/ico" />
+
+<script type="text/javascript">
+  eBookConfig = {};
+  eBookConfig.host = 'http://127.0.0.1:8000' ? 'http://127.0.0.1:8000' : 'http://127.0.0.1:8000';
+  eBookConfig.app = eBookConfig.host+'/runestone';
+  eBookConfig.ajaxURL = eBookConfig.app+'/ajax/';
+  eBookConfig.course = 'TxtProgInPython';
+  eBookConfig.logLevel = 0;
+  eBookConfig.loginRequired = false;
+  eBookConfig.build_info = "";
+  eBookConfig.isLoggedIn = false;
+  eBookConfig.useRunestoneServices = false;
+  eBookConfig.python3 = true;
+  eBookConfig.basecourse = 'TxtProgInPython';
+  eBookConfig.runestone_version = '3.1.1';
+  eBookConfig.imagesDir = '../_images/';
+  eBookConfig.staticDir = '../_static/';
+  if(typeof(Sk) != "undefined")
+      Sk.imgPath = eBookConfig.imagesDir;
+</script>
+
+<div id="fb-root"></div>
+
+
+
+  </head><body>
+
+
+<!-- Begin navbar -->
+
+<nav id="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+  <div class="container">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+     <img src="../_static/img/logo.png" style="width:80px; height: 80px;"> 
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top: 10px; margin-left: 25px;">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="../">Textual Programming in Python</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<br/>
+
+
+<div class="container col-md-12" id="continue-reading"></div>
+
+<div class="container col-md-8 col-md-offset-2" id="main-content">
+  
+  <div class="section" id="skripte-i-for-petlje">
+<h1>Skripte i <em>for</em> petlje<a class="headerlink" href="#skripte-i-for-petlje" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="skripte">
+<h2>Skripte<a class="headerlink" href="#skripte" title="Permalink to this headline">¶</a></h2>
+<p>Ljudi često pišu kratke programe u Python-u i koriste ih za izračun ili automatizaciju nečega. Takvi su programi poznati i kao <strong>skripte.</strong> Za skripte nije neobično da pojedini ili svi ulazni podaci budu sadržani u samoj skripti umjesto da se učitavaju. Na primjer, sljedeća skripta izračunava 20 posto popusta:</p>
+
+<div data-childcomponent="console__scripting_fixed" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=console__scripting_fixed data-lang="python" 
+      data-timelimit=25000  data-codelens="true"  
+    data-audio=''   
+               data-hidehistory=true
+       >
+discount = 20
+regular_price = 250
+discounted_price = regular_price * (1 - discount / 100)
+print(regular_price, discounted_price)
+</textarea>
+</div>
+<p>Upute za korištenje ove skripte mogu biti: “U prva dva reda skripte postavite željene vrijednosti, a zatim pokrenite skriptu.”</p>
+<p>Nećete vidjeti slične upute za programe koje instalirate na svoje računalo ili mobilni telefon. Takve programe nazivamo  <strong>aplikacijama</strong>, a napisane su tako da korisnici ne trebaju znati (a najčešće ne mogu znati) kako izgledaju pnaredbe tog programa.</p>
+<p>Sa skriptama nema stroge podjele između korisnika i programera kao kod aplikacija. Skripte se često pišu za osobnu upotrebu ili za korisnika koji koristi ili razumije programiranje. Svi programi u ovom vodiču zapravo su više skripti nego aplikacija.</p>
+<p>Već smo naglasili da ovaj priručnik nije namijenjen samo budućim profesionalcima u programiranju. Ako ne programirate programe, još uvijek možete imati koristi od programiranja. Možete napisati skriptu ili prilagoditi postojeću, kao što se očekuje u pretpostavljenoj uputi prethodnog primjera.</p>
+</div>
+<div class="section" id="ponavljanje-izracuna-za-vise-podataka">
+<h2>Ponavljanje izračuna za više podataka<a class="headerlink" href="#ponavljanje-izracuna-za-vise-podataka" title="Permalink to this headline">¶</a></h2>
+<p>Napravimo prethodni primjer općenitijim. Pretpostavimo da u jednoj trgovini imamo pravo na 20 posto popusta na redovne cijene. Zanimaju nas snižene cijene raznih proizvoda, čije redovne cijene poznajemo.</p>
+<p><strong>Ponovno pokretanje programa koji učitava podatke</strong></p>
+<p>Rješenje koje već znamo napisati je učitati redovnu cijenu proizvoda, a zatim izračunati i ispisati sniženu cijenu. Ovaj program može izgledati ovako:</p>
+
+<div data-childcomponent="console__scripting_input" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=console__scripting_input data-lang="python" 
+      data-timelimit=25000  data-codelens="true"  
+    data-audio=''   
+               data-hidehistory=true
+       >
+discount = 20
+regular_price = int(input())
+discounted_price = regular_price * (1 - discount / 100)
+print(regular_price, discounted_price)
+</textarea>
+</div>
+<p>Program možemo pokrenuti više puta, postavljajući svaki put redovnu cijenu za jedan od proizvoda koji nas zanimaju.</p>
+<p><strong>Višestruki ulazi podaci u samom programu</strong></p>
+<p>U slučaju kada su nam unaprijed poznate sve redovne cijene proizvoda koji nas interesiraju, više pokretanja programa i unošenje jedne po jedne cijene nije najbolji način da dobijemo sve snižene cijene. Umjesto toga, najbolje bi bilo da sve redovne cijene unesemo direktno u program i da za svaki od tih podataka ponovimo računanje i ispisivanje rezultata.</p>
+</div>
+<div class="section" id="naredba-for">
+<h2>Naredba <em>for</em><a class="headerlink" href="#naredba-for" title="Permalink to this headline">¶</a></h2>
+<p>Da bismo mogli ponoviti neki dio programa za razne podatke, potrebna nam je naredba <strong>for</strong>, koja omogućava ponavljanje drugih naredbi. Sada ćemo upoznati jedan način korištenja naredbe <em>for</em>, a još neke načine ćemo upoznati tokom narednih lekcija.</p>
+<p>Vratimo se primjeru s popustom. Recimo da su redovne cijene proizvoda koji nas interesiraju 250, 120 i 310 i želimo da pomoću programa u jednom izvršavanju izračunamo cijene s popustom za te proizvode. To možemo napraviti ovako:</p>
+
+<div data-childcomponent="console__scripting_for" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=console__scripting_for data-lang="python" 
+      data-timelimit=25000  data-codelens="true"  
+    data-audio=''   
+               data-hidehistory=true
+       >
+discount = 20
+for regular_price in (250, 120, 310):
+    discounted_price = regular_price * (1 - discount / 100)
+    print(regular_price, discounted_price)
+</textarea>
+</div>
+<p>Napomena: notacija (250, 120, 310) se zove <strong>n-torka</strong>.</p>
+<p>Pokretanjem programa vidimo da on ispisuje:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">250</span> <span class="mf">200.0</span>
+<span class="mi">120</span> <span class="mf">96.0</span>
+<span class="mi">310</span> <span class="mf">248.0</span>
+</pre></div>
+</div>
+<p>Primjećujemo da su posljednja dva reda programa izvedena tri puta, pri čemu je varijabla <em>regular_price</em> dobivala redom vrijednosti 250, 120, 310. To smo postigli <code class="docutils literal notranslate"><span class="pre">for</span></code> naredbom. Dijelovi programa koji se ponavljaju nazivaju se petlje, pa možemo reći da smo u prethodnom primjeru koristili <strong>for petlju</strong>.</p>
+<p>Sljedeća slika prikazuje glavne elemente <em>for</em> petlje:</p>
+<a class="reference internal image-reference" href="../_images/console_loop_tuple.png"><img alt="../_images/console_loop_tuple.png" class="align-center" src="../_images/console_loop_tuple.png" style="width: 400px;" /></a>
+<ul class="simple">
+<li><p>Obavezni elementi ispisuju se crvenom bojom (riječi <code class="docutils literal notranslate"><span class="pre">for</span></code>, <code class="docutils literal notranslate"><span class="pre">in</span></code> i znak dvotočka <code class="docutils literal notranslate"><span class="pre">:</span></code> u prvom redu). Ti se elementi pišu na isti način u svakoj <em>for</em> naredbi.</p></li>
+<li><p>Plavom bojom napisana je <strong>varijabla petlje</strong>. Na tom mjestu pišemo ime varijable koja će uzimati redom navedene vrijednosti. U našem primjeru, varijabla petlje je <em>regular_price</em>.</p></li>
+<li><p>Zelenom bojom je napisana n-torka vrijednosti. Na to mjesto u zagrade postavljamo vrijednosti odvojene zarezima. To su vrijednosti koje će redom uzimati varijabla petlje. U našem primjeru, n-torka vrijednosti je (250, 120, 310).</p></li>
+<li><p><strong>Tijelo petlje</strong> je napisano crnom bojom. To su naredbe koje se po jedanput izvršavaju za svaku vrijednost varijable petlje. U naredbama tijela petlje mogu, a i ne moraju se koristiti varijble petlje.</p></li>
+</ul>
+<p>Naredbe tijela petlje se pišu uvučeno u odnosu na prvi red naredbe <em>for</em> i sve se uvlače za isti broj razmaka. Uobičajeno je koristi 4 razmaka za uvlačenje i mi ćemo se držati te preporuke.</p>
+<div class="section" id="primjeri-i-zadaci">
+<h3>Primjeri i zadaci<a class="headerlink" href="#primjeri-i-zadaci" title="Permalink to this headline">¶</a></h3>
+
+    <div class="course-box course-box-special">
+        <div class="course-content">
+            <h4 class="carbox-title">
+                <img class="corner-image float-right" src="../_static/img/question-mark.png" />
+            </h4>
+            <p>
+<p><strong>Primjeri - kada krenuti</strong></p>
+<p>Ronnie bi trebao stići na odredište najkasnije u 17:00. Ovisno o odabranom putu putovanja, Ronnieu će možda trebati 55, 70, 85, ili 95 minuta. Napišite program koji ispisuje za svaki način putovanja kada Ronnie mora otići najkasnije kako bi stigao na vrijeme.</p>
+
+    </p></div></div>
+<p>Program koji rješava taj zadatak mogao bi izgledati ovako:</p>
+
+<div data-childcomponent="console__scripting_start_travel" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=console__scripting_start_travel data-lang="python" 
+      data-timelimit=25000  data-codelens="true"  
+    data-audio=''   
+               data-hidehistory=true
+       >
+arrival = 17*60
+for travel_duration in (55, 70, 85, 95):
+    leaving = arrival - travel_duration
+    leaving_hours = leaving // 60
+    leaving_minutes = leaving % 60
+    print("Ako put traje", travel_duration, "minuta, Ronnie treba krenuti u", leaving_hours, "sati i", leaving_minutes, "minuta.")
+</textarea>
+</div>
+
+    <div class="course-box course-box-special">
+        <div class="course-content">
+            <h4 class="carbox-title">
+                <img class="corner-image float-right" src="../_static/img/question-mark.png" />
+            </h4>
+            <p>
+<p><strong>Zadatak - trajanje putovanja</strong></p>
+<p>George namjerava krenuti na put autom aužine 600-kilometara u 9 sati ujutro, i zanima ga kada bi stigao na odredište ako bi se vozio prosječnom brzinom od 90, 100, 120 ili 130 kilometara na sat. Dovršite program koji ispisuje vrijeme dolaska na odredište za svaku od gore navedenih prosječnih brzina.</p>
+
+    </p></div></div>
+
+<div data-childcomponent="console__scripting_speed" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=console__scripting_speed data-lang="python" 
+      data-timelimit=25000  data-codelens="true"  
+    data-audio=''   
+               data-hidehistory=true
+       >
+path_length = 600 # Km
+leaving = 9       # h
+for a in ():  # ispravite i dopunite
+    trip_duration = path_length / speed # h
+    arrival = leaving + trip_duration    # h
+    arrival_hours = int(arrival)
+    arrival_minutes = round((arrival - arrival_hours) * 60)
+    print("Na", brzini, "km / h dolazak je u", arrival_hours, "sati i", arrival_minutes, "minuta.")
+</textarea>
+</div>
+
+    <div class="course-box course-box-special">
+        <div class="course-content">
+            <h4 class="carbox-title">
+                <img class="corner-image float-right" src="../_static/img/question-mark.png" />
+            </h4>
+            <p>
+<p><strong>Zadatak - završna ocjena</strong></p>
+<p>Zbroj dosadašnjih 5 Katieinih ocjena je 23. očekuje još jednu ocjenu od zadnjeg kontrolnog zadatka. Dovršite program u nastavku tako da za svaku moguću konačnu ocjenu (1, 2, 3, 4, ili 5) ispisuje koja bi prosječna ocjena bila u tom slučaju.</p>
+
+    </p></div></div>
+
+<div data-childcomponent="console__scripting_final_mark" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=console__scripting_final_mark data-lang="python" 
+      data-timelimit=25000  data-codelens="true"  
+    data-audio=''   
+               data-hidehistory=true
+       >
+sum_grades_so_far = 23
+num_grades_so_far = 5
+for # dovršite naredbu
+    average_grade = 0 # ispravite
+    print("Zvaršna ocjena", final_grade, "srednja ocjena bi bila", average_grade)
+</textarea>
+</div>
+
+    <div class="course-box course-box-special">
+        <div class="course-content">
+            <h4 class="carbox-title">
+                <img class="corner-image float-right" src="../_static/img/question-mark.png" />
+            </h4>
+            <p>
+<p><strong>Zadatak - džeparac</strong></p>
+<p>Theo je napravio plan za trošenje džeparca tijekom 14-dnevnog odmora. Napišite program koji za prosječnu dnevnu potrošnju od 5, 10, ili 20 euro, ispisuje koliko bi novca Theo ukupno trebao za svaki slučaj.</p>
+
+    </p></div></div>
+
+<div data-childcomponent="console__scripting_allowance" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=console__scripting_allowance data-lang="python" 
+      data-timelimit=25000  data-codelens="true"  
+    data-audio=''   
+               data-hidehistory=true
+       >
+num_days = 14
+# dovršite program
+</textarea>
+</div>
+</div>
+</div>
+</div>
+
+
+  
+      <div class="col-md-12">
+<ul class="pager">
+        <li id="relations-prev" title='Previous chapter - Složena grananja' data-toggle="tooltip"><a href="02_Console_09_elif.html">Previous chapter</a></li>
+    
+        <li id="relations-next" title='Next chapter - Zbirke podataka' data-toggle="tooltip"><a href="02_Console_11_collections.html">Next chapter</a></li>
+</ul>
+
+<!-- <ul class="pager"> -->
+    <!-- -->
+        <!-- <li id="relations-prev" title='Претходно поглавље - Složena grananja' data-toggle="tooltip"><a href="02_Console_09_elif.html">Претходно поглавље</a></li> -->
+    <!--  -->
+    <!-- -->
+        <!-- <li id="relations-next" title='Следеће поглавље - Zbirke podataka' data-toggle="tooltip"><a href="02_Console_11_collections.html">Следеће поглавље</a></li> -->
+    <!-- -->
+<!-- </ul> -->
+
+<script type="text/javascript">
+
+  $('#relations-prev').tooltip({'placement':'right', 'selector': '', 'delay': { show: 100, hide: 50}});
+  $('#relations-next').tooltip({'placement':'left', 'selector': '', 'delay': { show: 100, hide: 50}});
+
+</script>
+</div>
+  
+</div>
+<footer class="footer col-md-12">
+    <div class="container text-center">
+        <div class="text-center">
+            <hr>
+            <p class="text-muted">
+                <span class="text-center">&copy; 2019 <a href="https://petlja.org">Petlja.org</a> 
+                  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; vertical-align: text-bottom" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+                  (Created using  <a href="https://pypi.org/project/Sphinx/">Sphinx</a>, <a href="http://runestoneinteractive.org/">RunestoneComponents</a> and <a href="https://github.com/Petlja/PetljaDoc">PetljaDoc</a>)</span>
+            </p>
+        </div>
+    </div>
+</footer>
+
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-32029811-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </body>
+</html>

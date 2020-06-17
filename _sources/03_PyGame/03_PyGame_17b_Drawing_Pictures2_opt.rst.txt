@@ -1,0 +1,103 @@
+Prikazivanje gotovih slika - zadaci
+-----------------------------------
+
+Naučili smo prikazati gotovu sliku tako da se njezin gornji lijevi kut nalazi na zadanom mjestu na zaslonu. U nekim nam situacijama položaj gornjeg lijevog kuta neće biti poznat, ali trebat će ga izračunati. U takvim će slučajevima možda biti potrebno znati širinu i visinu slike. U Pythonovoj biblioteci PyGamea za sliku ``im``, širinu i visinu te slike dobivamo redom kao ``im.get_width()`` i ``im.get_height()``.
+
+Košare
+''''''
+
+Ispunite sljedeći program da biste dobili sliku kao na primjeru. Dani su položaji stabala, a pored svakog stabla treba se nacrtati košara tako da se donji desni uglovi košarice i slike stabala preklapaju.
+
+Da biste dovršili ovaj zadatak, za svaku nacrtanu košaru morate izračunati položaj njenog gornjeg lijevog kuta, što se može učiniti počevši od koordinata gornjeg lijevog kuta stabla, koristeći širinu i visinu obje slike.
+
+.. image:: ../../_images/tree.png
+   :width: 50px
+
+.. image:: ../../_images/apple_small.png
+   :width: 50px
+
+.. image:: ../../_images/basket.png
+   :width: 50px
+
+.. activecode:: PyGame__pictures_baskets1
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\9_UsingImages\trees_baskets.py
+
+    tree_image = pg.image.load("tree.png")  # slika drveta
+    basket_image = pg.image.load("basket.png")  # slika košare
+    tree_positions = ((200, 70), (120, 150), (240, 290), (550, 170), (400, 200))
+
+
+Branje jabuka
+''''''''''''''
+
+Ispunite sljedeći program da biste dobili sliku kao na primjeru. Rješenje ovog zadatka dobiva se dodavanjem prethodnog programa - kopirajte ga i dodajte jabuke na drveće i u košare.
+
+.. activecode:: PyGame__pictures_baskets_apples
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\9_UsingImages\trees_apples_baskets.py
+
+    tree_image = pg.image.load("tree.png")  # slika drveta
+    apple_image = pg.image.load("apple_small.png")  # slika jabuke
+    basket_image = pg.image.load("basket.png")  # slika košare
+    apples_on_tree_positions = ((43,191), (61, 158), (124, 145), (134, 175), (160, 180))
+    apples_in_basket_positions = ((15, 38), (60, 41), (22, 43), (49, 45), (34, 48))
+    tree_positions = ((200, 70), (120, 150), (240, 290), (550, 170), (400, 200))
+
+
+
+Kutije
+''''''
+
+.. questionnote:: 
+
+    Napišite programe koji koriste sliku jednog okvira prikazanog dolje,
+
+    .. image:: ../../_images/PyGame/box.png
+        :width: 200px
+        :align: center 
+
+    i oblikujte slike kao u primjerima (u svakom zadatku koristite gumb "Play task").
+      
+    Koordinate slike, odnosno njen gornji lijevi kut za krajnji lijevi okvir su (60, 400) a za najviši okvir su (420, 115).
+
+Iz datih podataka i slika moguće je odrediti seriju *x* i *y* koordinata slike svakog okvira u svakom primjeru. Ovdje treba uzeti u obzir i redoslijed prikaza slika na kutijama.
+
+Da biste bolje razumjeli kako se isti niz brojeva (na primjer, 10, 15, 20, 25, 30) može dobiti u dva različita reda, i što drugo tražiti, odgovorite na prateće pitanje.
+
+.. dragndrop:: console__pictures_quiz_series_negative_step
+    :feedback: Pokušaj ponovo.
+    :match_1: 10, 15, 20, 25, 30 ||| for x in range(10, 35, 5)
+    :match_2: 30, 25, 20, 15, 10 ||| for x in range(30, 5, -5)
+    :match_3: prazna serija ||| for x in range(30, 10, 5)
+    :match_4: 5, 15, 25 ||| for x in range(5, 35, 10)
+
+    Uparite niz brojeva s naredbama koje ih generiraju.
+
+.. activecode:: PyGame__pictures_boxes1
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\9_UsingImages\boxes1.py
+
+.. activecode:: PyGame__pictures_boxes2
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\9_UsingImages\boxes2.py
+
+.. activecode:: PyGame__pictures_boxes3
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\9_UsingImages\boxes3.py
+

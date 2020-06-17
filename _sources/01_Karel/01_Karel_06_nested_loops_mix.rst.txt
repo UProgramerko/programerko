@@ -1,0 +1,442 @@
+Kombiniranje petlji
+===================
+
+Vidjeli smo da u tijelu *for* naredbe, može naći više različitih naredbi. Slično kao i za *for* naredbu, i u tijelu ``while`` neredbe možemo isto (pored ostalih naredbi) staviti novu petlji, bilo da je *while* ili *for*. Na taj način možemo izraditi različite kombinacije umetnutih petlji.
+
+Kada su dvije petlje umetnute jedna u drugu, zovemo ih i dvostruka petlja, dok tri umetnute petlje zovemo trostruka petlja. Na sličan način možemo umetnuti bilo koji broj petlji jednu u drugu, ali za velikim brojem umetnutih petlji vrlo rijetko imamo potrebu.
+
+U ovoj lekciji ćemo vježbati pisanje umetnute *while* i *for* petlje.
+
+Razne dvostruke i višestruke petlje - zadaci
+--------------------------------------------
+
+Pokupi po četiri loptice do kraja
+'''''''''''''''''''''''''''''''''
+
+.. questionnote::
+
+  Ispred Karela je jedno ili više polja, a na svakom od polja ispred Karela su po četiri loptice (na početnom polju nema loptica). Karel ih treba sve pokupiti.
+  
+Sada Karel, sve dok ne dođe do zida, treba ponavljati korak naprijed i pokupiti 4 loptice. Pokušajte dopuniti program.
+
+Podsjetimo se, kao i u ranijim primjerima petlje za umetanje, izraz u tijelu unutarnje petlje (ovdje će to biti naredba ``pick_ball()``) treba biti dodatno uvučena.
+
+.. karel:: Karel_while__many_squares_four_bals_per_square
+   :blockly:
+
+   {
+      setup:function() {
+         function random(n) {
+            return Math.floor(n * Math.random());
+         }
+
+         var N = 2 + random(9);
+         var world = new World(N, 1);
+         world.setRobotStartAvenue(1);
+         world.setRobotStartStreet(1);
+         world.setRobotStartDirection("E");
+         for (var k = 2; k <= N; k++)
+             world.putBalls(k, 1, 4);
+      
+         var robot = new Robot();
+      
+         var code = ["from karel import *",
+                     "while front_is_clear():",
+                     "    move()",
+                     "    # dodajte naredbe koje nedostaju",
+                     ""];
+                     //from karel import *
+                     //while front_is_clear():
+                     //    move()
+                     //    for i in range(4):
+                     //        pick_ball()
+         return {robot:robot, world:world, code:code};
+      },
+      
+      isSuccess: function(robot, world) {
+         var N = world.getAvenues();
+         for (var k = 1; k <= N; k++)
+            if (world.getBalls(k, 1) > 0)
+               return false;
+               
+         return true;
+      }
+   }
+   
+..  commented out
+    .. reveal:: Karel_while__many_squares_four_bals_per_square_reveal
+       :showtitle: Rješenje
+       :hidetitle: Sakrij rješenje
+    
+       .. activecode:: Karel_while__many_squares_two_bals_per_square_solution
+          :passivecode: true
+          
+          from karel import *
+          while front_is_clear():
+              move()
+              for i in range(4):
+                  pick_ball()
+   
+   
+Pokupi sve loptice
+''''''''''''''''''
+
+.. questionnote::
+
+  Ispred Karela je bar jedno polje, a može ih biti bilo koji broj. Na svakom od polja **ispred** Karela ima nula ili više loptica (počteno polje je prazno). Karel treba pokupiti sve loptice.
+
+Ovaj zadatak je generalizacija prethodnog, pa se program koji rješava taj zadatak može koristiti i u prethodnom. Razlika je u tome što sada unutarnja petlja mora biti *while* petlja, dok je u prethodnom zadatku to mogla biti i *for* petlja.
+
+Opet, naredba ``pick_ball()`` treba biti dodatno uvučena. Na taj način će se ona ponavljati dok je uvjet unutarnje *while* naredbe ispunjen, to jest, dok ima loptica na polju na kojem je Karel u tom trenutku, a pokupljanje svih loptica se zajedno sa naredbom ``move`` ponavlja u vanjskoj ``while`` naredbi dok god ima polja ispred Karela. Ukupni učinak petlje za umetanje je da će se uzeti sve loptice iz svakog polja.
+
+.. karel:: Karel_while__many_squares_many_balls
+   :blockly:
+
+   {
+      setup:function() {
+         function random(n) {
+            return Math.floor(n * Math.random());
+         }
+
+         var N = 2 + random(9);
+         var world = new World(N, 1);
+         world.setRobotStartAvenue(1);
+         world.setRobotStartStreet(1);
+         world.setRobotStartDirection("E");
+         
+         for (var k = 2; k <= N; k++) {
+            let B = random(7);
+            world.putBalls(k, 1, B);
+         }
+      
+         var robot = new Robot();
+      
+         var code = ["from karel import *",
+                     "while front_is_clear():",
+                     "    # idi naprijed",
+                     "    while ... # dovrši program",
+                     ""];
+         return {robot:robot, world:world, code:code};
+      },
+      
+      isSuccess: function(robot, world) {
+         var N = world.getAvenues();
+         for (var k = 1; k <= N; k++)
+            if (world.getBalls(k, 1) > 0)
+               return false;
+               
+         return true;
+      }
+   }
+
+Donesi sve loptice
+''''''''''''''''''
+
+.. questionnote::
+
+  Pred Karelom je staza nepoznate duljine. Karel bi trebao pokupiti sve loptice sa svih polja i dovesti ih na početno polje.
+
+Program je komentarima podijeljen na manje dijelove. Dodajte dijelove koji nedostaju. 
+
+.. karel:: Karel_while__bring_all_balls
+   :blockly:
+
+   {
+      setup:function() {
+         function random(n) {
+            return Math.floor(n * Math.random());
+         }
+
+         var N = 2 + random(9);
+         var world = new World(N, 1);
+         world.setRobotStartAvenue(1);
+         world.setRobotStartStreet(1);
+         world.setRobotStartDirection("E");
+         
+         for (var k = 1; k <= N; k++) {
+            let B = random(7);
+            world.putBalls(k, 1, B);
+         }
+      
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "# koristite dvostruku while petlju kako bi Karel pokupio loptice sa svih polja ",
+                     "",
+                     "",
+                     "turn_left(); turn_left()                # okreni se nazad",
+                     "# recite Karelu da se vrati na početno polje",
+                     "# (to jest, da ide naprijed koliko može)",
+                     "",
+                     "while any_balls_with_karel():",
+                     "    # ostavi jednu lopticu",
+                     ""];
+
+           return {robot:robot, world:world, code:code};
+        },
+    
+        isSuccess: function(robot, world) {
+           var N = world.getAvenues();
+           for (var k = 2; k <= N; k++)
+              if (world.getBalls(k, 1) > 0)
+                 return false;
+               
+           if (robot.getBalls() > 0)
+                 return false;
+                 
+           return true;
+        },
+   }
+
+..  commented out
+    .. reveal:: Karel_while__bring_all_balls_reveal
+       :showtitle: Rješenje
+       :hidetitle: Sakrij rješenje
+
+       .. activecode:: Karel_while__bring_all_balls_solution
+          :passivecode: true
+          
+          from karel import *
+          while front_is_clear():          # donesi sve loptice sa svih polja
+              move()
+              while is_ball_on_square():
+                  pick_ball()
+                
+          turn_left(); turn_left()         # okreni se natrag
+          
+          while front_is_clear():          # idi natrag na početno polje
+              move()
+              
+          while any_balls_with_karel():    # ostavi sve loptice
+              drop_ball()
+
+
+Gore - dole
+'''''''''''
+
+.. questionnote::
+
+  Karel je na pravokutnoj ploči nepoznate veličine (broj kolona je uvijek neparan), bez loptica. Cilj je da Karel dođe na donje desno polje. Da bi to postigao, Karel će se morati kretati kroz kolone naizmjenično gore i dolje.
+  
+   Ovo su neki od mogućih izgleda labirinata:
+
+   .. image:: ../../_images/Karel/While_UpDown.jpg
+      :width: 600px   
+      :align: center
+
+.. karel:: Karel_while__up_col_down_col
+   :blockly:
+
+   {
+      setup:function() {
+         function random(n) {
+            return Math.floor(n * Math.random());
+         }
+
+         var X2 = 1 + random(4);
+         var Y = 2 + random(5);
+         var world = new World(2*X2+1, Y);
+         world.setRobotStartAvenue(1);
+         world.setRobotStartStreet(1);
+         world.setRobotStartDirection("E");
+            
+         world.addEWWall(1, 1, 1);
+         for (let x = 0; x < X2; x++) { 
+            world.addNSWall(2*x + 1, 2, Y - 1);
+            world.addNSWall(2*x + 2, 1, Y - 1);
+         }
+         
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "# dodajte naredbe",
+                     ""];
+                     //from karel import *
+                     //while front_is_clear():        # dok nismo u donjem desnom kutu
+                     //    move(); turn_left()            # udji u sljedecu kolonu i okreni se prema sjeveru
+                     //    while front_is_clear():        # idi do gornjeg vrha
+                     //        move()
+                     //
+                     //    turn_right(); move(); turn_right() # udji u sljedecu kolonu i okreni se prema jugu
+                     //    while front_is_clear():        # idi do donjeg kraja
+                     //        move()
+                     //
+                     //    turn_left()                    # okreni se prema istoku
+    
+         return {robot:robot, world:world, code:code};
+      },
+    
+      isSuccess: function(robot, world) {
+         return robot.getAvenue() == world.getAvenues() &&
+            robot.getStreet() == 1;
+      },
+   }
+
+.. reveal:: Karel_while__up_col_down_col_reveal
+   :showtitle: Pomoć
+   :hidetitle: Sakrij pomoć
+
+   .. activecode:: Karel_while__up_col_down_col_solution
+      :passivecode: true
+      
+      from karel import *
+      while front_is_clear(): # dok nismo u donjem desnom kutu
+          move(); turn_left()     # udji u sljedecu kolonu i okreni se prema sjeveru
+          ... # finish this part  # idi do gornjeg vrha
+
+          turn_right(); move()    # udji u sljedecu kolonu 
+          turn_right()            # okreni se prema jugu
+          ... # finish this part  # idi do donjeg kraja
+
+          turn_left()             # okreni se prema istoku
+
+Stepenice
+'''''''''
+
+.. questionnote::
+
+  Karel bi se trebao popeti prvim stepenicama, a zatim se spustiti i završiti u donjem desnom kutu. Veličina table nije poznata, ali broj kolona uvijek će biti neparan. Stol može izgledati ovako:
+  
+   .. image:: ../../_images/Karel/While_Stairs.jpg
+      :width: 600px   
+      :align: center
+
+.. karel:: Karel_while__stairs
+   :blockly:
+
+   {
+      setup:function() {
+         function random(n) {
+            return Math.floor(n * Math.random());
+         }
+
+         var Y = 2 + random(6);
+         var X = 2 * Y - 1;
+         var world = new World(X, Y);
+         world.setRobotStartAvenue(1);
+         world.setRobotStartStreet(1);
+         world.setRobotStartDirection("E");
+
+         // Vertical walls
+         for (let y = 1; y < Y; y++) world.addNSWall(y, y, 1); // low left
+         for (let y = 1; y < Y; y++) world.addNSWall(X - 1 - y, y, 1); // low right
+         for (let y = 3; y <= Y; y++) world.addNSWall(y - 2, y, 1); // high left
+         for (let y = 2; y <= Y; y++) world.addNSWall(X + 1 - y, y, 1); // high right
+         
+         // Horizontal walls
+         for (let y = 1; y < Y - 1; y++) world.addEWWall(y + 1, y, 1); // low left
+         for (let y = 2; y < Y; y++) world.addEWWall(y - 1, y, 1); // high left
+         for (let y = 1; y < Y - 1; y++) world.addEWWall(X - 1 - y, y, 1); // low right
+         for (let y = 1; y < Y; y++) world.addEWWall(X + 1 - y, y, 1); // high right
+
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "# dodajte naredbe",
+                     ""];
+                     //from karel import *
+                     //turn_left()                       # prema sjeveru
+                     //while front_is_clear():           # dok ima stepenica prema gore
+                     //    move(); turn_right(); move(); turn_left() #    popni se jednu stepenicu prema gore
+                     //
+                     //turn_right(); turn_right()        # prema jugu
+                     //
+                     //while front_is_clear():           # dok ima stepenica prema dole
+                     //    move(); turn_left(); move(); turn_right() #    sidji jednu stepenicu
+    
+         return {robot:robot, world:world, code:code};
+      },
+    
+      isSuccess: function(robot, world) {
+         return robot.getAvenue() == world.getAvenues() &&
+            robot.getStreet() == 1;
+      },
+   }
+
+.. reveal:: Karel_while__stairs_reveal
+   :showtitle: Pomoć
+   :hidetitle: Sakrij pomoć
+
+   .. activecode:: Karel_while__stairs_solution
+      :passivecode: true
+      
+      from karel import *
+      turn_left()                        # prema sjeveru
+      while front_is_clear():            # dok ima stepenica prema gore
+          move(); turn_right(); move(); turn_left() # popni se jednu stepenicu prema gore
+
+      turn_right(); turn_right()         # prema jugu
+      
+      while ... # add the condition      # dok ima stepenica prema dole
+          ... # add 4 statements             # sidji jednu stepenicu
+
+
+Spirala ulijevo
+'''''''''''''''
+
+.. questionnote::
+
+  U svim prikazanim slučajevima, Karel bi trebao doći na polje označen crvenim krugom (u ovom zadatku nema loptica). 
+   
+   .. image:: ../../_images/Karel/While_SpiralLeft.jpg
+      :width: 600px   
+      :align: center
+
+
+.. karel:: Karel_while__spiral_left
+   :blockly:
+
+   {
+      setup:function() {
+         function random(n) {
+            return Math.floor(n * Math.random());
+         }
+
+      var N = 1 + random(7);
+      var world = new World(N, N);
+      world.setRobotStartAvenue(1);
+      world.setRobotStartStreet(1);
+      world.setRobotStartDirection("E");
+      
+      var i = 1;
+      for (let d = N - 1; d > 0; d -= 2) { world.addEWWall(i, i, d); i++; }
+      i = 2;
+      for (let d = N - 2; d > 0; d -= 2) { world.addEWWall(i, N+1-i, d); i++; }
+      i = 2;
+      for (let d = N - 2; d > 0; d -= 2) { world.addNSWall(N+1-i, i, d); i++; }
+      i = 1;
+      for (let d = N - 3; d > 0; d -= 2) { world.addNSWall(i, i+2, d); i++; }
+   
+      var robot = new Robot();
+      
+      var code = ["from karel import *",
+                  "# dopunite naredbe koje nisu kompletne",
+                  "while front_is_clear():",
+                  "    while ... ",
+                  "        ... ",
+                  "    turn_left()",
+                  ""];
+
+        return {robot:robot, world:world, code:code};
+     },
+ 
+     isSuccess: function(robot, world) {
+        var N = world.getAvenues();
+        return robot.getStreet() === Math.floor((N+2)/2) &&
+           robot.getAvenue() === Math.floor((N+1)/2);
+     },
+   }
+
+.. reveal:: Karel_while__spiral_left_reveal
+   :showtitle: Rješenje
+   :hidetitle: Sakrij rješenje
+
+   .. activecode:: Karel_while__spiral_left_solution
+      :passivecode: true
+      
+      from karel import *
+      while front_is_clear():
+          while front_is_clear():
+              move()
+          turn_left()
+

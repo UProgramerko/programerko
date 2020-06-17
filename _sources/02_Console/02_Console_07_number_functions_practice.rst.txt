@@ -1,0 +1,114 @@
+Matematičke funkcije - vježbanje
+================================
+
+Vježbajmo koristeći matematičke funkcije koje smo naučili.
+
+.. questionnote::
+    
+    **Zadataka - oglašavanje:** 
+    
+    Thomas distribuira reklamne pakete koji sadrže jedan kalendar, privjesak za ključeve i kemijsku olovku. Napišite program koji učitava koliko kalendara, privjesaka za ključeve i kemijskih olovaka Thomas ima kod sebe, a zatim ispisuje koliko reklamnih paketa može napraviti.
+
+Za završetak programa umetnite jednu od matematičkih funkcija koje ste naučili. 
+
+.. activecode:: console__mathfunc_promo_material
+
+    num_calendars = int(input("Koliko ima kalendara?"))
+    num_keychains = int(input("Koliko ima privjesaka za klučeve?"))
+    num_pens = int(input("Koliko ima olovaka?"))
+    num_packages = 0 # dovršite ovu naredbu
+    print("Može se napraviti", num_packages, "paketa.")
+
+
+.. questionnote::
+
+    **Zadatak - limunada:** 
+    
+    Skupina ljudi krenula je na put i Zoe je napravila limunadu za sve. Napišite program koji učitava koliko litara limunade Zoe napravilq (kao realan broj), a zatim napiše koliko boca od pola litre može biti napunjeno tom limunadom i koliko boca je potrebno za svu limunadu (dva broja mogu se razlikovati najviše za jedan).
+    
+  
+.. activecode:: console__mathfunc_lemonade
+
+.. reveal:: console__mathfunc_lemonade_reveal
+   :showtitle: Pomoć
+   :hidetitle: Sakrij pomoć
+   
+   Da biste dovršili ovaj program, koristite neke od funkcija za zaokruživanje.
+   
+   .. activecode:: console__mathfunc_lemonade_solution
+   
+        liters = float(input())
+        num_full_bottles = 0 # dovršite ovu naredbu
+        total_bottles = 0 # dovršite ovu naredbu
+        print("Može se napuniti", num_full_bottles, "boca.")
+        print("Potrebno je ukupno", total_bottles, "boca.") 
+
+    
+.. questionnote::
+
+    **Zadatak - utakmica:**
+    
+    Šest prijatelja se dogovorilo da se nađu na igralištu u određeno vrijeme i odigraju utakmicu. Napišite program koji učitava vrijeme kašnjenja svakog igrača u minutima (kao cijele brojeve), a ispisuje sa koliko minuta zakašnjenja je utakmica mogla započeti.
+    
+.. activecode:: console__mathfunc_late_game
+
+.. reveal:: console__mathfunc_late_game_reveal
+   :showtitle: Pomoć
+   :hidetitle: Sakrij pomoć
+   
+   Jedno od mogućih rješenja djelomično je napisano u nastavku. Pokušajte ga dovršiti. 
+   
+   .. activecode:: console__mathfunc_late_game_help
+
+        t1 = int(input("Koliko je minuta kasnio prvi: "))
+        # ucitajte ostale podatke na isti nacin
+        game_delay = 0 # dovrsite ovu naredbu
+        print("Utakmica je mogla zapoceti", game_delay, "minuta zakašnjenja.")
+
+.. commented out
+
+   .. activecode:: console__mathfunc_late_game_solution
+
+        t1 = int(input("Koliko je minuta kasnio prvi: "))
+        t2 = int(input("Koliko je minuta kasnio drugi: "))
+        t3 = int(input("Koliko je minuta kasnio treci: "))
+        t4 = int(input("Koliko je minuta kasnio cetvrti: "))
+        t5 = int(input("Koliko je minuta kasnio peti: "))
+        t6 = int(input("Koliko je minuta kasnio sesti: "))
+        game_delay = 0 # dovrsite ovu naredbu
+        print("Utakmica je mogla zapoceti", game_delay, "minuta zakašnjenja.")
+
+
+
+.. questionnote::
+
+    **Zadatak - dva busa:** 
+    
+    Maya i Lola putuju istom autocestom u dva različita autobusa i razgovaraju telefonom. Jedna od njih je upravo primjetila oznaku *x* a druga *y*. Napišite program koji učitava cijele brojeve: *x* i *y* i ispisuje koliko su kilometara Maya i Lola udaljene jedna od druge.
+    
+.. activecode:: console__mathfunc_buses
+
+.. commented out
+    
+    .. reveal:: console__mathfunc_buses_reveal
+       :showtitle: Pomoć
+       :hidetitle: Sakrij pomoć
+       
+       Da biste dovršili ovaj program, koristite neke od math funkcija za zaokruživanje.
+       
+       .. activecode:: console__mathfunc_buses_solution
+
+            x = int(input("Enter x: "))
+            y = int(input("Enter y: "))
+            distance = 0 # dovršite naredbu
+            print("Udaljenost je", distance)
+
+
+
+.. questionnote::
+
+    **Zadatak - Video lekcije**
+
+    Tečaj se sastoji od nekoliko video lekcija koje sve traju jednako. Odlučili ste svaki dan posvetiti 90 minuta ovom tečaju i želite znati koliko će dana trebati za cijeli tečaj. Napišite program koji učitava broj lekcija i trajanje jedne lekcije u minutima i ispisuje potrebni broj dana, zaokružen na najbliži cijeli broj.
+    
+.. activecode:: console__mathfunc_videolessons

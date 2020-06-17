@@ -1,0 +1,230 @@
+Crtanje ravnih linija i poligona
+--------------------------------
+
+Funkcije za crtanje ravnih linija i poligona slične su funkcijama za crtanje pravokutnika, elipsa i krugova, koje smo već naučili. Ovdje se koriste i parametri *prozori*, *boje* i *debljina* s istim značenjem kao i prije. Nove parametre ćemo objasniti na mjestu pojavljivanja.
+
+Ovdje ćemo ponoviti "prazan" program, koji samo rukovodi bibliotekom PyGame i prozorom za crtanje (a ne crta ništa sam po sebi), a ne crta ništa sam po sebi), u slučaju da želite nešto brzo isprobati.
+
+.. activecode:: pygame__drawing_primirives_def_copy
+    :nocodelens:
+    :modaloutput: 
+    :enablecopy:
+
+    # -*- acsection: general-init -*-
+    import pygame as pg, pygamebg
+    canvas = pygamebg.open_window(200, 200, "Pygame")
+    canvas.fill(pg.Color("gray"))
+    # -*- acsection: main -*-
+
+
+
+    # -*- acsection: after-main -*-
+    pygamebg.wait_loop()
+ 
+
+Crtanje linije
+''''''''''''''
+
+Za crtanje linije koristimo funkciju ``pg.draw.line``, sa ili bez parametra debljine. 
+
+.. code::
+
+    pg.draw.line(prozor, boja, točka1, točka2, debljina)
+    pg.draw.line(prozor, boja, točka1, točka2)
+
+
+- Parametri *točka1*, *točka2* su točke na zaslonu koje predstavljaju krajnje točke segmenta linije. Opet, točka je navedena kao n-torka ili lista 2 elementa. Elementi ove n-torke ili liste su koordinate točke u prozoru u koji crtamo.
+- Ovom funkcijom izostavljanje debljine ima drugačije značenje nego u ostalim funkcijama, a to je korištenje zadane debljine crte od 1 piksela.
+    
+Na primjer, naredba:
+
+.. activecode:: pygame__drawing_line_def
+    :passivecode: true
+
+    pg.draw.line(canvas, pg.Color("blue"), (20, 10), (40, 30), 2)
+    
+crta plavu liniju širine 2 piksela od točke :math:`(20, 10)` do točke :math:`(40, 30)`.
+
+.. image:: ../../_images/PyGame/drawing_line.png
+   :width: 200px   
+   :align: center 
+
+Crtanje poligona
+'''''''''''''''''
+
+Za crtanje poligona koristimo funkciju ``pg.draw.polygon``, koja također ima dva oblika:
+
+.. code::
+
+    pg.draw.polygon(prozor, boja, lista_točaka, debljina)
+    pg.draw.polygon(prozor, boja, lista_točaka)
+
+- Parametar *lista_točaka* predstavlja listu vrhova poligona koji crtamo. Na primjer [(50, 250), (150, 150), (250, 250)] predstavlja listu od 3 točke.
+- Ovdje ponovo oblik funkcije bez prametra *debljina* koristimo kada želimo da poligon bude cijeli obojan navedenom bojom (ako odredimo širinu, nacrtat ćemo poligonalnu liniju te širine). 
+
+Na primjer, sljedeća naredba crta trokut obojan bojom :math:`(0, 100, 36)`. Vrhovi trokuta su :math:`(50, 100)`, :math:`(150, 150)` i :math:`(150, 50)`.
+
+.. activecode:: pygame__drawing_polygon_def
+    :passivecode: true
+
+    pg.draw.polygon(canvas, (0, 100, 36), [(50, 100), (150, 150), (150, 50)])
+
+.. image:: ../../_images/PyGame/drawing_polygon.png
+   :width: 200px   
+   :align: center 
+
+Pored navedenih i opisanih funkcija, u ``pg.draw`` modulu postoje i druge funkcije crtanja, ali ovdje se nećemo baviti njima. Ako vas zanima više o tim funkcijama, potpunije informacije možete pronaći, na primjer, na `<https://www.pygame.org/docs/ref/draw.html>`__
+
+Funkcije crtanja - pitanja
+''''''''''''''''''''''''''
+
+Provjerite svoje znanje o funkcijama crtanja:
+
+.. parsonsprob:: pygame__drawing_quiz_arg_order
+
+   Kojim su redoslijedom ovi argumenti navedeni u pozivu funkcije `pg.draw.line`
+   -----
+   prozor
+   boja
+   koordinata prve točke
+   koordinata druge točke
+   debljina
+
+.. mchoice:: pygame__drawing_quiz_polygon_args1
+   :answer_a: pg.draw.polygon(prozor, boja, [(0, 0), (50, 100), (100, 0)])
+   :answer_b: pg.draw.polygon(prozor, boja, (0, 0), (50, 100), (100, 0))
+   :answer_c: pg.draw.polygon(prozor, boja, (0, 0, 50, 100, 100, 0))
+   :answer_d: pg.draw.polygon(prozor, boja, [0, 0, 50, 100, 100, 0])
+   :correct: a
+   :feedback_a: Točno
+   :feedback_b: Pokušaj ponovo
+   :feedback_c: Pokušaj ponovo
+   :feedback_d: Pokušaj ponovo
+
+   Želimo nacrtati trokut. U kojem obliku se mogu odrediti koordinate točaka?
+
+.. mchoice:: pygame__drawing_quiz_polygon_args2
+   :multiple_answers:
+   :answer_a: pg.draw.polygon(prozor, boja, [(0, 0), (50, 100), (100, 0)], 7)
+   :answer_b: pg.draw.polygon(prozor, boja, [(0, 0), (0, 50), (50, 50), (50,  0)])
+   :answer_c: pg.draw.polygon(prozor, boja, [(0, 0), (50, 100), (100, 0)])
+   :answer_d: pg.draw.polygon(prozor, boja, [(0, 0), (0, 50), (50, 50), (50,  0)], 4)
+   :correct: b, c
+   :feedback_a: Točno
+   :feedback_b: Pokušaj ponovo
+   :feedback_c: Pokušaj ponovo
+   :feedback_d: Točno
+
+   Koji se od sljedećih poligona ne može nacrtati s više poziva funkcije ``pg.draw.line``?
+   
+.. dragndrop:: pygame__drawing_quiz_function_names
+    :feedback: Try again!
+    :match_1: Dužinu linije|||pg.draw.line
+    :match_2: Poligon|||pg.draw.polygon
+    :match_3: Pravokutnik|||pg.draw.rect
+    :match_4: Krug|||pg.draw.circle
+
+    Uparite crteže i oblike koje crtaju.
+    
+.. parsonsprob:: pygame__drawing_quiz_general_arg_order
+
+   Poredaj prema tipičnom redoslijedu argumenata u funkcijama crtanja:
+   -----
+   prozor
+   boja
+   koordinate
+   debljina
+
+   
+.. mchoice:: pygame__drawing_quiz_point_list
+   :answer_a: Krug
+   :answer_b: Elipsa
+   :answer_c: Poligon
+   :answer_d: Dužina linije
+   :answer_e: Kvadrat
+   :correct: c
+   :feedback_a: Pokušaj ponovo
+   :feedback_b: Pokušaj ponovo
+   :feedback_c: Točno
+   :feedback_d: Pokušaj ponovo
+   :feedback_e: Pokušaj ponovo
+
+   Kad crtate koji od sljedećih oblika su koordinate navedene u obliku liste uređenih parova?
+
+
+Crtanje po uputama
+'''''''''''''''''''''''
+
+.. questionnote::
+
+    **Strašilo:** Na bijeloj pozadini nacrtajte strašilo. Sastoji se od sljedećih dijelova:
+    
+    - glava: crni krug, 6 piksela širok, centriran u točki (150, 70), polumjera 50
+    - tijelo: ravna crna linija, 6 piksela široka, od točke (150, 120) do točke (150, 300)
+    - ruke: ravna crna linija, 6 piksela široka, od točke (80, 170) do točke (220, 170)
+    - lijeva noga: ravna crna linija, 6 piksela široka, od točke (150, 300) do točke (90, 480)
+    - desna noga: ravna crna linija, 6 piksela široka, od točke (150, 300) do točke (210, 480)
+
+.. activecode:: pygame__drawing_scarecrow
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :playtask:
+   :includexsrc: src/PyGame/1_Drawing/1_BasicExamples/scarecrow.py
+   
+.. questionnote::
+
+    **Drvo:** Nacrtajte drvo na bijeloj pozadini. Sastoji se od sljedećih dijelova:
+
+    - drvo: pravokutnik ispunjen bojom (97, 26, 9), veličine 40 x 50, s gornjim lijevim vrhom u točki (130, 250)
+    - gornji dio krošnje: trokut ispunjen bojom (0, 100, 36), s vrhovima (50, 250), (150, 150) and (250, 250)
+    - srednji dio krošnje: trokut ispunjen bojom (0, 100, 36), s vrhovima (75, 200), (150, 100) и (225, 200)
+    - donji dio krošnje: trokut ispunjen bojom (0, 100, 36), s vrhovima (100, 150), (150, 50) и (200, 150)
+    
+.. activecode:: pygame__drawing_tree
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :playtask:
+   :includexsrc: src/PyGame/1_Drawing/1_BasicExamples/tree.py
+
+
+Crteži iznenađenja
+''''''''''''''''''
+
+Da biste vidjeli crtež u sljedećim zadacima, morate napisati prave izjave i pokrenuti svoj program.
+
+.. questionnote::
+
+    **Iznenađenje 1 - povežite točke:** Daju se vrhovi poligona. Nacrtajte taj poligon ispunjen "khaki" bojom na "darkgreen" pozadini.
+
+.. activecode:: pygame__drawing_giraffe
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :includexsrc: src/PyGame/1_Drawing/2_ByInstructions/giraffe.py
+
+.. questionnote::
+
+    **Iznenađenje 2:** 
+    
+    Nacrtajte "limegreen" bojom:
+    
+    - Ispunjena elipsa upisana u pravokutnik čijije gornji lijevi vrh (75, 100), širina joj je 150, a visina 180;
+    - Linija širine 6, od točke (130, 110) do točke (120, 20);
+    - Još jedna linija širine 6, od točke (170, 110) do točke (180, 20);
+    - Ispunjeni krug polumjera 10 piksela centriran u točki (120, 20);
+    - Ispunjeni krug polumjera 10 piksela centriran u točki (180, 20);
+    
+    Crnom bojom nacrtajte još dvije ispunjene elipse:
+
+    - jedan upisan u pravokutnik čiji je gornji lijevi vrh u točki (110, 140), njegova širina je 30, a visina 50;
+    - a jedan upisan u pravokutnik čiji je gornji lijevi vrh u točki (160, 140), širine 30, i visine 50;
+
+
+.. activecode:: pygame__drawing_ant
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :includexsrc: src/PyGame/1_Drawing/2_ByInstructions/insect.py
+   

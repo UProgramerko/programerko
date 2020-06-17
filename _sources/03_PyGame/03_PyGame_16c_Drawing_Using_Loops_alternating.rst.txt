@@ -1,0 +1,189 @@
+Izrada složenijih crteža pomoću petlji
+--------------------------------------
+
+Regularnost koju želimo koristiti na crtežima može biti složenija u usporedbi s prethodnim problemima. Evo nekoliko primjera:
+
+.. image:: ../../_images/PyGame/repeat_alternating.png 
+   :width: 800px
+   :align: center 
+
+U svim tim slučajevima, pravilnost i dalje postoji i može se koristiti pri pisanju programa. Također možemo primijetiti da svi primjeri na slici imaju nešto zajedničko, a to je da se dva pravila pojavljuju naizmjenično. Na primjer, u crtežu od opeke prvi red opeke započinje cijelom ciglom, drugi s pola opeke, treći opet cijelom ciglom i tako dalje. Slično tome, osvijetljeni i zatamnjeni prozori pojavljuju se naizmjenično na građevinskom crtežu.
+
+Zbog izmjene dvaju pravila u svim crtežima, programi koji ih crtaju imat će i neke sličnosti. Pogledajmo primjere koda.
+
+Primjer - ciferšlus
+'''''''''''''''''''
+
+Da bismo nacrtali takav ciferšlus, linije ćemo svakako crtati u petlji. Crtež pokazuje da je svaki sljedeći redak isti broj piksela niži od prethodnog, tako da ne bi trebalo biti problema s računanjem *y* koordinate. Situacija s *x* koordinatama je nešto teža jer se mijenjaju prema malo složenijem pravilu.
+
+Ovaj problem možemo riješiti pomoću *if* naredbe u petlji. Nakon što nacrtamo jednu crtu, provjeravamo koja je od dvije moguće vrijednosti :math:`x` koordinata početka linije ima. Ako ima prvu vrijednost - dodijelimo je drugoj i obrnuto. Evo kako to izgleda u programu:
+
+.. activecode:: PyGame_drawing_loops_zipper1
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :includesrc: src\PyGame\1_Drawing\7c_Loops_alternating\Examples\zipper1.py
+
+Druga mogućnost za rješavanje problema s *x* koordinatama je crtanje dvije linije u jednoj petlji, na primjer:
+
+.. activecode:: PyGame_drawing_loops_zipper2
+   :nocodelens:
+   :enablecopy:
+   :modaloutput:
+   :includesrc: src\PyGame\1_Drawing\7c_Loops_alternating\Examples\zipper2.py
+
+
+Primjer - cigle
+''''''''''''''''
+
+Već smo spomenuli da redovi opeka naizmjence započinju cijelom ciglom i polovicom cigle. Zato pri crtanju cigle možemo koristiti bilo koju od dvije iste ideje kao u prethodnom primjeru.
+
+Neka se dužina cigle označi sa: math:`a` a njena visina s :math:`h`. Čitavu ciglu dobivamo na početku reda crtajući pravokutnik na zadanoj visini, s :math:`x` koordinatom jednakom nuli. Polovina cigle na početku reda može se dobiti crtanjem cijele opeke pomaknute za :math:`a \over 2` s lijeve strane, tj. crtanjem pravokutnika s :math:`x` koordinata jednaka :code:`-a // 2`. Dakle, vidljiva je samo desna polovina cigle. Ostaje nam riješiti kad nacrtamo pomaknutu ciglu a kada ne.
+
+Jedno rješenje je pohraniti početak reda cigle u varijablu, nazovite to *x_start*. Nakon crtanja svakog retka provjeravamo da varijabla *x_start* ima vrijednost nula ili :code:`-a // 2`. Kao u prethodnom primjeru, ovisno o kojoj od dvije vrijednosti imamo, dodijelit ćemo drugoj vrijednosti varijablu, tako da u sljedećem redu crtanje cigle započet će drugačije.
+
+Dovršite naredbe za dodjeljivanje vrijednosti varijabli x_start
+
+.. activecode:: PyGame_drawing_loops_bricks1
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\7c_Loops_alternating\Examples\bricks1.py
+
+    canvas.fill(pg.Color("red"))
+    brick_a, brick_h = 80, 40
+    x_start = 0
+    for y0 in range(0, height, brick_h): # za svaki redi cigli
+        for x0 in range(x_start, width, brick_a): # za svaku ciglu u redu
+            pg.draw.rect(canvas, pg.Color("black"), (x0, y0, brick_a, brick_h), 1)
+            
+        if x_start == x_start: # dovršite
+            x_start = -brick_a//2
+        else:
+            x_start = x_start # dovršite
+
+Druga ideja je da u svakom prolasku kroz dvostruku petlju crtamo ciglu koju smo crtali i u prvom rješenju, a osim nje i ciglu ispod i polu-lijevo od nje. Primjetite da u ovom slučaju petlja po *y0* ima dvostruki korak, jer unutarnja petlja crta dva reda cigle.
+
+Dovršite naredbe za crtanje pravokutnika u ovom programu
+
+.. activecode:: PyGame_drawing_loops_bricks2
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :includexsrc: src\PyGame\1_Drawing\7c_Loops_alternating\Examples\bricks2.py
+
+    canvas.fill(pg.Color("red"))
+    brick_width, brick_height = 80, 40
+    for y0 in range(0, height, 2 * brick_height):
+        for x0 in range(0, width, brick_width):
+            # draw the first brick
+            pg.draw.rect(???) # dovršite naredbe 
+            
+            # druga cigla je u sljedecem redu, pomaknuta za pola sirine ulijevo
+            x1, y1 = x0 - brick_width//2, y0 + brick_height 
+            pg.draw.rect(???) # dovršite crtanje druge cigle
+
+
+Zadaci za vježbu
+''''''''''''''''
+
+.. questionnote:: 
+
+    **Zadatak - šahovska ploča**
+
+    Nacrtajte šahovsku ploču preko cijelog prozora (kvadrati na ploči trebaju biti 50x50 piksela). Donji lijevi kvadrat trebao bi biti taman.
+
+Većina programa je napisana, pokušajte je dovršiti.
+
+.. activecode:: PyGame_drawing_loops_chessboard
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\7c_Loops_alternating\Tasks\chessboard1.py
+    
+    canvas.fill(pg.Color("gray")) # obojimo pozadinu prozora u sivo za svijetlo polje
+    
+    # velicina polja
+    num_squares = 8
+    square_width = width / num_squares
+    square_height = height / num_squares
+
+    # prolazimo kroz sva polja
+    for i in range(num_squares):
+        for j in range(num_squares):
+            # paint black squares only
+            if (i + j) % 2 != 0:
+                pass # dovršite naredbu
+
+
+.. questionnote::
+
+    **Zadatak - Zgrada**
+
+    Izmijenite program u nastavku tako da se prozori crtaju u dvostrukoj petlji.
+
+Dio koji treba promijeniti, nakon promjene, može započeti ovako:
+
+.. code::
+
+    for y in range(5):     # kat
+        for x in range(2): # strana zgrade (0 - lijevo, 1 - desno)
+            if (x+y) % 2 == 0:
+                color = ...
+
+
+.. activecode:: PyGame_drawing_loops_building_alternating
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\7c_Loops_alternating\Tasks\building_alternating.py
+    
+    pg.draw.rect(canvas, pg.Color("darkgray"), (120, 50, 60, 140)) # building
+
+    # zamijenite ovaj dio
+    pg.draw.rect(canvas, pg.Color('yellow'), (130,  60, 15, 15))
+    pg.draw.rect(canvas, pg.Color('black'), (155,  60, 15, 15))
+    pg.draw.rect(canvas, pg.Color('black'), (130,  80, 15, 15))
+    pg.draw.rect(canvas, pg.Color('yellow'), (155,  80, 15, 15))
+    pg.draw.rect(canvas, pg.Color('yellow'), (130, 100, 15, 15))
+    pg.draw.rect(canvas, pg.Color('black'), (155, 100, 15, 15))
+    pg.draw.rect(canvas, pg.Color('black'), (130, 120, 15, 15))
+    pg.draw.rect(canvas, pg.Color('yellow'), (155, 120, 15, 15))
+    pg.draw.rect(canvas, pg.Color('yellow'), (130, 140, 15, 15))
+    pg.draw.rect(canvas, pg.Color('black'), (155, 140, 15, 15))
+
+    pg.draw.rect(canvas, pg.Color("black"),  (140, 160, 20, 30))   # vrata
+
+~~~~
+
+Ako niste imali većih problema sa svim tim zadacima, pokušajte riješiti još jedan težak zadatak.
+
+.. questionnote::
+
+    **Zadatak - izazov: parket**
+
+    Napišite program koji prikazuje parket (sliku parketa možete vidjeti kad kliknete tipku "Play task", a slika je ista kao na početku ove stranice, desno). Cilj je, naravno, nacrtati daske za pod u više petlji. Dimenzije ploče su 10x60, a boje su "goldenrod" i "brown".
+
+Kostur programa otprilike izgleda ovako:
+
+.. code::
+
+    for row ...
+        for column ...
+            if ...
+                for floorboard in range(6):
+                    pg.draw.rect(...)
+            else:
+                for floorboard in range(6):
+                    pg.draw.rect(...)
+
+
+.. activecode:: PyGame_drawing_loops_parquet
+    :nocodelens:
+    :enablecopy:
+    :modaloutput:
+    :playtask:
+    :includexsrc: src\PyGame\1_Drawing\7c_Loops_alternating\Tasks\parquet.py

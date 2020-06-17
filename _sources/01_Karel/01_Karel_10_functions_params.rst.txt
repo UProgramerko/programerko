@@ -1,0 +1,401 @@
+Dodatna uputstva funkciji
+=========================
+
+Spomenuli smo da postoji nekoliko načina pisanja funkcija u Pythonu, a da su funkcije koje smo do sada pisali i koristili najjednostavijeg oblika. Takve su funkcije, na primjer, *move()*, *turn_left()*, *turn_right()*, *pick_ball()* i *drop_ball()* iz Karel biblioteke, kao i funkcije *back()*, *take_at_neighboring_square()* and *go_to_neighboring_nonempty_square()*, koje smo sami napisali. Sve ove funkcije obavljaju neki konkretan posao, uvijek na isti način.
+
+Funkcije se mogu napisati tako da u različitim izvršavanjima ne rade uvijek istu stvar, nego da obavljaju malo općenitiji zadatak. Kad takve funkcije zovemo, točno im kažemo kako želimo da odrade svoj zadatak. Na primjer, često bi mogli da nam bude korisna funkcija koja bi pomicala Karela za neki broj polja naprijed ili natrag. Za tu funkciju želimo da pri njenom pozivanju preciziramo zahtjev - za koliko se polja Karel treba pomaknuti i na koju stranu.
+
+Funkcije s parametrima
+----------------------
+
+.. infonote::
+    Dodatni podaci koje dajemo funkciji pišu se u zagrade nakon naziva funkcije u prvom redu njene definicije. Između zagrada možemo navesti jednu vrijednost ili više vrijednosti odvojenih zarezima. Te se vrijednosti nazivaju argumentima ili parametrima funkcije. Riječi "argumenti" i "parametri" sinonimi su u programiranju i koristit ćemo ih jednako. 
+    
+.. activecode:: Karel_functions__function_with_args_def
+    :passivecode: true
+
+    def function_name(parametar1, ... parametarN):
+        naredba_1
+        ...
+        naredba_k
+
+Funkcija koja Karela pomiče određeni broj polja naprijed ili natrag, mogla bi se nazvati *go* i da ima jedan parametar, čija je vrijednost cijeli broj. Ako je ovaj parametar pozitivan, Karel bi se pomaknuo toliko polja naprijed, a ako je negativan, Karel bi išao odgovarajući (suprotan) broj polja natrag. Na primjer, poziv go (5) značio bi "ići 5 polja naprijed", dok bi go (-2) značio "ići 2 polja unatrag". Evo kako možemo napisati takvu funkciju:
+
+.. activecode:: Karel_functions__function_go_def
+    :passivecode: true
+
+    def go(n):
+        if n > 0:
+            for i in range(n):
+                move()
+        else:
+            turn_left();turn_left()
+            for i in range(-n):
+                move()
+            turn_left();turn_left()
+ 
+Ova funkcija može pojednostaviti mnoge programe koji bi trebali reći Karelu da se kreće nekoliko puta duž jedne staze u oba smjera. Evo primjera.
+
+Izvršite određene pomake
+''''''''''''''''''''''''
+
+.. questionnote::
+
+    Karel se nalazi na početnom polju staze dovoljne dužine, a treba obaviti sljedeća premeštanja loptica:
+
+    - 3 loptice s polja 3 na polje 4
+    - 4 loptice s polja 5 na polje 1
+
+U rješavanju ovog zadatka upotrijebit ćemo opisanu funkciju *go*. Da bismo dodatno pojednostavili rješenje, možemo uvesti i funkciju *displace*, koja pomiče zadani broj lopti za određeni broj polja naprijed ili natrag. Ovaj opis pokazuje da funkcija *displace* treba imati dva argumenta.
+
+Da bi svrha svakog parametra bila jasnija, dat ćemo im imena koja opisuju njihovu ulogu:
+
+.. activecode:: Karel_functions__function_displace_def
+    :passivecode: true
+
+    def displace(num_balls, num_squares):
+        for i in range(num_balls):
+            pick_ball()
+        go(num_squares)
+        for i in range(num_balls):
+            drop_ball()
+
+Funkcija *displace* koristi predhodno napisanu funkciju *go*. Pozivanje funkcije iz druge funkcije poput ove može ići u dubinu onoliko koliko nam je potrebno. Važno je samo da se svaka funkcija definira prije nego što se ona pozove na izvršavanje.
+
+Sada kada su nam na raspolaganju ove dvije funkcije, vrlo je jednostavno riješiti početni zadatak:
+
+.. karel:: Karel_functions__displace_balls
+    :blockly:
+
+    {
+        setup:function() {
+            function random(n) {
+                return Math.floor(n * Math.random());
+        }
+         
+        var ww = [
+            [
+               '███████████',
+               '█E.0.4.0.6█',
+               '███████████'
+            ],
+            [
+               '█████████████',
+               '█E.1.3.0.4.0█',
+               '█████████████'
+            ]
+        ];
+        let choice = random(ww.length);
+        var w = ww[choice];
+        var ny = Math.floor(w.length / 2);
+        var nx = Math.floor(w[0].length / 2);
+        var world = new World(nx, ny);
+         
+        for (let y = 1; y <= ny; y++) {
+            let wy = 2*(ny-y) + 1;
+            for (let x = 1; x <= nx; x++) {
+               let wx = 2*x - 1;
+               if (y < ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+               if (x < nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+               let c = w[wy].charAt(wx);
+               let pos = "SWEN".indexOf(c);
+               if (pos > -1) {
+                  world.setRobotStartAvenue(x);
+                  world.setRobotStartStreet(y);
+                  world.setRobotStartDirection(c);
+               }
+               let d = w[wy].charCodeAt(wx);
+               if (d >= 48 && d < 58) world.putBalls(x, y, d - 48);
+            }
+         }
+         
+            var robot = new Robot();
+         
+            var code = ["from karel import *",
+                     "# umjesto rijeci 'pass' kopirajte tijela funkcije",
+                     "",
+                     "def go(n):",
+                     "    pass",
+                     "",
+                     "def displace(num_balls, num_squares):",
+                     "    pass",
+                     "",
+                     "go(2) # na polje 3",
+                     "displace(3, 1) # premjesti 3 loptice jedno polje naprijed",
+                     "go(1) # na polje 5 5",
+                     "displace(4, -4) # premjesti 4 loptice 4 polja unatrag",
+                     ""];
+                     
+            return {robot:robot, world:world, code:code};
+        },
+      
+        isSuccess: function(robot, world) {
+            var X = world.getAvenues();
+            if (X == 5) {var tagret_layout = [4,0,1,3,2]}
+            if (X == 6) {var tagret_layout = [4,1,0,3,0,0]}
+           
+            for (let x = 1; x <= X; x++)
+                if (world.getBalls(x, 1) != tagret_layout[x-1]) return false;
+           
+            if (robot.getBalls() > 0)
+                return false;
+                 
+            return true;
+        }
+    }
+
+Zadaci za vježbu
+----------------
+
+Pokupi zadani broj loptica
+''''''''''''''''''''''''''
+
+.. questionnote::
+   Napišite funkciju *take_up_to(n)*, kojom Karel s polja na kojme se nalazi uzima najviše *n* loptica. Preciznije, ako je na polju *n* ili više loptica, Karel ih uzima *n*, a ako ima manje loptica, Karel uzima onoliko loptica koliko ih ima.
+    
+   Potrebno je da Karel, koji se nalazi na prvom polju, uzme s drugog polja do 4 loptice, s trećeg do 2, a s četvrtog do 3 loptice, a zatim sve prikupljene loptice donese na prvo polje. Naravno, za to treba koristiti funkciju *take_up_to(n)* napisanu u prvom dijelu zadatka.
+
+.. karel:: Karel_functions__take_balls_up_to
+    :blockly:
+
+    {
+        setup:function() {
+            function random(n) {
+                return Math.floor(n * Math.random());
+        }
+         
+        var ww = [
+            [
+               '███████████',
+               '█E.3.4.1.2█',
+               '███████████'
+            ],
+            [
+               '█████████',
+               '█E.2.5.3█',
+               '█████████'
+            ]
+        ];
+        let choice = random(ww.length);
+        var w = ww[choice];
+        var ny = Math.floor(w.length / 2);
+        var nx = Math.floor(w[0].length / 2);
+        var world = new World(nx, ny);
+         
+        for (let y = 1; y <= ny; y++) {
+            let wy = 2*(ny-y) + 1;
+            for (let x = 1; x <= nx; x++) {
+               let wx = 2*x - 1;
+               if (y < ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+               if (x < nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+               let c = w[wy].charAt(wx);
+               let pos = "SWEN".indexOf(c);
+               if (pos > -1) {
+                  world.setRobotStartAvenue(x);
+                  world.setRobotStartStreet(y);
+                  world.setRobotStartDirection(c);
+               }
+               let d = w[wy].charCodeAt(wx);
+               if (d >= 48 && d < 58) world.putBalls(x, y, d - 48);
+            }
+         }
+         
+            var robot = new Robot();
+         
+            var code = ["from karel import *",
+                     "def take_up_to(n):",
+                     "    pass # napisite funkciju",
+                     "",
+                     "move(); take_up_to(4)",
+                     "# dovrsite uzimanje loptica",
+                     "",
+                     "turn_left(); turn_left() # come back",
+                     "# dovrsite povratak i ostavljanje loptica",
+                     ""];
+                     
+            // from karel import *
+            // def take_up_to(n):
+            //     for i in range(n):
+            //         if is_ball_on_square():
+            //             pick_ball()
+            // 
+            // move(); take_up_to(4)
+            // move(); take_up_to(2)
+            // move(); take_up_to(3)
+            //
+            // turn_left(); turn_left()
+            // move();move();move()
+            // while any_balls_with_karel():
+            //     drop_ball()
+                     
+            return {robot:robot, world:world, code:code};
+        },
+      
+        isSuccess: function(robot, world) {
+            var X = world.getAvenues();
+            if (X == 5) {var tagret_layout = [6,0,2,0,2]} // = 0,3,4,1,2 - *,4,2,3
+            if (X == 4) {var tagret_layout = [7,0,3,0]}   // = 0,2,5,3   - *,4,2,3
+           
+            for (let x = 1; x <= X; x++)
+                if (world.getBalls(x, 1) != tagret_layout[x-1]) return false;
+           
+            if (robot.getBalls() > 0)
+                return false;
+                 
+            return true;
+        }
+    }
+    
+
+Vožnja prema uputstvima
+'''''''''''''''''''''''
+
+.. questionnote::
+    Date su funkcije *face_left_at_intersection()* i *go_left(n)* are given.
+    
+    - Funkcija *face_left_at_intersection()* postavlja Karela da gleda u prvu ulicu s lijeve strane na koju naiđe. Prilikom izvršavanja ove funkcije, Karel ide naprijed dok ne dođe do polja na kojme može ići lijevo, i ostaje na tom polju okrenut na lijevo. Ako prije poziva funkcije s Karelove lijeve strane postoji polje, on se tokom rada ove funkcije neće ni pomicati sa svog polja, nego će se samo okrenuti na lijevo;
+    - Funkcija *go_left(n)* uvodi Karela jedno polje u n-tu ulicu s lijeve strane. Ako je Karel već u raskrižju, ulica lijevo od njega se broji kao prva;
+        
+    Napišite funkciju *face_left_at_intersection()* i *go_right(n)* koristeći zadane funkcije kao model.
+    
+    Napišite program koji (koristeći date i napisane funkcije) vodi Karela u treću ulicu s lijeve strane, zatim drugu s desne strane, a na kraju drugu s lijeve strane. Karel bi trebao stići do kraja te ulice i uzeti jedinu loptu na ploči.
+
+.. karel:: Karel_functions__travel_instructions_1
+   :blockly:
+
+   {
+      setup:function() {
+         function random(n) {
+            return Math.floor(n * Math.random());
+         }
+         
+         var ww = [
+            [
+               '█████████████',
+               '█0.0.0█0█1█0█',
+               '█████.█.█.█.█',
+               '█0.0█0.0.0.0█',
+               '███.█.███████',
+               '█0█0█0.0.0.0█',
+               '█.█.█.█████.█',
+               '█E.0.0.0.0.0█',
+               '█████████████'
+            ],
+            [
+               '███████████████',
+               '█0.0.0.0.0.0█1█',
+               '███████.█████.█',
+               '█0.0.0.0.0.0█0█',
+               '███████.███.█.█',
+               '█0.0█0.0.0.0.0█',
+               '███.███.███████',
+               '█0█0█0.0.0.0█0█',
+               '█.█.███.█████.█',
+               '█E.0.0.0.0.0.0█',
+               '███████████████'
+            ]
+         ];
+         let choice = random(ww.length);
+         var w = ww[choice];
+         var ny = Math.floor(w.length / 2);
+         var nx = Math.floor(w[0].length / 2);
+         var world = new World(nx, ny);
+         
+         for (let y = 1; y <= ny; y++) {
+            let wy = 2*(ny-y) + 1;
+            for (let x = 1; x <= nx; x++) {
+               let wx = 2*x - 1;
+               if (y < ny && w[wy - 1].charAt(wx) == "█") world.addEWWall(x, y, 1);
+               if (x < nx && w[wy].charAt(wx + 1) == "█") world.addNSWall(x, y, 1);
+               let c = w[wy].charAt(wx);
+               let pos = "SWEN".indexOf(c);
+               if (pos > -1) {
+                  world.setRobotStartAvenue(x);
+                  world.setRobotStartStreet(y);
+                  world.setRobotStartDirection("SWEN".charAt(pos));
+               }
+               let d = w[wy].charCodeAt(wx);
+               if (d >= 48 && d < 58) world.putBalls(x, y, d - 48);
+            }
+         }
+         
+         var robot = new Robot();
+         
+         var code = ["from karel import *",
+                     "def face_left_at_intersection():",
+                     "    turn_left()",
+                     "    while not front_is_clear():",
+                     "        turn_right()",
+                     "        move()",
+                     "        turn_left()",
+                     "    ",
+                     "def go_left(n):",
+                     "    for i in range(n-1):",
+                     "        face_left_at_intersection()",
+                     "        turn_right()",
+                     "        move()",
+                     "    face_left_at_intersection()",
+                     "    move()",
+                     "",
+                     "def face_right_at_intersection():",
+                     "    # ...",
+                     "    ",
+                     "def go_right(n):",
+                     "    # ...",
+                     "",
+                     
+                     "go_left(3) # treca lijevo",
+                     "# druga desno",
+                     "# druga lijevo",
+                     "# idi do kraja ulice",
+                     "# pokupi lopticu",
+                     ""];
+                     
+         //var code = ["from karel import *",
+         //            "def face_left_at_intersection():",
+         //            "    turn_left()",
+         //            "    while not front_is_clear():",
+         //            "        turn_right()",
+         //            "        move()",
+         //            "        turn_left()",
+         //            "    ",
+         //            "def go_left(n):",
+         //            "    for i in range(n-1):",
+         //            "        face_left_at_intersection()",
+         //            "        turn_right()",
+         //            "        move()",
+         //            "    face_left_at_intersection()",
+         //            "    move()",
+         //            "",
+         //            "def face_right_at_intersection():",
+         //            "    turn_right()",
+         //            "    while not front_is_clear():",
+         //            "        turn_left()",
+         //            "        move()",
+         //            "        turn_right()",
+         //            "    ",
+         //            "def go_right(n):",
+         //            "    for i in range(n-1):",
+         //            "        face_right_at_intersection()",
+         //            "        turn_left()",
+         //            "        move()",
+         //            "    face_right_at_intersection()",
+         //            "    move()",
+         //            "",
+         //            
+         //            "go_left(3)",
+         //            "go_right(2)",
+         //            "go_left(2)",
+         //            "while front_is_clear():",
+         //            "    move()",
+         //            "if is_ball_on_square():",
+         //            "    pick_ball()",
+         //            ""];
+                     
+         return {robot:robot, world:world, code:code};
+      },
+      
+      isSuccess: function(robot, world) {
+         return robot.getBalls() > 0;
+      }
+   }

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Izrada složenijih crteža pomoću petlji &#8212; Textual Programming in Python</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/activecode.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/codemirror.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/clickable.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pytutor.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/modal-basic.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/datafile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/dragndrop.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fitb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/matrixeq.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/parsons.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/lib/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/poll.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/showEval.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabbedstuff.css" />
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/video.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/karel.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/notes.css" />
+    <link rel="stylesheet" href="../_static/user-highlights.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/flatly.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/petlja.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/runestonebase.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/jquery.highlight.js"></script>
+    <script type="text/javascript" src="../_static/bookfuncs.js"></script>
+    <script type="text/javascript" src="../_static/codemirror.js"></script>
+    <script type="text/javascript" src="../_static/xml.js"></script>
+    <script type="text/javascript" src="../_static/css.js"></script>
+    <script type="text/javascript" src="../_static/python.js"></script>
+    <script type="text/javascript" src="../_static/htmlmixed.js"></script>
+    <script type="text/javascript" src="../_static/javascript.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/CLDRPluralRuleParser.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.messagestore.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.fallbacks.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.language.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.parser.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.emitter.js"></script>
+    <script type="text/javascript" src="../_static/jquery_i18n/jquery.i18n.emitter.bidi.js"></script>
+    <script type="text/javascript" src="../_static/activecode-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/skulpt.min.js"></script>
+    <script type="text/javascript" src="../_static/skulpt-stdlib.js"></script>
+    <script type="text/javascript" src="../_static/activecode.js"></script>
+    <script type="text/javascript" src="../_static/clike.js"></script>
+    <script type="text/javascript" src="../_static/timed_activecode.js"></script>
+    <script type="text/javascript" src="../_static/animationbase.js"></script>
+    <script type="text/javascript" src="../_static/mchoice.js"></script>
+    <script type="text/javascript" src="../_static/timedmc.js"></script>
+    <script type="text/javascript" src="../_static/timed.js"></script>
+    <script type="text/javascript" src="../_static/mchoice-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/clickable.js"></script>
+    <script type="text/javascript" src="../_static/timedclickable.js"></script>
+    <script type="text/javascript" src="../_static/d3.v2.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.ba-bbq.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.jsPlumb-1.3.10-all-min.js"></script>
+    <script type="text/javascript" src="../_static/pytutor.js"></script>
+    <script type="text/javascript" src="../_static/codelens.js"></script>
+    <script type="text/javascript" src="../_static/datafile.js"></script>
+    <script type="text/javascript" src="../_static/dragndrop.js"></script>
+    <script type="text/javascript" src="../_static/timeddnd.js"></script>
+    <script type="text/javascript" src="../_static/dragndrop-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/fitb.js"></script>
+    <script type="text/javascript" src="../_static/timedfitb.js"></script>
+    <script type="text/javascript" src="../_static/fitb-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/matrixeq.js"></script>
+    <script type="text/javascript" src="../_static/lib/prettify.js"></script>
+    <script type="text/javascript" src="../_static/lib/hammer.min.js"></script>
+    <script type="text/javascript" src="../_static/parsons.js"></script>
+    <script type="text/javascript" src="../_static/parsons-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/timedparsons.js"></script>
+    <script type="text/javascript" src="../_static/poll.js"></script>
+    <script type="text/javascript" src="../_static/reveal.js"></script>
+    <script type="text/javascript" src="../_static/shortanswer.js"></script>
+    <script type="text/javascript" src="../_static/timed_shortanswer.js"></script>
+    <script type="text/javascript" src="../_static/showEval.js"></script>
+    <script type="text/javascript" src="../_static/tabbedstuff.js"></script>
+    <script type="text/javascript" src="../_static/runestonevideo.js"></script>
+    <script type="text/javascript" src="../_static/karelCorner.js"></script>
+    <script type="text/javascript" src="../_static/karelRobot.js"></script>
+    <script type="text/javascript" src="../_static/karelWorld.js"></script>
+    <script type="text/javascript" src="../_static/karelRobotDrawer.js"></script>
+    <script type="text/javascript" src="../_static/karelUI.js"></script>
+    <script type="text/javascript" src="../_static/karel.js"></script>
+    <script type="text/javascript" src="../_static/karel-i18n.en.js"></script>
+    <script type="text/javascript" src="../_static/notes.js"></script>
+    <script type="text/javascript" src="../_static/pygamelib-init.js"></script>
+    <script type="text/javascript" src="../_static/blockly/blockly_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/blocks_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/python_compressed.js"></script>
+    <script type="text/javascript" src="../_static/blockly/msg-sr.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/utilities.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/python_errors.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/ast_node_visitor.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/abstract_interpreter.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/pytifa.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/abstract_interpreter_definitions.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/python_to_blockly.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/imported.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/class.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/comment.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/comprehensions.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/dict.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/if.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/io.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/lists.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/sets.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/loops.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/parking.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/tuple.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/turtles.js"></script>
+    <script type="text/javascript" src="../_static/blockpy/blocks/text.js"></script>
+    <script type="text/javascript" src="../_static/blockpy-modal.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-4.0.0-dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <script type="text/javascript" src="../_static/waypoints.min.js"></script>
+    <script type="text/javascript" src="../_static/rangy-core.js"></script>
+    <script type="text/javascript" src="../_static/rangy-textrange.js"></script>
+    <script type="text/javascript" src="../_static/rangy-cssclassapplier.js"></script>
+    <script type="text/javascript" src="../_static/user-highlights.js"></script>
+    <script type="text/javascript" src="../_static/jquery.idle-timer.js"></script>
+    <script type="text/javascript" src="../_static/processing-1.4.1.min.js"></script>
+    <script type="text/javascript" src="../_static/jquery.hotkey.js"></script>
+    <script type="text/javascript" src="../_static/jquery-migrate-1.2.1.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Prikazivanje gotovih slika" href="03_PyGame_17a_Drawing_Pictures1.html" />
+    <link rel="prev" title="Crtanje poligona pomoću petlji" href="03_PyGame_16b_Drawing_Using_Loops2.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+<link rel="shortcut icon" href="../_static/favicon.ico" type="image/ico" />
+
+<script type="text/javascript">
+  eBookConfig = {};
+  eBookConfig.host = 'http://127.0.0.1:8000' ? 'http://127.0.0.1:8000' : 'http://127.0.0.1:8000';
+  eBookConfig.app = eBookConfig.host+'/runestone';
+  eBookConfig.ajaxURL = eBookConfig.app+'/ajax/';
+  eBookConfig.course = 'TxtProgInPython';
+  eBookConfig.logLevel = 0;
+  eBookConfig.loginRequired = false;
+  eBookConfig.build_info = "";
+  eBookConfig.isLoggedIn = false;
+  eBookConfig.useRunestoneServices = false;
+  eBookConfig.python3 = true;
+  eBookConfig.basecourse = 'TxtProgInPython';
+  eBookConfig.runestone_version = '3.1.1';
+  eBookConfig.imagesDir = '../_images/';
+  eBookConfig.staticDir = '../_static/';
+  if(typeof(Sk) != "undefined")
+      Sk.imgPath = eBookConfig.imagesDir;
+</script>
+
+<div id="fb-root"></div>
+
+
+
+  </head><body>
+
+
+<!-- Begin navbar -->
+
+<nav id="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+  <div class="container">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+     <img src="../_static/img/logo.png" style="width:80px; height: 80px;"> 
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-top: 10px; margin-left: 25px;">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="../">Textual Programming in Python</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<br/>
+
+
+<div class="container col-md-12" id="continue-reading"></div>
+
+<div class="container col-md-8 col-md-offset-2" id="main-content">
+  
+  <div class="section" id="izrada-slozenijih-crteza-pomocu-petlji">
+<h1>Izrada složenijih crteža pomoću petlji<a class="headerlink" href="#izrada-slozenijih-crteza-pomocu-petlji" title="Permalink to this headline">¶</a></h1>
+<p>Regularnost koju želimo koristiti na crtežima može biti složenija u usporedbi s prethodnim problemima. Evo nekoliko primjera:</p>
+<a class="reference internal image-reference" href="../_images/repeat_alternating.png"><img alt="../_images/repeat_alternating.png" class="align-center" src="../_images/repeat_alternating.png" style="width: 800px;" /></a>
+<p>U svim tim slučajevima, pravilnost i dalje postoji i može se koristiti pri pisanju programa. Također možemo primijetiti da svi primjeri na slici imaju nešto zajedničko, a to je da se dva pravila pojavljuju naizmjenično. Na primjer, u crtežu od opeke prvi red opeke započinje cijelom ciglom, drugi s pola opeke, treći opet cijelom ciglom i tako dalje. Slično tome, osvijetljeni i zatamnjeni prozori pojavljuju se naizmjenično na građevinskom crtežu.</p>
+<p>Zbog izmjene dvaju pravila u svim crtežima, programi koji ih crtaju imat će i neke sličnosti. Pogledajmo primjere koda.</p>
+<div class="section" id="primjer-ciferslus">
+<h2>Primjer - ciferšlus<a class="headerlink" href="#primjer-ciferslus" title="Permalink to this headline">¶</a></h2>
+<p>Da bismo nacrtali takav ciferšlus, linije ćemo svakako crtati u petlji. Crtež pokazuje da je svaki sljedeći redak isti broj piksela niži od prethodnog, tako da ne bi trebalo biti problema s računanjem <em>y</em> koordinate. Situacija s <em>x</em> koordinatama je nešto teža jer se mijenjaju prema malo složenijem pravilu.</p>
+<p>Ovaj problem možemo riješiti pomoću <em>if</em> naredbe u petlji. Nakon što nacrtamo jednu crtu, provjeravamo koja je od dvije moguće vrijednosti <span class="math notranslate nohighlight">\(x\)</span> koordinata početka linije ima. Ako ima prvu vrijednost - dodijelimo je drugoj i obrnuto. Evo kako to izgleda u programu:</p>
+
+<div data-childcomponent="PyGame_drawing_loops_zipper1" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=PyGame_drawing_loops_zipper1 data-lang="python" 
+      data-timelimit=25000    
+    data-audio=''   
+              data-modaloutput="true" data-hidehistory=true
+    data-includesrc="# -*- acsection: general-init -*-
+import pygame as pg, pygamebg
+(width, height) = (100, 600)
+canvas = pygamebg.open_window(width, height, &quot;Zipper&quot;)
+
+canvas.fill(pg.Color(&quot;blue&quot;))
+# -*- acsection: main -*-
+
+line_length = 50       # length of one zipper line 
+margin_left_right = 15 # margin to left and right edge of the window
+margin_up_down = 40    # margin to upper and lower edge of the window
+d_y = 15               # vertical space between zipper lines
+
+# x coordinates of line starts and ends
+x_left = margin_left_right
+x_right = width - margin_left_right - line_length
+
+# coordinates of the start of the current line 
+x_start = x_left
+y = margin_up_down
+
+while y &lt; height - margin_up_down:
+    x_end = x_start + line_length
+    pg.draw.line(canvas, pg.Color(&quot;yellow&quot;), (x_start, y), (x_end, y), 6);
+    
+    # preparing to draw the next line
+    y += d_y              # y coordinate of the next line
+    if x_start == x_left: # x_start is the opposite of the previous one
+        x_start = x_right
+    else:
+        x_start = x_left
+ 
+# -*- acsection: after-main -*-
+pygamebg.wait_loop()
+"   data-enablecopy="true">
+
+
+</textarea>
+</div>
+<p>Druga mogućnost za rješavanje problema s <em>x</em> koordinatama je crtanje dvije linije u jednoj petlji, na primjer:</p>
+
+<div data-childcomponent="PyGame_drawing_loops_zipper2" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=PyGame_drawing_loops_zipper2 data-lang="python" 
+      data-timelimit=25000    
+    data-audio=''   
+              data-modaloutput="true" data-hidehistory=true
+    data-includesrc="# -*- acsection: general-init -*-
+import pygame as pg, pygamebg
+(width, height) = (100, 600)
+canvas = pygamebg.open_window(width, height, &quot;Zipper&quot;)
+
+canvas.fill(pg.Color(&quot;blue&quot;))
+# -*- acsection: main -*-
+
+line_length = 50       # length of one zipper line 
+margin_left_right = 15 # margin to left and right edge of the window
+margin_up_down = 40    # margin to upper and lower edge of the window
+d_y = 15               # vertical space between zipper lines
+
+# x coordinates of line starts and ends
+x_left_start = margin_left_right
+x_left_end = x_left_start + line_length
+x_right_start = width - margin_left_right - line_length
+x_right_end = x_right_start + line_length
+
+y = margin_up_down # y coordinate of the current line 
+while y &lt; height - margin_up_down:
+    pg.draw.line(canvas, pg.Color(&quot;yellow&quot;), (x_left_start, y), (x_left_end, y), 6);
+    y += d_y # preparing to draw the next line
+    pg.draw.line(canvas, pg.Color(&quot;yellow&quot;), (x_right_start, y), (x_right_end, y), 6);
+    y += d_y # preparing to draw the next line
+ 
+# -*- acsection: after-main -*-
+pygamebg.wait_loop()
+"   data-enablecopy="true">
+
+
+</textarea>
+</div>
+</div>
+<div class="section" id="primjer-cigle">
+<h2>Primjer - cigle<a class="headerlink" href="#primjer-cigle" title="Permalink to this headline">¶</a></h2>
+<p>Već smo spomenuli da redovi opeka naizmjence započinju cijelom ciglom i polovicom cigle. Zato pri crtanju cigle možemo koristiti bilo koju od dvije iste ideje kao u prethodnom primjeru.</p>
+<p>Neka se dužina cigle označi sa: math:<cite>a</cite> a njena visina s <span class="math notranslate nohighlight">\(h\)</span>. Čitavu ciglu dobivamo na početku reda crtajući pravokutnik na zadanoj visini, s <span class="math notranslate nohighlight">\(x\)</span> koordinatom jednakom nuli. Polovina cigle na početku reda može se dobiti crtanjem cijele opeke pomaknute za <span class="math notranslate nohighlight">\(a \over 2\)</span> s lijeve strane, tj. crtanjem pravokutnika s <span class="math notranslate nohighlight">\(x\)</span> koordinata jednaka <code class="code docutils literal notranslate"><span class="pre">-a</span> <span class="pre">//</span> <span class="pre">2</span></code>. Dakle, vidljiva je samo desna polovina cigle. Ostaje nam riješiti kad nacrtamo pomaknutu ciglu a kada ne.</p>
+<p>Jedno rješenje je pohraniti početak reda cigle u varijablu, nazovite to <em>x_start</em>. Nakon crtanja svakog retka provjeravamo da varijabla <em>x_start</em> ima vrijednost nula ili <code class="code docutils literal notranslate"><span class="pre">-a</span> <span class="pre">//</span> <span class="pre">2</span></code>. Kao u prethodnom primjeru, ovisno o kojoj od dvije vrijednosti imamo, dodijelit ćemo drugoj vrijednosti varijablu, tako da u sljedećem redu crtanje cigle započet će drugačije.</p>
+<p>Dovršite naredbe za dodjeljivanje vrijednosti varijabli x_start</p>
+
+<div data-childcomponent="PyGame_drawing_loops_bricks1" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=PyGame_drawing_loops_bricks1 data-lang="python" 
+      data-timelimit=25000    
+    data-audio=''   
+           data-playtask="true"   data-modaloutput="true" data-hidehistory=true
+      data-includexsrc="# -*- acsection: general-init -*-
+import pygame as pg, pygamebg
+(width, height) = (300, 300)
+canvas = pygamebg.open_window(width, height, &quot;Bricks&quot;)
+
+# -*- acsection: main -*-
+canvas.fill(pg.Color(&quot;red&quot;))
+brick_width, brick_height = 80, 40
+x_start = 0 # x coordinates of the first brick in the first row
+for y0 in range(0, height, brick_height):
+    for x0 in range(x_start, width, brick_width):
+        pg.draw.rect(canvas, pg.Color(&quot;black&quot;), (x0, y0, brick_width, brick_height), 1)
+        
+    # preparing to draw the next row of bricks
+    if x_start == 0: # x_start is the opposite of the previous one
+        x_start = -brick_width//2
+    else:
+        x_start = 0
+
+# -*- acsection: after-main -*-
+pygamebg.wait_loop()
+" data-enablecopy="true">
+canvas.fill(pg.Color("red"))
+brick_a, brick_h = 80, 40
+x_start = 0
+for y0 in range(0, height, brick_h): # za svaki redi cigli
+    for x0 in range(x_start, width, brick_a): # za svaku ciglu u redu
+        pg.draw.rect(canvas, pg.Color("black"), (x0, y0, brick_a, brick_h), 1)
+
+    if x_start == x_start: # dovršite
+        x_start = -brick_a//2
+    else:
+        x_start = x_start # dovršite
+</textarea>
+</div>
+<p>Druga ideja je da u svakom prolasku kroz dvostruku petlju crtamo ciglu koju smo crtali i u prvom rješenju, a osim nje i ciglu ispod i polu-lijevo od nje. Primjetite da u ovom slučaju petlja po <em>y0</em> ima dvostruki korak, jer unutarnja petlja crta dva reda cigle.</p>
+<p>Dovršite naredbe za crtanje pravokutnika u ovom programu</p>
+
+<div data-childcomponent="PyGame_drawing_loops_bricks2" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=PyGame_drawing_loops_bricks2 data-lang="python" 
+      data-timelimit=25000    
+    data-audio=''   
+              data-modaloutput="true" data-hidehistory=true
+      data-includexsrc="# -*- acsection: general-init -*-
+import pygame as pg, pygamebg
+width, height = 300, 300
+canvas = pygamebg.open_window(width, height, &quot;Bricks&quot;)
+
+# -*- acsection: main -*-
+canvas.fill(pg.Color(&quot;red&quot;))
+brick_width, brick_height = 80, 40
+for y0 in range(0, height, 2 * brick_height):
+    for x0 in range(0, width, brick_width):
+        # draw the first brick
+        pg.draw.rect(canvas, pg.Color(&quot;black&quot;), (x0, y0, brick_width, brick_height), 1)
+        
+        # the second brick is in the following row, displaced by half its width
+        x1, y1 = x0 - brick_width//2, y0 + brick_height 
+        pg.draw.rect(canvas, pg.Color(&quot;black&quot;), (x1, y1, brick_width, brick_height), 1)
+
+# -*- acsection: after-main -*-
+pygamebg.wait_loop()
+" data-enablecopy="true">
+canvas.fill(pg.Color("red"))
+brick_width, brick_height = 80, 40
+for y0 in range(0, height, 2 * brick_height):
+    for x0 in range(0, width, brick_width):
+        # draw the first brick
+        pg.draw.rect(???) # dovršite naredbe
+
+        # druga cigla je u sljedecem redu, pomaknuta za pola sirine ulijevo
+        x1, y1 = x0 - brick_width//2, y0 + brick_height
+        pg.draw.rect(???) # dovršite crtanje druge cigle
+</textarea>
+</div>
+</div>
+<div class="section" id="zadaci-za-vjezbu">
+<h2>Zadaci za vježbu<a class="headerlink" href="#zadaci-za-vjezbu" title="Permalink to this headline">¶</a></h2>
+
+    <div class="course-box course-box-special">
+        <div class="course-content">
+            <h4 class="carbox-title">
+                <img class="corner-image float-right" src="../_static/img/question-mark.png" />
+            </h4>
+            <p>
+<p><strong>Zadatak - šahovska ploča</strong></p>
+<p>Nacrtajte šahovsku ploču preko cijelog prozora (kvadrati na ploči trebaju biti 50x50 piksela). Donji lijevi kvadrat trebao bi biti taman.</p>
+
+    </p></div></div>
+<p>Većina programa je napisana, pokušajte je dovršiti.</p>
+
+<div data-childcomponent="PyGame_drawing_loops_chessboard" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=PyGame_drawing_loops_chessboard data-lang="python" 
+      data-timelimit=25000    
+    data-audio=''   
+           data-playtask="true"   data-modaloutput="true" data-hidehistory=true
+      data-includexsrc="# -*- acsection: general-init -*-
+import pygame as pg, pygamebg
+width, height = 400, 400
+canvas = pygamebg.open_window(width, height, &quot;Chessboard&quot;)
+# -*- acsection: main -*-
+
+canvas.fill(pg.Color(&quot;gray&quot;)) # background - light squares
+
+# square size
+num_squares = 8
+square_width = width / num_squares
+square_height = height / num_squares
+
+# go through all the squares
+for i in range(num_squares):
+    for j in range(num_squares):
+        # paint black squares
+        if (i + j) % 2 != 0:
+            pg.draw.rect(canvas, pg.Color(&quot;black&quot;), (i*square_width, j*square_height, square_width, square_height))
+
+# -*- acsection: after-main -*-
+pygamebg.wait_loop()
+" data-enablecopy="true">
+canvas.fill(pg.Color("gray")) # obojimo pozadinu prozora u sivo za svijetlo polje
+
+# velicina polja
+num_squares = 8
+square_width = width / num_squares
+square_height = height / num_squares
+
+# prolazimo kroz sva polja
+for i in range(num_squares):
+    for j in range(num_squares):
+        # paint black squares only
+        if (i + j) % 2 != 0:
+            pass # dovršite naredbu
+</textarea>
+</div>
+
+    <div class="course-box course-box-special">
+        <div class="course-content">
+            <h4 class="carbox-title">
+                <img class="corner-image float-right" src="../_static/img/question-mark.png" />
+            </h4>
+            <p>
+<p><strong>Zadatak - Zgrada</strong></p>
+<p>Izmijenite program u nastavku tako da se prozori crtaju u dvostrukoj petlji.</p>
+
+    </p></div></div>
+<p>Dio koji treba promijeniti, nakon promjene, može započeti ovako:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>     <span class="c1"># kat</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span> <span class="c1"># strana zgrade (0 - lijevo, 1 - desno)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="o">...</span>
+</pre></div>
+</div>
+
+<div data-childcomponent="PyGame_drawing_loops_building_alternating" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=PyGame_drawing_loops_building_alternating data-lang="python" 
+      data-timelimit=25000    
+    data-audio=''   
+           data-playtask="true"   data-modaloutput="true" data-hidehistory=true
+      data-includexsrc="# -*- acsection: general-init -*-
+import pygame as pg, pygamebg
+canvas = pygamebg.open_window(300, 300, &quot;Building&quot;)
+
+# -*- acsection: main -*-
+canvas.fill(pg.Color(&quot;lightgray&quot;))
+
+pg.draw.rect(canvas, pg.Color(&quot;darkgray&quot;), (120, 50, 60, 140)) # building
+
+for y in range(5):     # floor
+    for x in range(2): # side (0 - left, 1 - right)
+        if (x+y) % 2 == 0:
+            color = pg.Color(&quot;yellow&quot;)
+        else:
+            color = pg.Color(&quot;black&quot;)
+        square = (130 + 25 * x, 60 + 20 * y, 15, 15)
+        pg.draw.rect(canvas, color, square)                    # window
+
+pg.draw.rect(canvas, pg.Color(&quot;black&quot;),  (140, 160, 20, 30))   # door
+
+# -*- acsection: after-main -*-
+pygamebg.wait_loop()
+" data-enablecopy="true">
+pg.draw.rect(canvas, pg.Color("darkgray"), (120, 50, 60, 140)) # building
+
+# zamijenite ovaj dio
+pg.draw.rect(canvas, pg.Color('yellow'), (130,  60, 15, 15))
+pg.draw.rect(canvas, pg.Color('black'), (155,  60, 15, 15))
+pg.draw.rect(canvas, pg.Color('black'), (130,  80, 15, 15))
+pg.draw.rect(canvas, pg.Color('yellow'), (155,  80, 15, 15))
+pg.draw.rect(canvas, pg.Color('yellow'), (130, 100, 15, 15))
+pg.draw.rect(canvas, pg.Color('black'), (155, 100, 15, 15))
+pg.draw.rect(canvas, pg.Color('black'), (130, 120, 15, 15))
+pg.draw.rect(canvas, pg.Color('yellow'), (155, 120, 15, 15))
+pg.draw.rect(canvas, pg.Color('yellow'), (130, 140, 15, 15))
+pg.draw.rect(canvas, pg.Color('black'), (155, 140, 15, 15))
+
+pg.draw.rect(canvas, pg.Color("black"),  (140, 160, 20, 30))   # vrata
+</textarea>
+</div>
+<hr class="docutils" />
+<p>Ako niste imali većih problema sa svim tim zadacima, pokušajte riješiti još jedan težak zadatak.</p>
+
+    <div class="course-box course-box-special">
+        <div class="course-content">
+            <h4 class="carbox-title">
+                <img class="corner-image float-right" src="../_static/img/question-mark.png" />
+            </h4>
+            <p>
+<p><strong>Zadatak - izazov: parket</strong></p>
+<p>Napišite program koji prikazuje parket (sliku parketa možete vidjeti kad kliknete tipku “Play task”, a slika je ista kao na početku ove stranice, desno). Cilj je, naravno, nacrtati daske za pod u više petlji. Dimenzije ploče su 10x60, a boje su “goldenrod” i “brown”.</p>
+
+    </p></div></div>
+<p>Kostur programa otprilike izgleda ovako:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">row</span> <span class="o">...</span>
+    <span class="k">for</span> <span class="n">column</span> <span class="o">...</span>
+        <span class="k">if</span> <span class="o">...</span>
+            <span class="k">for</span> <span class="n">floorboard</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+                <span class="n">pg</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">floorboard</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+                <span class="n">pg</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+
+<div data-childcomponent="PyGame_drawing_loops_parquet" class="course-box course-box-problem course-content">
+
+<textarea data-component="activecode" id=PyGame_drawing_loops_parquet data-lang="python" 
+      data-timelimit=25000    
+    data-audio=''   
+           data-playtask="true"   data-modaloutput="true" data-hidehistory=true
+      data-includexsrc="# -*- acsection: general-init -*-
+import pygame as pg, pygamebg
+(width, height) = (300, 300)
+canvas = pygamebg.open_window(width, height, &quot;Parquet&quot;)
+
+# -*- acsection: main -*-
+canvas.fill(pg.Color(&quot;goldenrod&quot;))
+a = 10    # width of one block
+b = 6 * a # length of one block
+num_squares_x = width // b
+num_squares_y = height // b
+for row in range(num_squares_y):
+    for column in range(num_squares_y):
+        (x0, y0) = (column*b, row*b)
+        if (row + column) % 2 == 0:
+            for i in range(6):
+                pg.draw.rect(canvas, pg.Color(&quot;brown&quot;), (x0+i*a, y0, a, b), 1)
+        else:
+            for i in range(6):
+                pg.draw.rect(canvas, pg.Color(&quot;brown&quot;), (x0, y0+i*a, b, a), 1)
+
+# -*- acsection: after-main -*-
+pygamebg.wait_loop()
+" data-enablecopy="true">
+
+
+</textarea>
+</div>
+</div>
+</div>
+
+
+  
+      <div class="col-md-12">
+<ul class="pager">
+        <li id="relations-prev" title='Previous chapter - Crtanje poligona pomoću petlji' data-toggle="tooltip"><a href="03_PyGame_16b_Drawing_Using_Loops2.html">Previous chapter</a></li>
+    
+        <li id="relations-next" title='Next chapter - Prikazivanje gotovih slika' data-toggle="tooltip"><a href="03_PyGame_17a_Drawing_Pictures1.html">Next chapter</a></li>
+</ul>
+
+<!-- <ul class="pager"> -->
+    <!-- -->
+        <!-- <li id="relations-prev" title='Претходно поглавље - Crtanje poligona pomoću petlji' data-toggle="tooltip"><a href="03_PyGame_16b_Drawing_Using_Loops2.html">Претходно поглавље</a></li> -->
+    <!--  -->
+    <!-- -->
+        <!-- <li id="relations-next" title='Следеће поглавље - Prikazivanje gotovih slika' data-toggle="tooltip"><a href="03_PyGame_17a_Drawing_Pictures1.html">Следеће поглавље</a></li> -->
+    <!-- -->
+<!-- </ul> -->
+
+<script type="text/javascript">
+
+  $('#relations-prev').tooltip({'placement':'right', 'selector': '', 'delay': { show: 100, hide: 50}});
+  $('#relations-next').tooltip({'placement':'left', 'selector': '', 'delay': { show: 100, hide: 50}});
+
+</script>
+</div>
+  
+</div>
+<footer class="footer col-md-12">
+    <div class="container text-center">
+        <div class="text-center">
+            <hr>
+            <p class="text-muted">
+                <span class="text-center">&copy; 2019 <a href="https://petlja.org">Petlja.org</a> 
+                  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; vertical-align: text-bottom" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+                  (Created using  <a href="https://pypi.org/project/Sphinx/">Sphinx</a>, <a href="http://runestoneinteractive.org/">RunestoneComponents</a> and <a href="https://github.com/Petlja/PetljaDoc">PetljaDoc</a>)</span>
+            </p>
+        </div>
+    </div>
+</footer>
+
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-32029811-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </body>
+</html>

@@ -1,0 +1,21 @@
+Interakcija
+===========
+
+U PyGame programima koje smo do sada vidjeli, korisnik nije mogao utjecati na njihovo izvršavanje, osim što je zaustavio program. Ovakve programe možemo usporediti s gledanjem filmova - korisnik je u osnovi gledatelj.
+
+U sljedećem ćemo se dijelu pozabaviti programima u kojima korisnik ima aktivnu ulogu i može utjecati na pokretanje programa pomoću miša i tipkovnice. Postoje dva osnovna načina da naš program "sazna" kada je korisnik izvršio akciju.
+
+- Jedan od načina jeo **očitavanje stanja** miša i tipkovnice. Iz koda možemo pitati kakav je trenutačni položaj miša, da li je bilo koja tipka pritisnuta i slično.
+- Drugi način je upotreba sistemskih **događaja.** Svaka radnja korisnika (pritiskanje tipke miša ili tipke na tipkovnici, puštanje tipke, pomicanje miša itd.) je događaj, a u programima možemo dobiti informacije o takvim događajima i odgovoriti na njih.
+
+U ovom ćemo poglavlju upoznati oba ova načina koji našim programima omogućuju reagiranje na korisničke radnje.
+
+   .. toctree::
+      :maxdepth: 1
+
+      ./03_PyGame_31_Interaction_ReadMousePos.rst
+      ./03_PyGame_32_Interaction_ReadMouseKey.rst
+      ./03_PyGame_33_Interaction_ReadKeyboard.rst
+      ./03_PyGame_34_Interaction_Events.rst
+      ./03_PyGame_35_Interaction_EventMouse.rst
+      ./03_PyGame_36_Interaction_EventKeyboard.rst

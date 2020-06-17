@@ -1,0 +1,289 @@
+Brojanje i zbrajanje
+====================
+
+Vrlo je čest slučaj da nas zanimaju samo neki podaci iz zbirke. Ovdje ćemo vježbati kako brojati i, ako je potrebno, zbrajati brojeve koji nas zanimaju ili koji ispunjavaju neki uvjet.
+
+Brojanje
+--------
+
+Opći oblik programa (algoritam) pomoću kojeg računamo elemente zbirke koji ispunjavaju zadani uvjet izgleda ovako:
+
+.. code::
+
+    num = 0
+    for x in collection:
+        if (x meets the condition):
+            num += 1
+    print(num)
+    
+.. infonote::
+
+    Naredba ``x += a`` povećava vrijednost varijable *x* za *a*. To je zapravo skraćeni oblik naredbe :code:`x = x + a`, koja varijabli *x* dodjeljuje vrijednost *x + a*.
+
+    Naredba ``x -= a`` smanjuje vrijednost varijable *x* za *a*. To je skraćeni oblik naredbe :code:`x = x - a`, koja dodijeljuje vrijednost *x - a* varijabli *x*.
+    
+U našem primjeru, nardba *num += 1* povećava vrijednost varijable *br* za 1.
+
+
+Primjeri i zadaci
+'''''''''''''''''
+
+.. questionnote::
+
+    **Primjer - sastanak:** 
+    
+    Tim lider je ponudio dvije mogućnosti za vrijeme sastanka koji će se sutra održati. Svaki je član tima u tablicu napisao koji bi termin bio prikladniji za njega/nju (1 za prvi termin, 2 za drugi). Ti podaci su prebačeni u prvi red programa.
+    
+    Dovršite program - skriptu, tako da na temelju podataka o glasanju članova tima ispisuje koliko ih je glasovalo za prvi, a koliko za drugi termin.
+    
+.. activecode:: console__counting_meeting
+
+    terms = (1, 2, 2, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 1)
+    
+Na primjer, možemo prebrojati koliko je članova tima glasalo za prvi termin, a na kraju izračunamo ostale.
+
+.. activecode:: console__counting_meeting_sol1
+
+    terms = (1, 2, 2, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 1)
+
+    num_first_term = 0
+    for t in terms:
+        if t == 1:
+            num_first_term += 1
+            
+    num_second_term = len(terms) - num_first_term
+
+    print('Za prvi termin je glasalo', num_first_term,'a za drugi', num_second_term, 'članova tima.')
+
+Drugi način je da brojimo istovremeno glasove i za prvi i za drugi termin.
+
+.. activecode:: console__counting_meeting_sol2
+
+    terms = (1, 2, 2, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 1)
+
+    num_first_term = 0
+    num_second_term = 0
+    for t in terms:
+        if t == 1:
+            num_first_term += 1
+        if t == 2:
+            num_second_term += 1
+    print('Za prvi termin je glasalo', num_first_term,'a za drugi', num_second_term, 'članova tima.')
+
+ili, pod pretpostavkom da su podaci "čisti", to jest, nema vrijednosti osim 1 i 2:
+
+.. activecode:: console__counting_meeting_sol3
+
+    terms = (1, 2, 2, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 1)
+
+    num_first_term = 0
+    num_second_term = 0
+    for t in terms:
+        if t == 1:
+            num_first_term += 1
+        else:
+            num_second_term += 1
+            
+    print('Za prvi termin je glasalo', num_first_term,'a za drugi', num_second_term, 'članova tima.')
+
+U slučaju da podaci nisu poznati unaprijed nego ih treba unositi, mogli bismo napisati ovakav program:
+
+.. activecode:: console__counting_meeting_sol4
+
+    n = int(input("Koliko je članova tima glasalo: "))
+    num_first_term = 0
+    for i in range(n):
+        t = int(input("Unesite jedan glas: "))
+        if t == 1:
+            num_first_term += 1
+            
+    num_second_term = n - num_first_term
+    print('Za prvi termin je glasalo', num_first_term,'a za drugi', num_second_term, 'članova tima.')
+
+Na početku ovog programa, učitavamo broj glasova *n*, a zatim koristimo *for* petlju za učitavanja i prebrojavanje jednog glasa *n* puta.
+
+
+.. questionnote::
+
+    **Zadatak - pismeni test:** 
+    
+    Nekoliko ljudi je rješavalo test i prometnih propisa, što je uvjet za izlazak na praktični dio ispita. Test se smatra položenim ako je broj netočnih odgovora manji ili jednak 3.
+    
+    Na početku programa - skripte daju se rezultati jedne grupe kandidata (broj netočnih odgovora za svaku osobu koja je rješavala test). Dovršite skriptu tako da ispisuje koliko je kandidata položilo ispit.
+    
+.. activecode:: console__counting_test
+
+    num_incorrect = (2, 5, 1, 0, 4, 2, 7, 1)
+    passed = 0
+
+    # dodajte naredbe koje nedostaju
+    
+    print(passed)
+    
+.. commented out
+    
+    passed = 0
+    for x in num_incorrect:
+        if x <= 3:
+            passed += 1
+    print(passed)
+
+
+
+.. questionnote::
+
+    **Zadatak - bazen** 
+    
+    Za grupu djece priprema se posjet bazenu. Svatko niži od 160 centimetara može ući u manji bazen. Organizatora zanima koliko djece je niže od 160 centimetara kako bi mogao planirati grupe.
+    
+    Na početku programa su date visine djece. Dovršite program tako da ispisuje broj djece niže od 160 centimetara.
+    
+.. activecode:: console__counting_swimmingpool
+
+    heights = (160, 161, 174, 149, 153, 160, 158, 182, 144)
+    
+    
+
+
+.. questionnote::
+
+    **Zadatak - vlaga** 
+    
+    U botaničkom vrtu se vlaga tla mjeri jednom dnevno za rijetke i osjetljive vrste. Vlažnost je izražena brojevima od 0 do 1, a uvjeti za razvoj biljaka smatraju se dobrim kada je vlaga između 0,3 i 0,7 (uključujući granice).
+    
+    Vrijednosti vlage (mjerene tijekom određenog vremenskog razdoblja) date su u početku skripte. Dovršiti skriptu tako da ispisuje broj dana kada vlažnost nije bila dobra.
+
+.. activecode:: console__counting_humidity
+
+    humidity = (0.2, 0.5, 0.61, 0.40, 0.72, 0.51, 0.43, 0.35, 0.28)
+    
+
+
+Zbrajanje
+---------
+
+U jednoj velikoj grupi praktičnih problema dolazimo do rezultata postupnim stvaranjem (skupljanjem) tijekom prolaska kroz podatke. Na primjer, ako nam treba zbroj nekih brojeva, do njega možemo doći na ovaj opći način:
+
+.. code::
+
+    total = 0
+    for num in collection:
+        total += num
+    print(total)
+
+
+Kad izračunavamo zbroj svih elemenata kolekcije, dobivamo isti rezultat pozivanjem funkcije *sum*:
+
+.. code::
+
+    print(sum(collection))
+
+Koristit ćemo postupno formiranje rezultata kad nam trebaju samo neki elementi iz kolekcije, odnosno oni koji ispunjavaju zadani uvjet. U ovom slučaju, algoritam za izračunavanje zbroja obično bi izgledao ovako:
+
+.. code::
+
+    total = 0
+    for num in collection:
+        if (num meets the condition):
+            total += num
+    print(total)
+
+Da bismo dobili srednju vrijednost podataka koji ispunjavaju neki uvjet, potrebno je prebrojati i zbrojiti takve podatke, a onda njihov zbroj podjeliti njihovim brojem. U općem slučaju to izgleda ovako:
+
+.. code::
+
+    total = 0
+    counter = 0
+    for num in collection:
+        if (num meets the condition):
+            total += num
+            counter += 1
+    print(total / counter)
+
+Imajte na umu da se u Pythonu zbroj i sredina odabranih elemenata kolekcije mogu dobiti na kraći i učinkovitiji način. Odabrali smo gornju metodu jer izgleda gotovo isto kao u ostalim programskim jezicima.
+
+Primjeri i zadaci
+'''''''''''''''''
+
+.. questionnote::
+
+    **Primjer - Prosječan rezultat IQ testa:** 
+    
+    Dani su rezultati IQ testa za grupu ljudi. Ocjena -1 znači da osoba nije ispunjavala test. Dovršite program tako da ispisuje srednje vrijednosti dobivene na testiranju.
+
+.. activecode:: console__accumulate_IQ
+
+    iq_results = (-1, 98, 115, -1, 83, 130, 101, 122, -1, 108)
+
+Program možemo napisati ovako:
+
+.. activecode:: console__accumulate_IQ_sol
+
+    iq_results = (-1, 98, 115, -1, 83, 130, 101, 122, -1, 108)
+    num_tested = 0
+    iq_sum = 0
+    
+    for result in iq_results:
+        if result != -1:
+            iq_sum += result
+            num_tested += 1
+
+    if num_tested > 0:
+        mean_iq = iq_sum / num_tested
+        print('Srednji IQ je', mean_iq)
+    else:
+        print('Nitko nije testiran.')
+
+
+.. questionnote::
+
+    **Zadatak - dežurni:**  
+    
+    U tvrtki X, svi zaposlenici povremeno ostaju dežurni. Norma za prethodno razdoblje je 20 sati dežurstva. Svaki dodatni sat dežurstva (preko 20 sati) se dodatno naplaćuje. Daje se broj sati dežurstva za svakog zaposlenika, a direkto želi znati ukupan broj sati dežurstva iznad norme.
+    
+    Dovršite program tako da ispisuje ukupan broj prekovremenih sati dežurstva.
+    
+Ako ispravno riješite zadatak, trebali biste dobiti rezultat 25 za dane podatke, jer je :math:`(21-20)+(23-20)+(34-20)+(25-20)+(22-20)=25`.
+
+
+.. activecode:: console__accumulate_overtime
+
+    norm = 20
+    hours_on_duty = (21, 23, 19, 34, 25, 22, 17)
+    total_overtime = 0
+    # dovršite program
+    
+    print('Ukupan broj prekovremenih sati je', total_overtime)
+    
+.. commented out
+    
+    norma = 20
+    hours_on_duty = (21, 23, 19, 34, 25, 22, 17)
+    total_overtime = 0
+    for hours in hours_on_duty:
+        if hours > norm:
+            total_overtime += (hours - norm)
+    print('Ukupan broj prekovremenih sati je', total_overtime)
+
+
+
+
+
+
+.. questionnote::
+
+    **Zadatak - prosječni prinos:**  
+    
+    IU jednom voćnjaku nakon treće godine prati se prinos šljive po stablu. Drveće s urodom ispod 3 kilograma smatra se oštećenim ili bolesnim te će biti izvađeno.
+    
+    Daje se prinos svih stabala u voćnjaku. Dovršite program izračunavanjem i ispisom prosječnog prinosa zdravih stabala (s prinosima od 3 kilograma ili više).
+
+    
+Za dane podatke trebali biste dobiti približno 14.757.
+
+    
+.. activecode:: console__accumulate_yield
+
+    yield_per_plant = (11.3, 15.8, 9.5, 2.6, 21.1, 13.4, 17.9, 0.7, 14.3)
+    
+    # dovršite program

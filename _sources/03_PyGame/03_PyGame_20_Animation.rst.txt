@@ -1,0 +1,40 @@
+Animacije
+=========
+
+Poznato je da se videozapisi sastoje od velikog broja slika, koje se prikazuju dovoljno brzo, jedna za drugom, pri čemu se uzastopne slike malo razlikuju. Stvaranje video zapisa na ovaj način u osnovi je moguće jer osoba (ljudsko biće), pri dovoljno velikoj brzini prikazivanja slika, nije u mogućnosti vidjeti pojedinačne slike, već se stapaju i stvaraju dojam pokreta.
+
+Stvaranje dojma pokreta s fotografijama naziva se animacijom. Na primjer, sa sljedećih osam slika lika na različitim položajima:
+
+.. image:: ../../_images/PyGame/pganim_running1.png
+   :width: 120px
+.. image:: ../../_images/PyGame/pganim_running2.png
+   :width: 120px
+.. image:: ../../_images/PyGame/pganim_running3.png
+   :width: 120px
+.. image:: ../../_images/PyGame/pganim_running4.png
+   :width: 120px
+.. image:: ../../_images/PyGame/pganim_running5.png
+   :width: 120px
+.. image:: ../../_images/PyGame/pganim_running6.png
+   :width: 120px
+.. image:: ../../_images/PyGame/pganim_running7.png
+   :width: 120px
+.. image:: ../../_images/PyGame/pganim_running8.png
+   :width: 120px
+
+
+stvara se sljedeća animacija trčanja:
+           
+.. image:: ../../_images/PyGame/pganim_running.gif
+   :width: 120px
+           
+Svaka slika koja se pojavljuje u animaciji naziva se *frame* (okvir). Programi kojima smo se do sada bavili crtali su samo jedan crtež (frame) a slika se nakon toga nije mijenjala. U programima koji koriste animaciju mora se za svaki kadar nacrtati jedna slika. U sljedećim lekcijama vidjet ćemo kako to možemo učiniti.
+
+   .. toctree::
+      :maxdepth: 1
+
+      ./03_PyGame_21_Animation_Basics.rst
+      ./03_PyGame_22_Animation_Motion.rst
+      ./03_PyGame_23_Animation_Stages.rst
+      ./03_PyGame_24_Animation_Text.rst
+      ./03_PyGame_25_Animation_Multiple.rst
